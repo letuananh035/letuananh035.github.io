@@ -4,7 +4,6 @@ function loadXMLDoc(url) {
     if (this.readyState == 4 && this.status == 200) {
 	  var res = this.responseURL.split("ip=");
 	  document.cookie = "token=" + res[1];
-	  alert(this.responseURL);
       return this.responseURL;
     }
   };
