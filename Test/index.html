@@ -9,10 +9,16 @@
 <p>This is a paragraph.</p>
 <p id="answer"> None </p>
 <button onclick="App.capture_webbox()">Capture</button>
+<input id="text"></input>
 <button onclick="App.save_answer('Test')">Save</button>
 <script>
    function on_init(answer_data){
    	 document.getElementById('answer').innerText = answer_data;
+   }
+   
+   function save(){
+   	var value = document.getElementById('text').value;
+   	 App.save_answer(value)
    }
 </script>
 </body>
