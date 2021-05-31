@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
+<p id="answer"> None </p>
+<button onclick="App.capture_webbox()">Capture</button>
+<button onclick="App.save_answer('Test')">Save</button>
+<script>
+   function on_init(answer_data){
+   	 document.getElementById('answer').innerText = answer_data;
+   }
+</script>
+</body>
+</html>
