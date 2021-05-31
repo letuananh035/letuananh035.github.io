@@ -10,7 +10,9 @@
 <p id="answer"> None </p>
 <button onclick="App.capture_webbox()">Capture</button>
 <input id="text"></input>
-<button onclick="save('Test')">Save</button>
+<button onclick="save()">Save</button>
+<input id="text2"></input>
+<button onclick="save2()">Save Other</button>
 <script>
    function on_init(answer_data){
    	 document.getElementById('answer').innerText = answer_data;
@@ -19,6 +21,11 @@
    function save(){
    	var value = document.getElementById('text').value;
    	 App.save_answer(value)
+   }
+	 
+	 function save2(){
+   	var value = document.getElementById('text2').value;
+   	 App.save_answer_other('result', value);
    }
 </script>
 </body>
