@@ -1,0 +1,153 @@
+
+1_nanzhujue.png
+size: 907,1046
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+jiao1
+  rotate: false
+  xy: 472, 122
+  size: 114, 492
+  orig: 114, 492
+  offset: 0, 0
+  index: -1
+jiao2
+  rotate: false
+  xy: 276, 486
+  size: 190, 558
+  orig: 190, 558
+  offset: 0, 0
+  index: -1
+piaodai1
+  rotate: false
+  xy: 311, 82
+  size: 159, 402
+  orig: 159, 402
+  offset: 0, 0
+  index: -1
+piaodai10
+  rotate: false
+  xy: 276, 430
+  size: 31, 54
+  orig: 31, 54
+  offset: 0, 0
+  index: -1
+piaodai11
+  rotate: false
+  xy: 2, 20
+  size: 171, 376
+  orig: 171, 376
+  offset: 0, 0
+  index: -1
+piaodai2
+  rotate: false
+  xy: 719, 345
+  size: 80, 293
+  orig: 80, 293
+  offset: 0, 0
+  index: -1
+piaodai3
+  rotate: false
+  xy: 719, 263
+  size: 74, 80
+  orig: 74, 80
+  offset: 0, 0
+  index: -1
+piaodai4
+  rotate: false
+  xy: 836, 120
+  size: 44, 76
+  orig: 44, 76
+  offset: 0, 0
+  index: -1
+piaodai5
+  rotate: false
+  xy: 175, 19
+  size: 134, 377
+  orig: 134, 377
+  offset: 0, 0
+  index: -1
+piaodai6
+  rotate: false
+  xy: 588, 223
+  size: 129, 391
+  orig: 129, 391
+  offset: 0, 0
+  index: -1
+piaodai7
+  rotate: false
+  xy: 468, 616
+  size: 221, 428
+  orig: 221, 428
+  offset: 0, 0
+  index: -1
+piaodai8
+  rotate: false
+  xy: 801, 198
+  size: 95, 188
+  orig: 95, 188
+  offset: 0, 0
+  index: -1
+piaodai9
+  rotate: false
+  xy: 798, 100
+  size: 36, 96
+  orig: 36, 96
+  offset: 0, 0
+  index: -1
+shenti
+  rotate: false
+  xy: 691, 640
+  size: 190, 404
+  orig: 190, 404
+  offset: 0, 0
+  index: -1
+shou1
+  rotate: false
+  xy: 2, 398
+  size: 272, 646
+  orig: 272, 646
+  offset: 0, 0
+  index: -1
+shou2
+  rotate: false
+  xy: 801, 388
+  size: 93, 250
+  orig: 93, 250
+  offset: 0, 0
+  index: -1
+toufa1
+  rotate: true
+  xy: 311, 35
+  size: 45, 107
+  orig: 45, 107
+  offset: 0, 0
+  index: -1
+toufa2
+  rotate: false
+  xy: 883, 998
+  size: 22, 46
+  orig: 22, 46
+  offset: 0, 0
+  index: -1
+toufa3
+  rotate: true
+  xy: 719, 241
+  size: 20, 57
+  orig: 20, 57
+  offset: 0, 0
+  index: -1
+toufa4
+  rotate: false
+  xy: 588, 2
+  size: 208, 219
+  orig: 208, 219
+  offset: 0, 0
+  index: -1
+toufa5
+  rotate: true
+  xy: 472, 80
+  size: 40, 107
+  orig: 40, 107
+  offset: 0, 0
+  index: -1
