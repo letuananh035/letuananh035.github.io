@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cylinder Rice Displacement - Cake Volume Calculator</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- KaTeX for Math rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Print styles for lab reports */
+    @media print {
+      body { background: white !important; color: black !important; }
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+      .shadow-xl, .shadow-md, .shadow-sm { box-shadow: none !important; }
+    }
+
+    /* Grain pattern background for rice */
+    .rice-pattern {
+      background-color: #f6d89b;
+      background-image: radial-gradient(#d4a853 0.75px, transparent 0.75px), radial-gradient(#d4a853 0.75px, #f6d89b 0.75px);
+      background-size: 8px 8px;
+      background-position: 0 0, 4px 4px;
+    }
+
+    .rice-displaced-pattern {
+      background-color: #fce7b8;
+      background-image: radial-gradient(#e2ba6b 0.75px, transparent 0.75px), radial-gradient(#e2ba6b 0.75px, #fce7b8 0.75px);
+      background-size: 8px 8px;
+      background-position: 0 0, 4px 4px;
+    }
+
+    /* Custom range slider */
+    input[type=range]::-webkit-slider-thumb {
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      background: #ea580c;
+      cursor: pointer;
+      -webkit-appearance: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-slate-900">
+
+  <!-- TOP HEADER -->
+  <header class="bg-slate-800/80 backdrop-blur border-b border-slate-700/60 sticky top-0 z-40 no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-400 flex items-center justify-center shadow-lg shadow-amber-500/20">
+          <i data-lucide="flask-conical" class="w-5 h-5 text-slate-950 font-bold"></i>
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-white tracking-tight flex items-center gap-2">
+            Cake Volume Displacement Calculator
+            <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">Rice Method</span>
+          </h1>
+          <p class="text-xs text-slate-400 hidden sm:block">
+            Measuring Cylinder H = 100cm, R = 9.37cm | Initial Rice Level = 50cm
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <button id="btn-export-csv" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-slate-700 hover:bg-slate-600 text-slate-200 transition flex items-center gap-1.5 border border-slate-600">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>Export CSV</span>
+        </button>
+        <button id="btn-print-report" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 transition flex items-center gap-1.5 font-bold shadow-md shadow-amber-500/10">
+          <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+          <span>Print Report</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full space-y-6">
+
+    <!-- CALCULATION MODE TOGGLE & QUICK CONSTANTS -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+      
+      <!-- Mode Selector -->
+      <div class="lg:col-span-2 bg-slate-800/60 border border-slate-700/60 rounded-2xl p-4 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <i data-lucide="sliders" class="w-4 h-4 text-amber-400"></i>
+            Operational Mode
+          </span>
+          <span id="mode-status-badge" class="text-xs font-medium px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+            Real-time Synchronized
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <button id="btn-mode-exp" class="p-3 rounded-xl border text-left transition flex items-start gap-3 bg-amber-500/10 border-amber-500 text-white">
+            <div class="p-2 rounded-lg bg-amber-500/20 text-amber-400 mt-0.5">
+              <i data-lucide="ruler" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="text-sm font-bold">1. Đo thực nghiệm (Experimental)</div>
+              <div class="text-xs text-slate-400 mt-0.5">Nhập mức đọc $h_{\text{sau}}$ $\to$ Tính $\Delta h$ và thể tích $V$</div>
+            </div>
+          </button>
+
+          <button id="btn-mode-theo" class="p-3 rounded-xl border text-left transition flex items-start gap-3 bg-slate-800/80 border-slate-700 hover:border-slate-600 text-slate-300">
+            <div class="p-2 rounded-lg bg-indigo-500/20 text-indigo-400 mt-0.5">
+              <i data-lucide="box" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="text-sm font-bold">2. Dự đoán lý thuyết (Geometric)</div>
+              <div class="text-xs text-slate-400 mt-0.5">Nhập kích thước 10 bánh $\to$ Dự đoán $h_{\text{sau}}$ và độ dâng</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Cylinder Constants Card -->
+      <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-4 flex flex-col justify-between">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+            <i data-lucide="cylinder" class="w-4 h-4 text-blue-400"></i>
+            Cylinder Parameters
+          </span>
+          <button id="btn-toggle-cylinder-config" class="text-xs text-amber-400 hover:underline">Edit</button>
+        </div>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-700/40">
+            <div class="text-slate-400">Chiều cao $H$</div>
+            <div class="text-sm font-bold font-mono text-white" id="disp-H">100.0 cm</div>
+          </div>
+          <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-700/40">
+            <div class="text-slate-400">Bán kính $R$</div>
+            <div class="text-sm font-bold font-mono text-white" id="disp-R">9.37 cm</div>
+          </div>
+          <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-700/40">
+            <div class="text-slate-400">Tiết diện đáy $A$</div>
+            <div class="text-sm font-bold font-mono text-amber-300" id="disp-A">275.82 cm²</div>
+          </div>
+          <div class="bg-slate-900/60 p-2 rounded-lg border border-slate-700/40">
+            <div class="text-slate-400">Mức gạo đầu $h_0$</div>
+            <div class="text-sm font-bold font-mono text-white" id="disp-h0">50.0 cm</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- MAIN TWO COLUMN WORKSPACE -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+      <!-- LEFT COLUMN: 2D CYLINDER VISUALIZER & EXPERIMENT CONTROLS (5 cols) -->
+      <div class="lg:col-span-5 space-y-4">
+        
+        <!-- Interactive Visualizer Box -->
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-xl relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-sm font-bold text-white flex items-center gap-2">
+              <i data-lucide="eye" class="w-4 h-4 text-amber-400"></i>
+              Mô Phỏng Ống Đong 2D (Cylinder Visualization)
+            </h2>
+            <span class="text-xs px-2 py-0.5 rounded bg-slate-700 text-slate-300 font-mono">1:100 Scale</span>
+          </div>
+
+          <!-- The Visual Cylinder Display -->
+          <div class="flex items-center justify-center gap-4 py-2">
+            
+            <!-- Ruler scale labels -->
+            <div class="h-96 flex flex-col justify-between text-[10px] font-mono text-slate-400 py-1 text-right w-12 select-none">
+              <span class="font-bold text-red-400">100cm</span>
+              <span>90cm</span>
+              <span>80cm</span>
+              <span>70cm</span>
+              <span class="text-amber-400 font-bold" id="marker-h-after-label">h_sau</span>
+              <span class="text-sky-400 font-bold">50cm (h₀)</span>
+              <span>40cm</span>
+              <span>30cm</span>
+              <span>20cm</span>
+              <span>10cm</span>
+              <span>0cm</span>
+            </div>
+
+            <!-- SVG Cylinder Graphic -->
+            <div class="relative w-40 h-96 bg-slate-950/80 border-2 border-slate-600 rounded-b-2xl rounded-t-lg shadow-inner overflow-hidden flex flex-col-reverse">
+              
+              <!-- Glass reflection highlight -->
+              <div class="absolute inset-y-0 left-2 w-3 bg-white/10 blur-[1px] pointer-events-none z-20"></div>
+              <div class="absolute inset-y-0 right-2 w-1.5 bg-white/5 pointer-events-none z-20"></div>
+
+              <!-- Measurement tick marks on cylinder glass -->
+              <div class="absolute inset-0 flex flex-col justify-between pointer-events-none z-10 opacity-40">
+                <div class="border-b border-white w-4"></div>
+                <div class="border-b border-white w-2"></div>
+                <div class="border-b border-white w-4"></div>
+                <div class="border-b border-white w-2"></div>
+                <div class="border-b border-white w-4"></div>
+                <div class="border-b border-white w-2"></div>
+                <div class="border-b border-white w-4"></div>
+                <div class="border-b border-white w-2"></div>
+                <div class="border-b border-white w-4"></div>
+                <div class="border-b border-white w-2"></div>
+                <div class="border-b border-white w-4"></div>
+              </div>
+
+              <!-- 1. BASE RICE LAYER (0 to 50cm = 50% height) -->
+              <div class="w-full rice-pattern relative border-t border-amber-600/40 transition-all duration-300" style="height: 50%;">
+                <div class="absolute inset-0 bg-amber-900/10"></div>
+                <div class="absolute inset-x-0 bottom-1 flex justify-center">
+                  <span class="text-[10px] font-bold text-amber-950 bg-amber-300/80 px-1.5 py-0.5 rounded shadow">Gạo ban đầu (50cm)</span>
+                </div>
+              </div>
+
+              <!-- 2. DISPLACED RICE + CAKES LAYER (50cm to h_sau) -->
+              <div id="displaced-layer" class="w-full rice-displaced-pattern relative transition-all duration-300 flex items-center justify-center overflow-hidden border-t-2 border-amber-400" style="height: 15%;">
+                <div class="absolute inset-0 bg-orange-600/10 animate-pulse"></div>
+                
+                <!-- Floating Cakes Icons inside the displaced grain -->
+                <div id="cakes-floating-container" class="absolute inset-0 flex flex-wrap items-center justify-around p-1 opacity-80 pointer-events-none">
+                  <!-- Generated by JS -->
+                </div>
+
+                <div class="z-10 bg-amber-950/80 text-amber-300 text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border border-amber-500/40 shadow">
+                  Δh = <span id="layer-delta-h">15.0</span>cm
+                </div>
+              </div>
+
+              <!-- Dynamic level line marker for h_sau -->
+              <div id="h-after-line" class="absolute w-full border-t-2 border-red-500 z-30 flex items-center justify-end pr-1 pointer-events-none" style="bottom: 65%;">
+                <span class="text-[9px] bg-red-600 text-white font-mono px-1 rounded shadow">h_sau</span>
+              </div>
+
+              <!-- Initial 50cm dashed marker -->
+              <div class="absolute w-full border-t border-dashed border-sky-400 z-25 pointer-events-none" style="bottom: 50%;">
+                <span class="text-[8px] text-sky-300 ml-1">50cm</span>
+              </div>
+
+            </div>
+
+            <!-- Dimension indicators next to cylinder -->
+            <div class="h-96 flex flex-col justify-end text-xs space-y-4 w-28 pl-1">
+              <div class="bg-amber-500/10 border border-amber-500/30 p-2 rounded-xl text-left">
+                <div class="text-[10px] text-amber-400 font-semibold uppercase">Mức gạo sau</div>
+                <div class="text-base font-extrabold font-mono text-amber-300" id="stat-h-sau">65.0 cm</div>
+              </div>
+
+              <div class="bg-orange-500/10 border border-orange-500/30 p-2 rounded-xl text-left">
+                <div class="text-[10px] text-orange-400 font-semibold uppercase">Độ dâng Δh</div>
+                <div class="text-base font-extrabold font-mono text-orange-300" id="stat-delta-h">15.0 cm</div>
+              </div>
+
+              <div class="bg-emerald-500/10 border border-emerald-500/30 p-2 rounded-xl text-left">
+                <div class="text-[10px] text-emerald-400 font-semibold uppercase">Thể tích V</div>
+                <div class="text-sm font-extrabold font-mono text-emerald-300" id="stat-volume-v">4,137.35 cm³</div>
+                <div class="text-[10px] text-slate-400" id="stat-volume-liters">≈ 4.14 Lít</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Interactive Slider / Input for h_sau -->
+          <div class="mt-4 pt-4 border-t border-slate-700/80 space-y-3">
+            <div class="flex items-center justify-between text-xs">
+              <label for="input-h-sau" class="font-bold text-slate-300 flex items-center gap-1.5">
+                <i data-lucide="gauge" class="w-4 h-4 text-amber-400"></i>
+                Điều chỉnh mức gạo lúc sau ($h_{\text{sau}}$):
+              </label>
+              <div class="flex items-center gap-1">
+                <input type="number" id="input-h-sau-number" step="0.1" min="50" max="100" value="65.0" 
+                  class="w-20 px-2 py-1 bg-slate-900 border border-slate-600 rounded-lg text-right font-mono font-bold text-amber-300 focus:outline-none focus:border-amber-500 text-sm">
+                <span class="text-slate-400 font-mono text-xs">cm</span>
+              </div>
+            </div>
+
+            <input type="range" id="input-h-sau-slider" min="50" max="100" step="0.1" value="65.0" 
+              class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-amber-500">
+
+            <div class="flex justify-between text-[10px] font-mono text-slate-500">
+              <span>50cm (Chưa dâng)</span>
+              <span>75cm</span>
+              <span>100cm (Đầy ống)</span>
+            </div>
+
+            <!-- Overflow Warning Banner -->
+            <div id="overflow-alert" class="hidden p-2.5 rounded-xl bg-red-500/20 border border-red-500/40 text-red-300 text-xs flex items-center gap-2">
+              <i data-lucide="alert-triangle" class="w-4 h-4 text-red-400 flex-shrink-0"></i>
+              <span><strong>Cảnh báo tràn ống!</strong> Chiều cao sau khi lật vượt quá 100cm. Cần giảm số lượng hoặc kích thước bánh.</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Metric Summary Cards -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-slate-800/80 border border-slate-700/80 rounded-xl p-3">
+            <div class="text-[11px] text-slate-400 font-medium">Tổng khối lượng (10 bánh)</div>
+            <div class="text-lg font-bold font-mono text-white mt-1" id="stat-total-mass">3,200 g</div>
+            <div class="text-[10px] text-slate-500" id="stat-mass-kg">≈ 3.20 kg</div>
+          </div>
+
+          <div class="bg-slate-800/80 border border-slate-700/80 rounded-xl p-3">
+            <div class="text-[11px] text-slate-400 font-medium">Thể tích riêng (Độ nở)</div>
+            <div class="text-lg font-bold font-mono text-cyan-300 mt-1" id="stat-spec-volume">1.29 cm³/g</div>
+            <div class="text-[10px] text-slate-500">Specific Volume (v = V/M)</div>
+          </div>
+
+          <div class="bg-slate-800/80 border border-slate-700/80 rounded-xl p-3">
+            <div class="text-[11px] text-slate-400 font-medium">Khối lượng riêng trung bình</div>
+            <div class="text-lg font-bold font-mono text-purple-300 mt-1" id="stat-density">0.77 g/cm³</div>
+            <div class="text-[10px] text-slate-500">Bulk Density (ρ = M/V)</div>
+          </div>
+
+          <div class="bg-slate-800/80 border border-slate-700/80 rounded-xl p-3">
+            <div class="text-[11px] text-slate-400 font-medium">Sai lệch (Lý thuyết vs Thực)</div>
+            <div class="text-lg font-bold font-mono text-emerald-400 mt-1" id="stat-diff-percent">1.8%</div>
+            <div class="text-[10px] text-slate-500" id="stat-diff-desc">Độ khớp cao (Sai lệch < 5%)</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: 10-CAKE SPECIFICATION TABLE & SHAPE CONTROLS (7 cols) -->
+      <div class="lg:col-span-7 space-y-4">
+        
+        <div class="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-5 shadow-xl flex flex-col h-full">
+          
+          <!-- Table Toolbar -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-700">
+            <div>
+              <h2 class="text-base font-bold text-white flex items-center gap-2">
+                <i data-lucide="cake" class="w-4 h-4 text-amber-400"></i>
+                Bảng Thông Số 10 Chiếc Bánh (10 Cakes Specifications)
+              </h2>
+              <p class="text-xs text-slate-400 mt-0.5">
+                Nhập hình dạng, kích thước (cm) và khối lượng (g) cho từng chiếc bánh
+              </p>
+            </div>
+
+            <!-- Presets Dropdown -->
+            <div class="flex items-center gap-2">
+              <select id="preset-selector" class="text-xs bg-slate-900 border border-slate-700 text-slate-200 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-amber-500">
+                <option value="muffin">Mẫu: 10 Bánh Muffin / Cupcake</option>
+                <option value="bread">Mẫu: 10 Bánh Mì Sandwich (Hộp CN)</option>
+                <option value="bun">Mẫu: 10 Bánh Bao Tròn (Hình cầu)</option>
+                <option value="donut">Mẫu: 10 Bánh Donut Vòng (Hình xuyến)</option>
+                <option value="mixed" selected>Mẫu: 10 Bánh Hỗn Hợp</option>
+              </select>
+              <button id="btn-copy-first-to-all" title="Sao chép thông số bánh 1 cho toàn bộ 10 bánh" class="p-1.5 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg text-xs flex items-center gap-1 border border-slate-600">
+                <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline">Áp dụng cho 10 bánh</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- The 10-Cake Scrollable Table -->
+          <div class="overflow-x-auto my-3 flex-1">
+            <table class="w-full text-left text-xs text-slate-300">
+              <thead class="text-[11px] uppercase bg-slate-900/60 text-slate-400 font-bold border-b border-slate-700">
+                <tr>
+                  <th class="py-2.5 px-2 text-center w-8">#</th>
+                  <th class="py-2.5 px-2 w-24">Hình dạng</th>
+                  <th class="py-2.5 px-2">Kích thước (cm)</th>
+                  <th class="py-2.5 px-2 w-16 text-right">Khối lượng</th>
+                  <th class="py-2.5 px-2 w-20 text-right">Thể tích Vᵢ</th>
+                  <th class="py-2.5 px-2 w-16 text-right">Tỷ trọng</th>
+                </tr>
+              </thead>
+              <tbody id="cake-table-body" class="divide-y divide-slate-700/50 font-mono">
+                <!-- Dynamically populated rows 1 to 10 -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Bottom Totals & Sync Buttons -->
+          <div class="pt-3 border-t border-slate-700/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-3">
+              <div class="text-slate-400">
+                Tổng thể tích hình học: <span class="font-bold text-amber-300 font-mono" id="sum-geo-volume">4,120.0 cm³</span>
+              </div>
+              <div class="text-slate-500">|</div>
+              <div class="text-slate-400">
+                h_sau dự kiến: <span class="font-bold text-emerald-400 font-mono" id="predicted-h-sau">64.9 cm</span>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button id="btn-sync-prediction" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-bold flex items-center gap-1.5 transition shadow">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                <span>Đồng bộ h_sau dự đoán lên ống đong</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- FORMULA GUIDE & SCIENTIFIC NOTES ACCORDION -->
+    <div class="bg-slate-800/40 border border-slate-700/60 rounded-2xl p-5 no-print">
+      <h3 class="text-sm font-bold text-slate-200 flex items-center gap-2 mb-3">
+        <i data-lucide="book-open" class="w-4 h-4 text-amber-400"></i>
+        Cơ Sở Tính Toán & Công Thức Vật Lý (Displacement Physics & Formulas)
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-300 leading-relaxed">
+        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/40">
+          <div class="font-bold text-amber-400 mb-1">1. Tiết diện ống đong (Base Area)</div>
+          <p>Ống đong có bán kính $R = 9.37\text{ cm}$:</p>
+          <p class="font-mono text-amber-300 my-1">A = π × R² = π × (9.37)² ≈ 275.8234 cm²</p>
+          <p class="text-slate-400">Mỗi 1cm chiều cao dâng lên tương đương lượng thể tích chiếm chỗ là ~275.82 cm³ (~0.276 Lít).</p>
+        </div>
+
+        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/40">
+          <div class="font-bold text-orange-400 mb-1">2. Thể tích đo bằng hạt gạo (Displacement)</div>
+          <p>Mức ban đầu $h_0 = 50\text{ cm}$, mức sau khi lật ống là $h_{\text{sau}}$:</p>
+          <p class="font-mono text-orange-300 my-1">Δh = h_sau - 50 (cm)</p>
+          <p class="font-mono text-orange-300 my-1">V_thực = A × Δh = 275.8234 × (h_sau - 50)</p>
+          <p class="text-slate-400">Phương pháp chiếm chỗ hạt gạo (AACC 10-05.01) xác định thể tích tổng thể chính xác của bánh.</p>
+        </div>
+
+        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-700/40">
+          <div class="font-bold text-cyan-400 mb-1">3. Độ nở & Khối lượng riêng</div>
+          <p>Đánh giá chất lượng cấu trúc và độ phồng bánh:</p>
+          <p class="font-mono text-cyan-300 my-1">Thể tích riêng: v = V_tổng / M_tổng (cm³/g)</p>
+          <p class="font-mono text-cyan-300 my-1">Khối lượng riêng: ρ = M_tổng / V_thực (g/cm³)</p>
+          <p class="text-slate-400">Bánh càng xốp phồng thì thể tích riêng $v$ càng cao và tỷ trọng $\rho$ càng nhỏ.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- PRINT ONLY LAB REPORT LAYOUT -->
+  <div class="hidden print-only p-8 text-black bg-white max-w-4xl mx-auto">
+    <div class="border-b-2 border-black pb-4 mb-6">
+      <h1 class="text-2xl font-bold uppercase tracking-wider">Phiếu Báo Cáo Đo Thể Tích Bánh Bằng Phương Pháp Chiếm Chỗ Gạo</h1>
+      <p class="text-sm text-gray-600 mt-1">Cylinder Rice Displacement Laboratory Report | Test Session</p>
+    </div>
+
+    <div class="grid grid-cols-2 gap-4 text-xs mb-6 border p-4 rounded">
+      <div>
+        <p><strong>Thiết bị:</strong> Ống đong hình trụ thủy tinh chuẩn</p>
+        <p><strong>Chiều cao ống (H):</strong> 100.0 cm | <strong>Bán kính (R):</strong> 9.37 cm</p>
+        <p><strong>Diện tích tiết diện (A):</strong> 275.82 cm²</p>
+        <p><strong>Mức gạo ban đầu (h₀):</strong> 50.0 cm</p>
+      </div>
+      <div>
+        <p><strong>Mức gạo sau khi thả 10 bánh (h_sau):</strong> <span id="print-h-sau"></span> cm</p>
+        <p><strong>Độ dâng (Δh):</strong> <span id="print-delta-h"></span> cm</p>
+        <p><strong>Tổng thể tích đo thực nghiệm (V):</strong> <span id="print-volume"></span> cm³ (<span id="print-volume-l"></span> L)</p>
+        <p><strong>Tổng khối lượng (M):</strong> <span id="print-mass"></span> g | <strong>Tỷ trọng ρ:</strong> <span id="print-density"></span> g/cm³</p>
+      </div>
+    </div>
+
+    <h2 class="text-sm font-bold uppercase mb-2">Bảng Dữ Liệu Chi Tiết 10 Chiếc Bánh</h2>
+    <table class="w-full text-xs border-collapse border border-gray-400 mb-6">
+      <thead>
+        <tr class="bg-gray-100 border-b border-gray-400">
+          <th class="border border-gray-400 p-1 text-center">#</th>
+          <th class="border border-gray-400 p-1">Hình Dạng</th>
+          <th class="border border-gray-400 p-1">Thông Số Kích Thước (cm)</th>
+          <th class="border border-gray-400 p-1 text-right">Khối Lượng (g)</th>
+          <th class="border border-gray-400 p-1 text-right">Thể Tích Hình Học Vᵢ (cm³)</th>
+          <th class="border border-gray-400 p-1 text-right">Khối Lượng Riêng (g/cm³)</th>
+        </tr>
+      </thead>
+      <tbody id="print-table-body">
+        <!-- Rendered by JS -->
+      </tbody>
+    </table>
+
+    <div class="flex justify-between text-xs mt-12 pt-4 border-t border-gray-300">
+      <div class="text-center w-40">
+        <p class="font-bold">Người Thực Hiện Thí Nghiệm</p>
+        <p class="text-gray-400 italic mt-10">(Ký và ghi rõ họ tên)</p>
+      </div>
+      <div class="text-center w-40">
+        <p class="font-bold">Người Kiểm Tra / Giám Sát</p>
+        <p class="text-gray-400 italic mt-10">(Ký và ghi rõ họ tên)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    // CYLINDER CONSTANTS
+    const CYLINDER = {
+      H: 100.0,      // Total height: 100 cm
+      R: 9.37,       // Radius: 9.37 cm
+      h0: 50.0       // Initial rice height: 50 cm
+    };
+
+    // Calculate cross-sectional area A = pi * R^2
+    function getCylinderArea() {
+      return Math.PI * Math.pow(CYLINDER.R, 2);
+    }
+
+    // STATE
+    let hAfter = 65.0; // Current h_sau (cm)
+    let currentMode = 'experimental'; // 'experimental' | 'theoretical'
+
+    // Initial 10 Cake Items
+    let cakes = [
+      { id: 1, name: 'Bánh 1', shape: 'cuboid', dims: { l: 12, w: 8, h: 4 }, mass: 350 },
+      { id: 2, name: 'Bánh 2', shape: 'cuboid', dims: { l: 12, w: 8, h: 4 }, mass: 350 },
+      { id: 3, name: 'Bánh 3', shape: 'cylinder', dims: { d: 9, h: 6 }, mass: 320 },
+      { id: 4, name: 'Bánh 4', shape: 'cylinder', dims: { d: 9, h: 6 }, mass: 320 },
+      { id: 5, name: 'Bánh 5', shape: 'muffin', dims: { d1: 9, d2: 6.5, h: 7 }, mass: 310 },
+      { id: 6, name: 'Bánh 6', shape: 'muffin', dims: { d1: 9, d2: 6.5, h: 7 }, mass: 310 },
+      { id: 7, name: 'Bánh 7', shape: 'sphere', dims: { d: 8.5 }, mass: 300 },
+      { id: 8, name: 'Bánh 8', shape: 'sphere', dims: { d: 8.5 }, mass: 300 },
+      { id: 9, name: 'Bánh 9', shape: 'donut', dims: { dout: 11, din: 4, thick: 3.5 }, mass: 240 },
+      { id: 10, name: 'Bánh 10', shape: 'donut', dims: { dout: 11, din: 4, thick: 3.5 }, mass: 240 }
+    ];
+
+    // Presets definitions
+    const PRESETS = {
+      muffin: Array.from({ length: 10 }, (_, i) => ({
+        id: i + 1, name: `Muffin ${i + 1}`, shape: 'muffin', dims: { d1: 9.0, d2: 6.5, h: 7.0 }, mass: 310
+      })),
+      bread: Array.from({ length: 10 }, (_, i) => ({
+        id: i + 1, name: `Sandwich ${i + 1}`, shape: 'cuboid', dims: { l: 12.0, w: 8.5, h: 4.2 }, mass: 360
+      })),
+      bun: Array.from({ length: 10 }, (_, i) => ({
+        id: i + 1, name: `Bánh bao ${i + 1}`, shape: 'sphere', dims: { d: 9.2 }, mass: 330
+      })),
+      donut: Array.from({ length: 10 }, (_, i) => ({
+        id: i + 1, name: `Donut ${i + 1}`, shape: 'donut', dims: { dout: 11.5, din: 4.0, thick: 3.8 }, mass: 260
+      })),
+      mixed: [
+        { id: 1, name: 'Bánh 1', shape: 'cuboid', dims: { l: 12, w: 8, h: 4 }, mass: 350 },
+        { id: 2, name: 'Bánh 2', shape: 'cuboid', dims: { l: 12, w: 8, h: 4 }, mass: 350 },
+        { id: 3, name: 'Bánh 3', shape: 'cylinder', dims: { d: 9, h: 6 }, mass: 320 },
+        { id: 4, name: 'Bánh 4', shape: 'cylinder', dims: { d: 9, h: 6 }, mass: 320 },
+        { id: 5, name: 'Bánh 5', shape: 'muffin', dims: { d1: 9, d2: 6.5, h: 7 }, mass: 310 },
+        { id: 6, name: 'Bánh 6', shape: 'muffin', dims: { d1: 9, d2: 6.5, h: 7 }, mass: 310 },
+        { id: 7, name: 'Bánh 7', shape: 'sphere', dims: { d: 8.5 }, mass: 300 },
+        { id: 8, name: 'Bánh 8', shape: 'sphere', dims: { d: 8.5 }, mass: 300 },
+        { id: 9, name: 'Bánh 9', shape: 'donut', dims: { dout: 11, din: 4, thick: 3.5 }, mass: 240 },
+        { id: 10, name: 'Bánh 10', shape: 'donut', dims: { dout: 11, din: 4, thick: 3.5 }, mass: 240 }
+      ]
+    };
+
+    // Calculate individual cake volume from geometric dimensions
+    function calculateCakeVolume(cake) {
+      const d = cake.dims || {};
+      switch (cake.shape) {
+        case 'cuboid': {
+          const l = parseFloat(d.l) || 0;
+          const w = parseFloat(d.w) || 0;
+          const h = parseFloat(d.h) || 0;
+          return l * w * h;
+        }
+        case 'cylinder': {
+          const dia = parseFloat(d.d) || 0;
+          const h = parseFloat(d.h) || 0;
+          const r = dia / 2;
+          return Math.PI * Math.pow(r, 2) * h;
+        }
+        case 'sphere': {
+          const dia = parseFloat(d.d) || 0;
+          const r = dia / 2;
+          return (4 / 3) * Math.PI * Math.pow(r, 3);
+        }
+        case 'ellipsoid': {
+          const a = (parseFloat(d.a) || 0) / 2;
+          const b = (parseFloat(d.b) || 0) / 2;
+          const c = (parseFloat(d.c) || 0) / 2;
+          return (4 / 3) * Math.PI * a * b * c;
+        }
+        case 'muffin': {
+          // Truncated cone: V = (1/3) * pi * h * (r1^2 + r2^2 + r1*r2)
+          const r1 = (parseFloat(d.d1) || 0) / 2;
+          const r2 = (parseFloat(d.d2) || 0) / 2;
+          const h = parseFloat(d.h) || 0;
+          return (1 / 3) * Math.PI * h * (Math.pow(r1, 2) + Math.pow(r2, 2) + r1 * r2);
+        }
+        case 'donut': {
+          // Torus: Outer D and Inner D. Tube radius r = (D_out - D_in) / 4. Major R = (D_out + D_in) / 4.
+          const dOut = parseFloat(d.dout) || 0;
+          const dIn = parseFloat(d.din) || 0;
+          if (dOut <= dIn) return 0;
+          const rTube = (dOut - dIn) / 4;
+          const rMajor = (dOut + dIn) / 4;
+          return 2 * Math.pow(Math.PI, 2) * rMajor * Math.pow(rTube, 2);
+        }
+        case 'custom': {
+          return parseFloat(d.v) || 0;
+        }
+        default:
+          return 0;
+      }
+    }
+
+    // MAIN UPDATE ROUTINE
+    function updateAll() {
+      const A = getCylinderArea();
+      const deltaH = Math.max(0, hAfter - CYLINDER.h0);
+      const measuredVolume = A * deltaH; // V = A * delta_h in cm3
+      const measuredVolumeLiters = measuredVolume / 1000;
+
+      // 1. Calculate Geometric Totals
+      let totalGeoVolume = 0;
+      let totalMass = 0;
+
+      cakes.forEach(cake => {
+        const v = calculateCakeVolume(cake);
+        cake.calculatedVolume = v;
+        const m = parseFloat(cake.mass) || 0;
+        cake.calculatedDensity = v > 0 ? (m / v) : 0;
+        totalGeoVolume += v;
+        totalMass += m;
+      });
+
+      // Predicted h_sau from geometric volume: h = h0 + V / A
+      const predictedHAfter = CYLINDER.h0 + (totalGeoVolume / A);
+
+      // Check overflow
+      const isOverflow = hAfter > CYLINDER.H;
+      document.getElementById('overflow-alert').classList.toggle('hidden', !isOverflow);
+
+      // 2. Update Visual Cylinder
+      const visualHAfter = Math.min(100, Math.max(50, hAfter));
+      const displacedPct = Math.max(0, visualHAfter - 50); // percentage height (0 to 50%)
+
+      const displacedLayer = document.getElementById('displaced-layer');
+      displacedLayer.style.height = `${displacedPct}%`;
+      document.getElementById('layer-delta-h').textContent = deltaH.toFixed(1);
+
+      const hAfterLine = document.getElementById('h-after-line');
+      hAfterLine.style.bottom = `${visualHAfter}%`;
+      document.getElementById('marker-h-after-label').textContent = `${hAfter.toFixed(1)}cm`;
+
+      // Render floating cake shapes inside the displaced layer
+      renderFloatingCakes();
+
+      // 3. Update Metric Display Texts
+      document.getElementById('disp-A').textContent = `${A.toFixed(2)} cm²`;
+      document.getElementById('stat-h-sau').textContent = `${hAfter.toFixed(1)} cm`;
+      document.getElementById('stat-delta-h').textContent = `${deltaH.toFixed(1)} cm`;
+      document.getElementById('stat-volume-v').textContent = `${measuredVolume.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} cm³`;
+      document.getElementById('stat-volume-liters').textContent = `≈ ${measuredVolumeLiters.toFixed(2)} Lít`;
+
+      document.getElementById('stat-total-mass').textContent = `${totalMass.toLocaleString('en-US')} g`;
+      document.getElementById('stat-mass-kg').textContent = `≈ ${(totalMass / 1000).toFixed(2)} kg`;
+
+      const specVolume = totalMass > 0 ? (measuredVolume / totalMass) : 0;
+      document.getElementById('stat-spec-volume').textContent = `${specVolume.toFixed(2)} cm³/g`;
+
+      const avgDensity = measuredVolume > 0 ? (totalMass / measuredVolume) : 0;
+      document.getElementById('stat-density').textContent = `${avgDensity.toFixed(2)} g/cm³`;
+
+      // Compare Measured vs Geometric
+      const diffPercent = totalGeoVolume > 0 ? (Math.abs(measuredVolume - totalGeoVolume) / totalGeoVolume * 100) : 0;
+      const diffElem = document.getElementById('stat-diff-percent');
+      diffElem.textContent = `${diffPercent.toFixed(1)}%`;
+      if (diffPercent < 5) {
+        diffElem.className = 'text-lg font-bold font-mono text-emerald-400 mt-1';
+        document.getElementById('stat-diff-desc').textContent = 'Độ khớp cao (Sai lệch < 5%)';
+      } else if (diffPercent < 15) {
+        diffElem.className = 'text-lg font-bold font-mono text-amber-400 mt-1';
+        document.getElementById('stat-diff-desc').textContent = 'Sai lệch vừa phải (5% - 15%)';
+      } else {
+        diffElem.className = 'text-lg font-bold font-mono text-rose-400 mt-1';
+        document.getElementById('stat-diff-desc').textContent = 'Sai lệch lớn (> 15%)';
+      }
+
+      // Summary below table
+      document.getElementById('sum-geo-volume').textContent = `${totalGeoVolume.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} cm³`;
+      document.getElementById('predicted-h-sau').textContent = `${predictedHAfter.toFixed(1)} cm`;
+
+      // Inputs sync
+      document.getElementById('input-h-sau-number').value = hAfter.toFixed(1);
+      document.getElementById('input-h-sau-slider').value = hAfter.toFixed(1);
+
+      // Print elements sync
+      document.getElementById('print-h-sau').textContent = hAfter.toFixed(1);
+      document.getElementById('print-delta-h').textContent = deltaH.toFixed(1);
+      document.getElementById('print-volume').textContent = measuredVolume.toFixed(1);
+      document.getElementById('print-volume-l').textContent = measuredVolumeLiters.toFixed(2);
+      document.getElementById('print-mass').textContent = totalMass.toFixed(0);
+      document.getElementById('print-density').textContent = avgDensity.toFixed(2);
+    }
+
+    // Render floating cake icons
+    function renderFloatingCakes() {
+      const container = document.getElementById('cakes-floating-container');
+      container.innerHTML = '';
+      const icons = {
+        cuboid: '📦',
+        cylinder: '🥫',
+        sphere: '⚪',
+        muffin: '🧁',
+        donut: '🍩',
+        ellipsoid: '🥚',
+        custom: '🍰'
+      };
+
+      cakes.forEach(c => {
+        const span = document.createElement('span');
+        span.className = 'text-xs select-none transform hover:scale-125 transition';
+        span.textContent = icons[c.shape] || '🍰';
+        span.title = `${c.name}: ${c.shape} (${(c.calculatedVolume || 0).toFixed(0)} cm³)`;
+        container.appendChild(span);
+      });
+    }
+
+    // RENDER 10-CAKE TABLE
+    function renderCakeTable() {
+      const tbody = document.getElementById('cake-table-body');
+      const printBody = document.getElementById('print-table-body');
+      tbody.innerHTML = '';
+      printBody.innerHTML = '';
+
+      cakes.forEach((cake, index) => {
+        // Table row for App UI
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-700/30 transition';
+
+        // Dimension input template generator
+        const dimInputs = getDimensionInputsHTML(cake, index);
+
+        tr.innerHTML = `
+          <td class="py-2 px-2 text-center text-slate-400 font-bold">${index + 1}</td>
+          <td class="py-2 px-2">
+            <select data-index="${index}" class="cake-shape-select bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded px-1.5 py-1 w-full focus:outline-none focus:border-amber-500 font-sans">
+              <option value="cuboid" ${cake.shape === 'cuboid' ? 'selected' : ''}>Hộp chữ nhật</option>
+              <option value="cylinder" ${cake.shape === 'cylinder' ? 'selected' : ''}>Hình trụ</option>
+              <option value="muffin" ${cake.shape === 'muffin' ? 'selected' : ''}>Muffin (Nón cụt)</option>
+              <option value="sphere" ${cake.shape === 'sphere' ? 'selected' : ''}>Hình cầu</option>
+              <option value="donut" ${cake.shape === 'donut' ? 'selected' : ''}>Donut (Xuyến)</option>
+              <option value="ellipsoid" ${cake.shape === 'ellipsoid' ? 'selected' : ''}>Bầu dục (Elip)</option>
+              <option value="custom" ${cake.shape === 'custom' ? 'selected' : ''}>Tùy chỉnh</option>
+            </select>
+          </td>
+          <td class="py-2 px-2">
+            <div class="flex items-center gap-1.5 flex-wrap">
+              ${dimInputs}
+            </div>
+          </td>
+          <td class="py-2 px-2 text-right">
+            <input type="number" step="1" min="1" value="${cake.mass}" data-index="${index}" data-field="mass"
+              class="cake-mass-input w-16 px-1.5 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white focus:outline-none focus:border-amber-500 font-mono">
+          </td>
+          <td class="py-2 px-2 text-right font-bold text-amber-300">
+            ${(cake.calculatedVolume || 0).toFixed(1)}
+          </td>
+          <td class="py-2 px-2 text-right text-purple-300">
+            ${(cake.calculatedDensity || 0).toFixed(2)}
+          </td>
+        `;
+        tbody.appendChild(tr);
+
+        // Row for print layout
+        const printTr = document.createElement('tr');
+        printTr.className = 'border-b border-gray-300';
+        printTr.innerHTML = `
+          <td class="p-1 border border-gray-300 text-center font-bold">${index + 1}</td>
+          <td class="p-1 border border-gray-300 capitalize">${cake.shape}</td>
+          <td class="p-1 border border-gray-300 font-mono">${formatDimSummary(cake)}</td>
+          <td class="p-1 border border-gray-300 text-right font-mono">${cake.mass}</td>
+          <td class="p-1 border border-gray-300 text-right font-mono font-bold">${(cake.calculatedVolume || 0).toFixed(1)}</td>
+          <td class="p-1 border border-gray-300 text-right font-mono">${(cake.calculatedDensity || 0).toFixed(2)}</td>
+        `;
+        printBody.appendChild(printTr);
+      });
+
+      attachTableEventListeners();
+    }
+
+    function formatDimSummary(cake) {
+      const d = cake.dims || {};
+      if (cake.shape === 'cuboid') return `L:${d.l} W:${d.w} H:${d.h}`;
+      if (cake.shape === 'cylinder') return `D:${d.d} H:${d.h}`;
+      if (cake.shape === 'sphere') return `D:${d.d}`;
+      if (cake.shape === 'muffin') return `D1:${d.d1} D2:${d.d2} H:${d.h}`;
+      if (cake.shape === 'donut') return `D_out:${d.dout} D_in:${d.din} T:${d.thick}`;
+      if (cake.shape === 'ellipsoid') return `a:${d.a} b:${d.b} c:${d.c}`;
+      return `V:${d.v}`;
+    }
+
+    function getDimensionInputsHTML(cake, index) {
+      const d = cake.dims || {};
+      switch (cake.shape) {
+        case 'cuboid':
+          return `
+            <span class="text-[10px] text-slate-400">Dài:</span>
+            <input type="number" step="0.1" value="${d.l || 10}" data-index="${index}" data-dim="l" class="dim-input w-12 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+            <span class="text-[10px] text-slate-400">Rộng:</span>
+            <input type="number" step="0.1" value="${d.w || 8}" data-index="${index}" data-dim="w" class="dim-input w-12 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+            <span class="text-[10px] text-slate-400">Cao:</span>
+            <input type="number" step="0.1" value="${d.h || 4}" data-index="${index}" data-dim="h" class="dim-input w-12 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+          `;
+        case 'cylinder':
+          return `
+            <span class="text-[10px] text-slate-400">Đ.kính:</span>
+            <input type="number" step="0.1" value="${d.d || 8}" data-index="${index}" data-dim="d" class="dim-input w-14 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+            <span class="text-[10px] text-slate-400">Cao:</span>
+            <input type="number" step="0.1" value="${d.h || 5}" data-index="${index}" data-dim="h" class="dim-input w-14 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+          `;
+        case 'muffin':
+          return `
+            <span class="text-[10px] text-slate-400">ĐK trên:</span>
+            <input type="number" step="0.1" value="${d.d1 || 9}" data-index="${index}" data-dim="d1" class="dim-input w-12 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+            <span class="text-[10px] text-slate-400">ĐK đáy:</span>
+            <input type="number" step="0.1" value="${d.d2 || 6}" data-index="${index}" data-dim="d2" class="dim-input w-12 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+            <span class="text-[10px] text-slate-400">Cao:</span>
+            <input type="number" step="0.1" value="${d.h || 7}" data-index="${index}" data-dim="h" class="dim-input w-12 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+          `;
+        case 'sphere':
+          return `
+            <span class="text-[10px] text-slate-400">Đ.kính:</span>
+            <input type="number" step="0.1" value="${d.d || 8}" data-index="${index}" data-dim="d" class="dim-input w-16 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+          `;
+        case 'donut':
+          return `
+            <span class="text-[10px] text-slate-400">ĐK ngoài:</span>
+            <input type="number" step="0.1" value="${d.dout || 11}" data-index="${index}" data-dim="dout" class="dim-input w-12 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+            <span class="text-[10px] text-slate-400">ĐK lỗ:</span>
+            <input type="number" step="0.1" value="${d.din || 4}" data-index="${index}" data-dim="din" class="dim-input w-12 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+            <span class="text-[10px] text-slate-400">Dày:</span>
+            <input type="number" step="0.1" value="${d.thick || 3.5}" data-index="${index}" data-dim="thick" class="dim-input w-12 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+          `;
+        case 'ellipsoid':
+          return `
+            <span class="text-[10px] text-slate-400">a:</span>
+            <input type="number" step="0.1" value="${d.a || 12}" data-index="${index}" data-dim="a" class="dim-input w-12 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+            <span class="text-[10px] text-slate-400">b:</span>
+            <input type="number" step="0.1" value="${d.b || 8}" data-index="${index}" data-dim="b" class="dim-input w-12 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+            <span class="text-[10px] text-slate-400">c:</span>
+            <input type="number" step="0.1" value="${d.c || 5}" data-index="${index}" data-dim="c" class="dim-input w-12 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+          `;
+        case 'custom':
+          return `
+            <span class="text-[10px] text-slate-400">V (cm³):</span>
+            <input type="number" step="1" value="${d.v || 300}" data-index="${index}" data-dim="v" class="dim-input w-20 px-1 py-0.5 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white">
+          `;
+        default:
+          return '';
+      }
+    }
+
+    function attachTableEventListeners() {
+      // Shape change listener
+      document.querySelectorAll('.cake-shape-select').forEach(select => {
+        select.addEventListener('change', (e) => {
+          const index = parseInt(e.target.dataset.index);
+          const newShape = e.target.value;
+          cakes[index].shape = newShape;
+          // default dims for new shape
+          if (newShape === 'cuboid') cakes[index].dims = { l: 12, w: 8, h: 4 };
+          else if (newShape === 'cylinder') cakes[index].dims = { d: 9, h: 6 };
+          else if (newShape === 'muffin') cakes[index].dims = { d1: 9, d2: 6.5, h: 7 };
+          else if (newShape === 'sphere') cakes[index].dims = { d: 8.5 };
+          else if (newShape === 'donut') cakes[index].dims = { dout: 11, din: 4, thick: 3.5 };
+          else if (newShape === 'ellipsoid') cakes[index].dims = { a: 12, b: 8, c: 5 };
+          else if (newShape === 'custom') cakes[index].dims = { v: 350 };
+          
+          renderCakeTable();
+          updateAll();
+        });
+      });
+
+      // Dimension inputs listener
+      document.querySelectorAll('.dim-input').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const index = parseInt(e.target.dataset.index);
+          const dimKey = e.target.dataset.dim;
+          cakes[index].dims[dimKey] = parseFloat(e.target.value) || 0;
+          updateAll();
+          // Update table row volume & density without full re-render
+          const v = calculateCakeVolume(cakes[index]);
+          const m = parseFloat(cakes[index].mass) || 0;
+          const tr = e.target.closest('tr');
+          tr.children[4].textContent = v.toFixed(1);
+          tr.children[5].textContent = v > 0 ? (m / v).toFixed(2) : '0.00';
+        });
+      });
+
+      // Mass inputs listener
+      document.querySelectorAll('.cake-mass-input').forEach(input => {
+        input.addEventListener('input', (e) => {
+          const index = parseInt(e.target.dataset.index);
+          cakes[index].mass = parseFloat(e.target.value) || 0;
+          updateAll();
+          const v = calculateCakeVolume(cakes[index]);
+          const m = parseFloat(cakes[index].mass) || 0;
+          const tr = e.target.closest('tr');
+          tr.children[5].textContent = v > 0 ? (m / v).toFixed(2) : '0.00';
+        });
+      });
+    }
+
+    // INITIALIZATION & EVENT HANDLERS
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+
+      // Sliders & Number inputs
+      const slider = document.getElementById('input-h-sau-slider');
+      const numInput = document.getElementById('input-h-sau-number');
+
+      slider.addEventListener('input', (e) => {
+        hAfter = parseFloat(e.target.value);
+        numInput.value = hAfter.toFixed(1);
+        updateAll();
+      });
+
+      numInput.addEventListener('input', (e) => {
+        hAfter = parseFloat(e.target.value) || 50;
+        slider.value = Math.min(100, Math.max(50, hAfter));
+        updateAll();
+      });
+
+      // Mode buttons
+      const btnModeExp = document.getElementById('btn-mode-exp');
+      const btnModeTheo = document.getElementById('btn-mode-theo');
+      const modeBadge = document.getElementById('mode-status-badge');
+
+      btnModeExp.addEventListener('click', () => {
+        currentMode = 'experimental';
+        btnModeExp.className = 'p-3 rounded-xl border text-left transition flex items-start gap-3 bg-amber-500/10 border-amber-500 text-white';
+        btnModeTheo.className = 'p-3 rounded-xl border text-left transition flex items-start gap-3 bg-slate-800/80 border-slate-700 hover:border-slate-600 text-slate-300';
+        modeBadge.textContent = 'Chế độ 1: Đo thực nghiệm (Experimental)';
+        modeBadge.className = 'text-xs font-medium px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30';
+      });
+
+      btnModeTheo.addEventListener('click', () => {
+        currentMode = 'theoretical';
+        btnModeTheo.className = 'p-3 rounded-xl border text-left transition flex items-start gap-3 bg-indigo-500/10 border-indigo-500 text-white';
+        btnModeExp.className = 'p-3 rounded-xl border text-left transition flex items-start gap-3 bg-slate-800/80 border-slate-700 hover:border-slate-600 text-slate-300';
+        modeBadge.textContent = 'Chế độ 2: Dự đoán lý thuyết (Geometric)';
+        modeBadge.className = 'text-xs font-medium px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/30';
+        
+        // Auto sync predicted h_sau
+        const A = getCylinderArea();
+        let totalV = 0;
+        cakes.forEach(c => totalV += calculateCakeVolume(c));
+        hAfter = CYLINDER.h0 + (totalV / A);
+        updateAll();
+      });
+
+      // Sync button
+      document.getElementById('btn-sync-prediction').addEventListener('click', () => {
+        const A = getCylinderArea();
+        let totalV = 0;
+        cakes.forEach(c => totalV += calculateCakeVolume(c));
+        hAfter = CYLINDER.h0 + (totalV / A);
+        updateAll();
+      });
+
+      // Preset selector
+      document.getElementById('preset-selector').addEventListener('change', (e) => {
+        const pKey = e.target.value;
+        if (PRESETS[pKey]) {
+          cakes = JSON.parse(JSON.stringify(PRESETS[pKey]));
+          renderCakeTable();
+          updateAll();
+        }
+      });
+
+      // Copy first to all
+      document.getElementById('btn-copy-first-to-all').addEventListener('click', () => {
+        const first = cakes[0];
+        cakes = cakes.map((c, i) => ({
+          id: i + 1,
+          name: `Bánh ${i + 1}`,
+          shape: first.shape,
+          dims: JSON.parse(JSON.stringify(first.dims)),
+          mass: first.mass
+        }));
+        renderCakeTable();
+        updateAll();
+      });
+
+      // Export CSV
+      document.getElementById('btn-export-csv').addEventListener('click', exportToCSV);
+
+      // Print Report
+      document.getElementById('btn-print-report').addEventListener('click', () => {
+        window.print();
+      });
+
+      // Edit Cylinder Config modal/prompt
+      document.getElementById('btn-toggle-cylinder-config').addEventListener('click', () => {
+        const newR = prompt('Nhập bán kính đáy ống đong R (cm):', CYLINDER.R);
+        if (newR && !isNaN(parseFloat(newR))) {
+          CYLINDER.R = parseFloat(newR);
+          document.getElementById('disp-R').textContent = `${CYLINDER.R.toFixed(2)} cm`;
+          updateAll();
+        }
+      });
+
+      // First initial render
+      renderCakeTable();
+      updateAll();
+    });
+
+    // CSV EXPORT FUNCTION
+    function exportToCSV() {
+      const A = getCylinderArea();
+      const deltaH = Math.max(0, hAfter - CYLINDER.h0);
+      const measuredVolume = A * deltaH;
+
+      let csv = 'Cylinder Rice Displacement Experiment Report\n';
+      csv += `Cylinder Height (H),${CYLINDER.H},cm\n`;
+      csv += `Cylinder Radius (R),${CYLINDER.R},cm\n`;
+      csv += `Cylinder Base Area (A),${A.toFixed(4)},cm2\n`;
+      csv += `Initial Rice Height (h0),${CYLINDER.h0},cm\n`;
+      csv += `Final Height (h_sau),${hAfter.toFixed(2)},cm\n`;
+      csv += `Height Displacement (delta_h),${deltaH.toFixed(2)},cm\n`;
+      csv += `Displaced Volume (V),${measuredVolume.toFixed(2)},cm3\n\n`;
+
+      csv += 'Cake #,Name,Shape,Dimensions,Mass (g),Geometric Volume (cm3),Density (g/cm3)\n';
+      cakes.forEach((c, i) => {
+        csv += `${i + 1},${c.name},${c.shape},"${formatDimSummary(c)}",${c.mass},${(c.calculatedVolume || 0).toFixed(2)},${(c.calculatedDensity || 0).toFixed(2)}\n`;
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `cake_displacement_report_${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  </script>
+</body>
+</html>
