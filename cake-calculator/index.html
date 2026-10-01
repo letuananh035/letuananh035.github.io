@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <title>Cylinder Rice Displacement - Cake Volume Calculator (H=80cm, Green Mark=50cm)</title>
+  <meta name="version" content="2.5.0">
+  <meta name="build-date" content="2026-10-01">
+  <title>Cake Volume Displacement v2.5.0 - Đo Thể Tích Bánh Ống Đong (H=80cm, h0=30cm, Vạch 50cm)</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -81,12 +83,20 @@
           <i data-lucide="flask-conical" class="w-5 h-5 text-slate-950 font-bold"></i>
         </div>
         <div>
-          <h1 class="text-sm sm:text-lg font-bold text-white tracking-tight flex items-center gap-1.5 sm:gap-2">
-            Cake Volume Displacement
-            <span class="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Vạch Xanh 50cm</span>
-          </h1>
-          <p class="text-[11px] text-slate-400 hidden sm:block">
-            Ống đong H = 80cm, R = 9.37cm (A = 275.82cm²) | Gạo đầu = 30cm | Vạch chuẩn xanh = 50cm
+          <div class="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+            <h1 class="text-xs sm:text-lg font-bold text-white tracking-tight">
+              Cake Displacement
+            </h1>
+            <span class="text-[9px] sm:text-xs px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-medium">Vạch 50cm</span>
+            <button id="header-version-badge" class="text-[9px] sm:text-xs px-2 py-0.5 rounded-full bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 font-mono font-bold flex items-center gap-1 cursor-pointer transition active:scale-95" title="Bấm để xem lịch sử cập nhật phiên bản">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              v2.5.0
+            </button>
+          </div>
+          <p class="text-[10px] sm:text-[11px] text-slate-400">
+            <span class="text-amber-300 font-mono font-medium">h₀: 30cm</span> • 
+            <span class="text-emerald-400 font-mono font-medium">Vạch xanh: 50cm</span> • 
+            <span class="text-slate-400 font-mono">Bản cập nhật 01/10/2026</span>
           </p>
         </div>
       </div>
@@ -528,7 +538,44 @@
 
       </div>
 
-    </div>
+    <!-- APPLICATION VERSION & UPDATE STATUS FOOTER -->
+    <footer class="mt-8 pt-4 pb-4 border-t border-slate-800/80 text-xs text-slate-400 space-y-3 no-print">
+      <div class="bg-slate-900/60 border border-slate-800/80 rounded-2xl p-3.5 sm:p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-lg">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span class="px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 font-mono font-bold text-xs flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              Phiên bản: v2.5.0
+            </span>
+            <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-[11px] font-mono">
+              Build: 2026.10.01-1525
+            </span>
+            <span class="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[11px] font-medium flex items-center gap-1">
+              <i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i>
+              Bản mới nhất
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400">
+            Thông số chuẩn: Ống <strong class="text-white">H = 80cm</strong>, <strong class="text-white">R = 9.37cm</strong>, Mức gạo đầu <strong class="text-amber-300">h₀ = 30cm</strong>, Vạch chuẩn <strong class="text-emerald-400">50cm</strong> (Chênh lệch gốc: 20cm, V_gốc = 5,516.47 cm³).
+          </p>
+        </div>
+
+        <div class="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto">
+          <button id="btn-force-reload" class="w-full sm:w-auto px-3 py-2 bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-200 border border-slate-700 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition shadow">
+            <i data-lucide="rotate-cw" class="w-3.5 h-3.5 text-indigo-400"></i>
+            <span>Tải lại & Xóa cache</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="text-center text-[11px] text-slate-500 flex flex-wrap items-center justify-center gap-x-3 gap-y-1">
+        <span>© 2026 Cake Displacement Calculator</span>
+        <span>•</span>
+        <a href="https://github.com/letuananh035/cake-displacement-calculator" target="_blank" class="hover:text-slate-300 underline text-slate-400">GitHub Repository</a>
+        <span>•</span>
+        <span class="text-indigo-400 font-mono font-medium">Phiên bản v2.5.0</span>
+      </div>
+    </footer>
 
   </main>
 
@@ -556,7 +603,7 @@
   <div class="hidden print-only p-8 text-black bg-white max-w-4xl mx-auto">
     <div class="border-b-2 border-black pb-4 mb-6">
       <h1 class="text-2xl font-bold uppercase tracking-wider">Phiếu Báo Cáo Đo Thể Tích Bánh Bằng Phương Pháp Chiếm Chỗ Gạo</h1>
-      <p class="text-sm text-gray-600 mt-1">Cylinder Rice Displacement Laboratory Report | H=80cm, h0=30cm, Green Mark=50cm</p>
+      <p class="text-sm text-gray-600 mt-1">Cylinder Rice Displacement Laboratory Report | Phiên bản: v2.5.0 (Build 2026.10.01) | H=80cm, h0=30cm, Green Mark=50cm</p>
     </div>
 
     <div class="grid grid-cols-2 gap-4 text-xs mb-6 border p-4 rounded">
@@ -605,6 +652,9 @@
 
   <!-- JAVASCRIPT APPLICATION LOGIC -->
   <script>
+    const APP_VERSION = 'v2.5.0';
+    const BUILD_TIMESTAMP = '2026-10-01 15:25';
+
     // CYLINDER CONSTANTS PER NEW SPEC
     const CYLINDER = {
       H: 80.0,         // Cylinder Height: 80cm
@@ -1282,6 +1332,33 @@
         updateAll();
       });
 
+      // Version badge popup on click
+      const headerVerBadge = document.getElementById('header-version-badge');
+      if (headerVerBadge) {
+        headerVerBadge.addEventListener('click', () => {
+          alert(
+            `Phiên bản hiện tại: ${APP_VERSION}\n` +
+            `Thời gian cập nhật: ${BUILD_TIMESTAMP}\n\n` +
+            `Các cập nhật mới nhất:\n` +
+            `✓ Mức gạo ban đầu chuẩn: h0 = 30.0 cm\n` +
+            `✓ Vạch mốc chuẩn màu xanh: 50.0 cm\n` +
+            `✓ Khoảng cách từ mốc đầu đến vạch xanh: 20.0 cm\n` +
+            `✓ Thể tích cơ sở tương ứng: 5,516.47 cm³\n` +
+            `✓ Bổ sung hình dạng bánh Chỏm Cầu (Spherical Cap / Vòm)\n` +
+            `✓ Nút Tải lại & Xóa cache để luôn tải bản mới nhất`
+          );
+        });
+      }
+
+      // Force Reload / Cache Busting button
+      const btnForceReload = document.getElementById('btn-force-reload');
+      if (btnForceReload) {
+        btnForceReload.addEventListener('click', () => {
+          const baseUrl = window.location.origin + window.location.pathname;
+          window.location.href = `${baseUrl}?v=${Date.now()}`;
+        });
+      }
+
       renderCakeTable();
       updateAll();
     });
@@ -1293,6 +1370,7 @@
       const measuredVolume = A * totalRise;
 
       let csv = 'Cylinder Rice Displacement Experiment Report\n';
+      csv += `Application Version,${APP_VERSION},Build ${BUILD_TIMESTAMP}\n`;
       csv += `Cylinder Height (H),${CYLINDER.H},cm\n`;
       csv += `Cylinder Radius (R),${CYLINDER.R},cm\n`;
       csv += `Cylinder Base Area (A),${A.toFixed(4)},cm2\n`;
