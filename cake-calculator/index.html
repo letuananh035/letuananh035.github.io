@@ -86,7 +86,7 @@
             <span class="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Vạch Xanh 50cm</span>
           </h1>
           <p class="text-[11px] text-slate-400 hidden sm:block">
-            Ống đong H = 80cm, R = 9.37cm (A = 275.82cm²) | Gạo đầu = 35cm | Vạch chuẩn xanh = 50cm
+            Ống đong H = 80cm, R = 9.37cm (A = 275.82cm²) | Gạo đầu = 30cm | Vạch chuẩn xanh = 50cm
           </p>
         </div>
       </div>
@@ -182,7 +182,7 @@
           </div>
           <div class="bg-slate-950 p-2 rounded-lg border border-slate-800/80 text-center sm:text-left">
             <div class="text-slate-500 text-[10px]">Mức gạo đầu</div>
-            <div class="font-bold font-mono text-amber-400 text-xs sm:text-sm" id="disp-h0">35.0cm</div>
+            <div class="font-bold font-mono text-amber-400 text-xs sm:text-sm" id="disp-h0">30.0cm</div>
           </div>
           <div class="bg-slate-950 p-2 rounded-lg border border-emerald-500/40 text-center sm:text-left bg-emerald-950/20">
             <div class="text-emerald-400 font-semibold text-[10px]">Vạch xanh</div>
@@ -219,10 +219,9 @@
               <span>60cm</span>
               <span class="text-emerald-400 font-extrabold flex items-center justify-end gap-1">50cm <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span></span>
               <span>40cm</span>
-              <span class="text-amber-400 font-bold">35cm (gạo)</span>
-              <span>25cm</span>
-              <span>15cm</span>
-              <span>5cm</span>
+              <span class="text-amber-400 font-bold">30cm (gạo)</span>
+              <span>20cm</span>
+              <span>10cm</span>
               <span>0cm</span>
             </div>
 
@@ -245,15 +244,15 @@
                 <div class="border-b border-white w-2"></div>
               </div>
 
-              <!-- 1. BASE RICE LAYER (0 to 35cm: 35/80 = 43.75%) -->
-              <div class="w-full rice-pattern relative border-t border-amber-600/40 transition-all duration-300" style="height: 43.75%;">
+              <!-- 1. BASE RICE LAYER (0 to 30cm: 30/80 = 37.5%) -->
+              <div class="w-full rice-pattern relative border-t border-amber-600/40 transition-all duration-300" style="height: 37.5%;">
                 <div class="absolute inset-0 bg-amber-900/10"></div>
                 <div class="absolute inset-x-0 bottom-1 flex justify-center">
-                  <span class="text-[9px] sm:text-[10px] font-bold text-amber-950 bg-amber-300/90 px-1.5 py-0.5 rounded shadow">Gạo đầu (35cm)</span>
+                  <span class="text-[9px] sm:text-[10px] font-bold text-amber-950 bg-amber-300/90 px-1.5 py-0.5 rounded shadow">Gạo đầu (30cm)</span>
                 </div>
               </div>
 
-              <!-- 2. DISPLACED RICE + CAKES LAYER (35cm to h_sau) -->
+              <!-- 2. DISPLACED RICE + CAKES LAYER (30cm to h_sau) -->
               <div id="displaced-layer" class="w-full rice-displaced-pattern relative transition-all duration-300 flex items-center justify-center overflow-hidden border-t-2 border-orange-400" style="height: 25%;">
                 <div class="absolute inset-0 bg-orange-600/10 animate-pulse"></div>
                 
@@ -279,9 +278,9 @@
                 <span class="text-[8px] sm:text-[9px] bg-red-600 text-white font-mono px-1 rounded shadow" id="h-after-badge">h_sau: 55cm</span>
               </div>
 
-              <!-- 35cm dashed marker -->
-              <div class="absolute w-full border-t border-dashed border-amber-500/80 z-25 pointer-events-none" style="bottom: 43.75%;">
-                <span class="text-[8px] text-amber-300 ml-1">35cm</span>
+              <!-- 30cm dashed marker -->
+              <div class="absolute w-full border-t border-dashed border-amber-500/80 z-25 pointer-events-none" style="bottom: 37.5%;">
+                <span class="text-[8px] text-amber-300 ml-1">30cm</span>
               </div>
 
             </div>
@@ -339,22 +338,22 @@
                   Mức gạo sau ($h_{\text{sau}}$):
                 </label>
                 <div class="flex items-center gap-1">
-                  <input type="number" inputmode="decimal" id="input-h-sau-number" step="0.1" min="35" max="80" value="55.0" 
+                  <input type="number" inputmode="decimal" id="input-h-sau-number" step="0.1" min="30" max="80" value="55.0" 
                     class="w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded-lg text-right font-mono font-bold text-amber-300 focus:outline-none focus:border-amber-500 text-sm">
                   <span class="text-slate-400 font-mono text-xs">cm</span>
                 </div>
-                <div class="text-[9px] text-slate-400 mt-0.5">Từ đáy ống (35cm đến 80cm)</div>
+                <div class="text-[9px] text-slate-400 mt-0.5">Từ đáy ống (30cm đến 80cm)</div>
               </div>
             </div>
 
-            <!-- Big touch slider (35cm to 80cm) -->
+            <!-- Big touch slider (30cm to 80cm) -->
             <div class="py-1">
-              <input type="range" id="input-h-sau-slider" min="35" max="80" step="0.1" value="55.0" 
+              <input type="range" id="input-h-sau-slider" min="30" max="80" step="0.1" value="55.0" 
                 class="w-full h-3 bg-slate-800 rounded-lg appearance-none cursor-pointer">
             </div>
 
             <div class="flex justify-between text-[10px] font-mono text-slate-500">
-              <span>35cm (Gạo đầu)</span>
+              <span>30cm (Gạo đầu)</span>
               <span class="text-emerald-400 font-bold">50cm (Vạch xanh)</span>
               <span>80cm (Đầy ống)</span>
             </div>
@@ -500,27 +499,27 @@
               <div class="font-bold text-amber-400 mb-1">1. Thông số ống đong</div>
               <p>Bán kính $R = 9.37\text{ cm}$, Cao $H = 80\text{ cm}$:</p>
               <p class="font-mono text-amber-300 my-1">A = π × R² ≈ 275.8234 cm²</p>
-              <p class="text-slate-400 text-[11px]">Mức gạo ban đầu: <strong class="text-amber-300">h₀ = 35 cm</strong>.<br>Vạch chuẩn màu xanh: <strong class="text-emerald-400">h_xanh = 50 cm</strong>.</p>
+              <p class="text-slate-400 text-[11px]">Mức gạo ban đầu: <strong class="text-amber-300">h₀ = 30 cm</strong>.<br>Vạch chuẩn màu xanh: <strong class="text-emerald-400">h_xanh = 50 cm</strong>.</p>
             </div>
 
             <div class="bg-slate-950 p-3 rounded-xl border border-emerald-500/40">
               <div class="font-bold text-emerald-400 mb-1">2. Tính thể tích từ độ cao so với vạch xanh</div>
               <p>Gọi <span class="font-mono text-emerald-300">Δh_xanh</span> là khoảng cách từ mức gạo sau đến vạch xanh 50cm:</p>
               <p class="font-mono text-emerald-300 my-0.5">h_sau = 50 + Δh_xanh (cm)</p>
-              <p class="font-mono text-emerald-300 my-0.5">Δh_tổng = h_sau - 35 = 15 + Δh_xanh (cm)</p>
+              <p class="font-mono text-emerald-300 my-0.5">Δh_tổng = h_sau - 30 = 20 + Δh_xanh (cm)</p>
               <div class="p-2 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 font-mono my-1.5 font-bold text-[11px]">
-                V = A × (15 + Δh_xanh)<br>
-                = 4,137.35 + 275.8234 × Δh_xanh
+                V = A × (20 + Δh_xanh)<br>
+                = 5,516.47 + 275.8234 × Δh_xanh
               </div>
-              <p class="text-slate-400 text-[11px]">Trong đó 4,137.35 cm³ là thể tích từ 35cm đến vạch 50cm.</p>
+              <p class="text-slate-400 text-[11px]">Trong đó 5,516.47 cm³ là thể tích gạo từ 30cm dâng lên vạch 50cm.</p>
             </div>
 
             <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
               <div class="font-bold text-cyan-400 mb-1">3. Dự đoán ngược từ 10 bánh</div>
               <p>Khi biết kích thước các bánh $\implies V_{\text{geo}} = \sum V_i$:</p>
               <p class="font-mono text-cyan-300 my-1">Δh_tổng = V_geo / A</p>
-              <p class="font-mono text-cyan-300 my-1">Δh_xanh = (V_geo / A) - 15 (cm)</p>
-              <p class="font-mono text-cyan-300 my-1">h_sau = 35 + (V_geo / A) (cm)</p>
+              <p class="font-mono text-cyan-300 my-1">Δh_xanh = (V_geo / A) - 20 (cm)</p>
+              <p class="font-mono text-cyan-300 my-1">h_sau = 30 + (V_geo / A) (cm)</p>
               <p class="text-slate-400 text-[11px]">Giúp đối chiếu kiểm tra thực nghiệm và lý thuyết.</p>
             </div>
 
@@ -557,7 +556,7 @@
   <div class="hidden print-only p-8 text-black bg-white max-w-4xl mx-auto">
     <div class="border-b-2 border-black pb-4 mb-6">
       <h1 class="text-2xl font-bold uppercase tracking-wider">Phiếu Báo Cáo Đo Thể Tích Bánh Bằng Phương Pháp Chiếm Chỗ Gạo</h1>
-      <p class="text-sm text-gray-600 mt-1">Cylinder Rice Displacement Laboratory Report | H=80cm, h0=35cm, Green Mark=50cm</p>
+      <p class="text-sm text-gray-600 mt-1">Cylinder Rice Displacement Laboratory Report | H=80cm, h0=30cm, Green Mark=50cm</p>
     </div>
 
     <div class="grid grid-cols-2 gap-4 text-xs mb-6 border p-4 rounded">
@@ -565,13 +564,13 @@
         <p><strong>Thiết bị:</strong> Ống đong hình trụ chuẩn</p>
         <p><strong>Chiều cao ống (H):</strong> 80.0 cm | <strong>Bán kính (R):</strong> 9.37 cm</p>
         <p><strong>Diện tích đáy (A):</strong> 275.82 cm²</p>
-        <p><strong>Mức gạo ban đầu (h₀):</strong> 35.0 cm</p>
+        <p><strong>Mức gạo ban đầu (h₀):</strong> 30.0 cm</p>
         <p><strong>Vạch chuẩn xanh:</strong> 50.0 cm</p>
       </div>
       <div>
         <p><strong>Mức gạo đo được (h_sau):</strong> <span id="print-h-sau"></span> cm</p>
         <p><strong>Độ lệch so với vạch xanh:</strong> <span id="print-delta-green"></span> cm</p>
-        <p><strong>Tổng độ dâng (Δh_tổng = h_sau - 35):</strong> <span id="print-delta-h"></span> cm</p>
+        <p><strong>Tổng độ dâng (Δh_tổng = h_sau - 30):</strong> <span id="print-delta-h"></span> cm</p>
         <p><strong>Tổng thể tích đo thực nghiệm (V):</strong> <span id="print-volume"></span> cm³ (<span id="print-volume-l"></span> L)</p>
         <p><strong>Tổng khối lượng (M):</strong> <span id="print-mass"></span> g | <strong>Tỷ trọng ρ:</strong> <span id="print-density"></span> g/cm³</p>
       </div>
@@ -610,7 +609,7 @@
     const CYLINDER = {
       H: 80.0,         // Cylinder Height: 80cm
       R: 9.37,         // Radius: 9.37cm
-      h0: 35.0,        // Initial rice level: 35cm
+      h0: 30.0,        // Initial rice level: 30cm
       greenMark: 50.0  // Reference Green Benchmark line: 50cm
     };
 
@@ -727,9 +726,9 @@
     function updateAll() {
       const A = getCylinderArea();
       
-      // Calculate delta relative to green mark (50cm) and relative to initial rice (35cm)
+      // Calculate delta relative to green mark (50cm) and relative to initial rice (30cm)
       const deltaGreen = hAfter - CYLINDER.greenMark; // e.g. 55 - 50 = +5.0 cm
-      const totalRise = Math.max(0, hAfter - CYLINDER.h0); // e.g. 55 - 35 = 20.0 cm
+      const totalRise = Math.max(0, hAfter - CYLINDER.h0); // e.g. 55 - 30 = 25.0 cm
       const measuredVolume = A * totalRise; // V = A * totalRise in cm3
       const measuredVolumeLiters = measuredVolume / 1000;
 
@@ -756,9 +755,9 @@
 
       // Visual cylinder graphic (0 to 80cm scale)
       // Percentage relative to 80cm height:
-      const visualHAfter = Math.min(80, Math.max(35, hAfter));
+      const visualHAfter = Math.min(80, Math.max(CYLINDER.h0, hAfter));
       const visualHAfterPct = (visualHAfter / CYLINDER.H) * 100; // % from bottom
-      const initialRicePct = (CYLINDER.h0 / CYLINDER.H) * 100;   // 35/80 = 43.75%
+      const initialRicePct = (CYLINDER.h0 / CYLINDER.H) * 100;   // 30/80 = 37.5%
       const displacedLayerPct = Math.max(0, visualHAfterPct - initialRicePct);
 
       const displacedLayer = document.getElementById('displaced-layer');
