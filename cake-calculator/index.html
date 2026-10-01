@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="version" content="2.8.0">
+  <meta name="version" content="2.8.1">
   <meta name="build-date" content="2026-10-01">
-  <title>Cake Displacement v2.8.0 - 10 Bánh Chỏm Cầu & Thí Nghiệm Lật Ống Đong</title>
+  <title>Cake Displacement v2.8.1 - 10 Bánh Chỏm Cầu & Thí Nghiệm Lật Ống Đong</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -37,7 +37,7 @@
             <span class="text-[9px] sm:text-xs px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-medium">Vạch Xanh Chuẩn 50cm</span>
             <button id="header-version-badge" class="text-[9px] sm:text-xs px-2 py-0.5 rounded-full bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 font-mono font-bold flex items-center gap-1 cursor-pointer transition active:scale-95" title="Bấm để xem lịch sử cập nhật phiên bản">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              v2.8.0
+              v2.8.1
             </button>
           </div>
           <p class="text-[10px] sm:text-[11px] text-slate-400">
@@ -343,9 +343,9 @@
             <div class="grid grid-cols-5 gap-1.5 pt-1">
               <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="0">0 (Tại vạch)</button>
               <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="5">+5cm</button>
-              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95 font-bold border border-emerald-500/40" id="btn-quick-pred" data-delta="9.7">+9.7cm (LT)</button>
-              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="15">+15cm</button>
-              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="20">+20cm</button>
+              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95 border border-emerald-500/40" data-delta="6">+6cm (Đo)</button>
+              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95 font-bold border border-indigo-500/40" id="btn-quick-pred" data-delta="5.9">+5.9cm (LT)</button>
+              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="10">+10cm</button>
             </div>
 
             <!-- Overflow Warning Banner -->
@@ -377,7 +377,9 @@
 
             <div class="flex items-center gap-2 flex-wrap">
               <select id="preset-selector" class="text-xs bg-slate-950 border border-slate-700 text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-emerald-500 flex-1 sm:flex-none">
-                <option value="dome_standard" selected>Mẫu chuẩn: 10 Bánh Chỏm Cầu (D=100mm, h=50mm)</option>
+                <option value="gemini_dataset_2" selected>⭐ Thí nghiệm 2: 10 Bánh Chỏm Cầu (1629.3 cm³, Δh=5.9cm)</option>
+                <option value="gemini_dataset_1">🧪 Thí nghiệm 1: 10 Bánh Chỏm Cầu (1726.5 cm³, Δh=6.3cm)</option>
+                <option value="dome_standard">Mẫu chuẩn: 10 Bánh Chỏm Cầu (D=100mm, h=50mm)</option>
                 <option value="dome_varied">Mẫu thực tế: 10 Bánh Chỏm Cầu (D=98-105mm, h=48-52mm)</option>
                 <option value="dome_large">Mẫu lớn: 10 Bánh Chỏm Cầu (D=110mm, h=55mm)</option>
                 <option value="dome_small">Mẫu nhỏ: 10 Bánh Chỏm Cầu (D=85mm, h=45mm)</option>
@@ -614,7 +616,7 @@
         <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-4 sm:p-5 no-print">
           <h3 class="text-xs sm:text-sm font-bold text-slate-200 flex items-center gap-2 mb-2.5">
             <i data-lucide="book-open" class="w-4 h-4 text-emerald-400"></i>
-            Nguyên Lý Lật Ống Đong & Thể Tích Chỏm Cầu (Chuẩn Hóa v2.8.0)
+            Nguyên Lý Lật Ống Đong & Thể Tích Chỏm Cầu (Chuẩn Hóa v2.8.1)
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-slate-300 leading-relaxed">
             
@@ -659,10 +661,10 @@
           <div class="flex items-center gap-2 flex-wrap">
             <span class="px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 font-mono font-bold text-xs flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Phiên bản: v2.8.0
+              Phiên bản: v2.8.1
             </span>
             <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-[11px] font-mono">
-              Build: 2026.10.01-1640
+              Build: 2026.10.01-1720
             </span>
             <span class="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[11px] font-medium flex items-center gap-1">
               <i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i>
@@ -687,7 +689,7 @@
         <span>•</span>
         <a href="https://github.com/letuananh035/cake-displacement-calculator" target="_blank" class="hover:text-slate-300 underline text-slate-400">GitHub Repository</a>
         <span>•</span>
-        <span class="text-indigo-400 font-mono font-medium">Phiên bản v2.8.0</span>
+        <span class="text-indigo-400 font-mono font-medium">Phiên bản v2.8.1</span>
       </div>
     </footer>
 
@@ -717,7 +719,7 @@
   <div class="hidden print-only p-8 text-black bg-white max-w-4xl mx-auto">
     <div class="border-b-2 border-black pb-4 mb-6">
       <h1 class="text-2xl font-bold uppercase tracking-wider">Phiếu Báo Cáo Đo Thể Tích Bánh Bằng Phương Pháp Chiếm Chỗ Gạo</h1>
-      <p class="text-sm text-gray-600 mt-1">Cylinder Rice Displacement Laboratory Report | Phiên bản: v2.6.0 (Build 2026.10.01) | H=80cm, h0=30cm, Vạch xanh sau lật=30cm</p>
+      <p class="text-sm text-gray-600 mt-1">Cylinder Rice Displacement Laboratory Report | Phiên bản: v2.8.1 (Build 2026.10.01) | H=80cm, h0=30cm, Mốc vạch xanh khi lật=50.0cm</p>
     </div>
 
     <div class="grid grid-cols-2 gap-4 text-xs mb-6 border p-4 rounded">
@@ -726,11 +728,11 @@
         <p><strong>Chiều cao ống (H):</strong> 80.0 cm | <strong>Bán kính (R):</strong> 9.37 cm</p>
         <p><strong>Diện tích đáy (A):</strong> 275.82 cm²</p>
         <p><strong>Mức gạo ban đầu (h₀):</strong> 30.0 cm</p>
-        <p><strong>Vạch xanh gốc / sau khi lật:</strong> 50.0 cm (gốc) $\to$ <strong>30.0 cm (sau lật, trùng gạo đầu)</strong></p>
+        <p><strong>Mốc chuẩn vạch xanh sau khi lật:</strong> <strong class="text-emerald-700">50.0 cm</strong> (khi không có bánh)</p>
       </div>
       <div>
         <p><strong>Mức gạo sau khi lật (h_sau):</strong> <span id="print-h-sau"></span> cm</p>
-        <p><strong>Độ dâng so với vạch xanh (Δh_xanh = h_sau - 30):</strong> <span id="print-delta-green"></span> cm</p>
+        <p><strong>Độ dâng so với vạch xanh (Δh_xanh = h_sau - 50):</strong> <span id="print-delta-green"></span> cm</p>
         <p><strong>Tổng thể tích đo thực nghiệm (V = A × Δh_xanh):</strong> <span id="print-volume"></span> cm³ (<span id="print-volume-l"></span> L)</p>
         <p><strong>Tổng khối lượng (M):</strong> <span id="print-mass"></span> g | <strong>Tỷ trọng ρ:</strong> <span id="print-density"></span> g/cm³</p>
       </div>

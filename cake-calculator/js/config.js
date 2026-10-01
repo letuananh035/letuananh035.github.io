@@ -3,8 +3,8 @@
  * Cake Displacement Volume Calculator
  */
 
-const APP_VERSION = 'v2.8.0';
-const BUILD_TIMESTAMP = '2026-10-01 16:40';
+const APP_VERSION = 'v2.8.1';
+const BUILD_TIMESTAMP = '2026-10-01 17:20';
 
 // Cylindrical measuring vessel specifications
 const CYLINDER = {
@@ -16,26 +16,50 @@ const CYLINDER = {
 
 // Application State
 let isFlipped = true;         // Default to inverted state (the measuring state of the experiment)
-let hAfter = 59.7;            // Measured rice level after inverting with 10 cakes (cm), default ~9.7cm above 50cm
+let hAfter = 56.0;            // Measured rice level after inverting with 10 cakes (cm), default Δh = 6.0cm above 50cm mark as tested in Gemini chat!
 let currentMode = 'experimental';
 let currentMobileTab = 'visualizer';
 
-// 10 Cake Items (default 10 spherical caps, dimensions in mm, mass in g)
+// 10 Cake Items (default matching latest Gemini chat dataset: V=1629.3cm³, m=421.7g)
 let cakes = [
-  { id: 1, name: 'Bánh 1 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 },
-  { id: 2, name: 'Bánh 2 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 },
-  { id: 3, name: 'Bánh 3 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 105, h: 52 }, mass: 285 },
-  { id: 4, name: 'Bánh 4 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 105, h: 52 }, mass: 285 },
-  { id: 5, name: 'Bánh 5 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 98, h: 48 }, mass: 240 },
-  { id: 6, name: 'Bánh 6 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 98, h: 48 }, mass: 240 },
-  { id: 7, name: 'Bánh 7 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 102, h: 51 }, mass: 270 },
-  { id: 8, name: 'Bánh 8 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 102, h: 51 }, mass: 270 },
-  { id: 9, name: 'Bánh 9 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 },
-  { id: 10, name: 'Bánh 10 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 }
+  { id: 1, name: 'Bánh 1 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 81, h: 46 }, mass: 42.0 },
+  { id: 2, name: 'Bánh 2 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 83, h: 49 }, mass: 41.9 },
+  { id: 3, name: 'Bánh 3 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 78, h: 47 }, mass: 41.9 },
+  { id: 4, name: 'Bánh 4 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 80, h: 50 }, mass: 42.7 },
+  { id: 5, name: 'Bánh 5 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 83, h: 45 }, mass: 41.7 },
+  { id: 6, name: 'Bánh 6 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 78, h: 46 }, mass: 42.8 },
+  { id: 7, name: 'Bánh 7 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 78, h: 43 }, mass: 41.0 },
+  { id: 8, name: 'Bánh 8 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 78, h: 44 }, mass: 42.7 },
+  { id: 9, name: 'Bánh 9 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 78, h: 42 }, mass: 41.9 },
+  { id: 10, name: 'Bánh 10 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 78, h: 43 }, mass: 43.1 }
 ];
 
 // Presets for quick selection
 const PRESETS = {
+  gemini_dataset_2: [
+    { id: 1, name: 'Bánh 1 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 81, h: 46 }, mass: 42.0 },
+    { id: 2, name: 'Bánh 2 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 83, h: 49 }, mass: 41.9 },
+    { id: 3, name: 'Bánh 3 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 78, h: 47 }, mass: 41.9 },
+    { id: 4, name: 'Bánh 4 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 80, h: 50 }, mass: 42.7 },
+    { id: 5, name: 'Bánh 5 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 83, h: 45 }, mass: 41.7 },
+    { id: 6, name: 'Bánh 6 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 78, h: 46 }, mass: 42.8 },
+    { id: 7, name: 'Bánh 7 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 78, h: 43 }, mass: 41.0 },
+    { id: 8, name: 'Bánh 8 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 78, h: 44 }, mass: 42.7 },
+    { id: 9, name: 'Bánh 9 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 78, h: 42 }, mass: 41.9 },
+    { id: 10, name: 'Bánh 10 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 78, h: 43 }, mass: 43.1 }
+  ],
+  gemini_dataset_1: [
+    { id: 1, name: 'Bánh 1 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 80, h: 49 }, mass: 41.1 },
+    { id: 2, name: 'Bánh 2 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 80, h: 47 }, mass: 42.1 },
+    { id: 3, name: 'Bánh 3 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 84, h: 44 }, mass: 42.5 },
+    { id: 4, name: 'Bánh 4 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 82, h: 49 }, mass: 42.2 },
+    { id: 5, name: 'Bánh 5 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 80, h: 47 }, mass: 41.6 },
+    { id: 6, name: 'Bánh 6 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 79, h: 47 }, mass: 41.9 },
+    { id: 7, name: 'Bánh 7 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 80, h: 45 }, mass: 42.3 },
+    { id: 8, name: 'Bánh 8 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 83, h: 43 }, mass: 41.6 },
+    { id: 9, name: 'Bánh 9 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 81, h: 47 }, mass: 41.8 },
+    { id: 10, name: 'Bánh 10 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 81, h: 47 }, mass: 43.1 }
+  ],
   dome_standard: Array.from({ length: 10 }, (_, i) => ({
     id: i + 1, name: `Chỏm cầu ${i + 1}`, shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260
   })),
