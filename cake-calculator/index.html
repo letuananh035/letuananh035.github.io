@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="version" content="2.7.0">
   <meta name="build-date" content="2026-10-01">
-  <title>Cake Displacement v2.7.0 - 10 Bánh Chỏm Cầu & Thí Nghiệm Lật Ống Đong</title>
+  <title>Cake Displacement v2.7.1 - 10 Bánh Chỏm Cầu & Thí Nghiệm Lật Ống Đong</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -90,7 +90,7 @@
             <span class="text-[9px] sm:text-xs px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-medium">Vạch Xanh Chuẩn 50cm</span>
             <button id="header-version-badge" class="text-[9px] sm:text-xs px-2 py-0.5 rounded-full bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 font-mono font-bold flex items-center gap-1 cursor-pointer transition active:scale-95" title="Bấm để xem lịch sử cập nhật phiên bản">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              v2.7.0
+              v2.7.1
             </button>
           </div>
           <p class="text-[10px] sm:text-[11px] text-slate-400">
@@ -667,7 +667,7 @@
         <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-4 sm:p-5 no-print">
           <h3 class="text-xs sm:text-sm font-bold text-slate-200 flex items-center gap-2 mb-2.5">
             <i data-lucide="book-open" class="w-4 h-4 text-emerald-400"></i>
-            Nguyên Lý Lật Ống Đong & Thể Tích Chỏm Cầu (Chuẩn Hóa v2.7.0)
+            Nguyên Lý Lật Ống Đong & Thể Tích Chỏm Cầu (Chuẩn Hóa v2.7.1)
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-slate-300 leading-relaxed">
             
@@ -712,10 +712,10 @@
           <div class="flex items-center gap-2 flex-wrap">
             <span class="px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 font-mono font-bold text-xs flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Phiên bản: v2.7.0
+              Phiên bản: v2.7.1
             </span>
             <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-[11px] font-mono">
-              Build: 2026.10.01-1600
+              Build: 2026.10.01-1630
             </span>
             <span class="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[11px] font-medium flex items-center gap-1">
               <i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i>
@@ -740,7 +740,7 @@
         <span>•</span>
         <a href="https://github.com/letuananh035/cake-displacement-calculator" target="_blank" class="hover:text-slate-300 underline text-slate-400">GitHub Repository</a>
         <span>•</span>
-        <span class="text-indigo-400 font-mono font-medium">Phiên bản v2.7.0</span>
+        <span class="text-indigo-400 font-mono font-medium">Phiên bản v2.7.1</span>
       </div>
     </footer>
 
@@ -818,8 +818,8 @@
 
   <!-- JAVASCRIPT APPLICATION LOGIC -->
   <script>
-    const APP_VERSION = 'v2.7.0';
-    const BUILD_TIMESTAMP = '2026-10-01 16:00';
+    const APP_VERSION = 'v2.7.1';
+    const BUILD_TIMESTAMP = '2026-10-01 16:30';
 
     // CYLINDER CONSTANTS PER SPEC
     const CYLINDER = {
@@ -963,13 +963,24 @@
       let totalGeoVolume = 0;
       let totalMass = 0;
 
-      cakes.forEach(cake => {
+      cakes.forEach((cake, index) => {
         const v = calculateCakeVolume(cake);
         cake.calculatedVolume = v;
         const m = parseFloat(cake.mass) || 0;
         cake.calculatedDensity = v > 0 ? (m / v) : 0;
         totalGeoVolume += v;
         totalMass += m;
+
+        // Dynamic sync to visible row and mobile card without re-rendering inputs
+        const dVol = document.querySelector(`[data-cake-vol="${index}"]`);
+        if (dVol) dVol.textContent = v.toFixed(1);
+        const dDens = document.querySelector(`[data-cake-density="${index}"]`);
+        if (dDens) dDens.textContent = cake.calculatedDensity.toFixed(2);
+
+        const mVol = document.querySelector(`[data-mobile-cake-vol="${index}"]`);
+        if (mVol) mVol.textContent = `V: ${v.toFixed(1)} cm³`;
+        const mDens = document.querySelector(`[data-mobile-cake-density="${index}"]`);
+        if (mDens) mDens.textContent = `ρ: ${cake.calculatedDensity.toFixed(2)} g/cm³`;
       });
 
       // Predicted rise from 10 cakes
@@ -1256,10 +1267,10 @@
             <input type="number" inputmode="decimal" step="1" min="1" value="${cake.mass}" data-index="${index}" data-field="mass"
               class="cake-mass-input w-16 px-1.5 py-1 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white focus:outline-none focus:border-emerald-500 font-mono">
           </td>
-          <td class="py-2 px-2 text-right font-bold text-amber-300">
+          <td data-cake-vol="${index}" class="py-2 px-2 text-right font-bold text-amber-300">
             ${(cake.calculatedVolume || 0).toFixed(1)}
           </td>
-          <td class="py-2 px-2 text-right text-purple-300">
+          <td data-cake-density="${index}" class="py-2 px-2 text-right text-purple-300">
             ${(cake.calculatedDensity || 0).toFixed(2)}
           </td>
         `;
@@ -1303,8 +1314,8 @@
               <span class="text-slate-500 text-[10px]">g</span>
             </div>
             <div class="text-right">
-              <div class="text-amber-300 font-bold font-mono text-xs">V: ${(cake.calculatedVolume || 0).toFixed(1)} cm³</div>
-              <div class="text-purple-300 text-[10px] font-mono">ρ: ${(cake.calculatedDensity || 0).toFixed(2)} g/cm³</div>
+              <div data-mobile-cake-vol="${index}" class="text-amber-300 font-bold font-mono text-xs">V: ${(cake.calculatedVolume || 0).toFixed(1)} cm³</div>
+              <div data-mobile-cake-density="${index}" class="text-purple-300 text-[10px] font-mono">ρ: ${(cake.calculatedDensity || 0).toFixed(2)} g/cm³</div>
             </div>
           </div>
         `;
@@ -1425,20 +1436,6 @@
               <span class="text-[10px] text-slate-500">a:</span><input type="number" inputmode="decimal" step="1" value="${d.a || 130}" data-index="${index}" data-dim="a" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
               <span class="text-[10px] text-slate-500">b:</span><input type="number" inputmode="decimal" step="1" value="${d.b || 90}" data-index="${index}" data-dim="b" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
               <span class="text-[10px] text-slate-500">c:</span><input type="number" inputmode="decimal" step="1" value="${d.c || 60}" data-index="${index}" data-dim="c" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
-            `;
-          case 'custom':
-            return `
-              <span class="text-[10px] text-slate-500">V:</span><input type="number" inputmode="decimal" step="1" value="${d.v || 450}" data-index="${index}" data-dim="v" class="dim-input w-20 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
-            `;
-        }
-      }
-              <span class="text-[10px] text-slate-500">T:</span><input type="number" inputmode="decimal" step="0.1" value="${d.thick || 4}" data-index="${index}" data-dim="thick" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
-            `;
-          case 'ellipsoid':
-            return `
-              <span class="text-[10px] text-slate-500">a:</span><input type="number" inputmode="decimal" step="0.1" value="${d.a || 13}" data-index="${index}" data-dim="a" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
-              <span class="text-[10px] text-slate-500">b:</span><input type="number" inputmode="decimal" step="0.1" value="${d.b || 9}" data-index="${index}" data-dim="b" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
-              <span class="text-[10px] text-slate-500">c:</span><input type="number" inputmode="decimal" step="0.1" value="${d.c || 6}" data-index="${index}" data-dim="c" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
             `;
           case 'custom':
             return `
