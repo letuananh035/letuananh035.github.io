@@ -398,6 +398,7 @@
               <select id="preset-selector" class="text-xs bg-slate-950 border border-slate-700 text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-emerald-500 flex-1 sm:flex-none">
                 <option value="muffin">Mẫu: 10 Bánh Muffin / Cupcake</option>
                 <option value="bread">Mẫu: 10 Bánh Mì Sandwich (Hộp CN)</option>
+                <option value="dome">Mẫu: 10 Bánh Chỏm Cầu (Dome / Vòm)</option>
                 <option value="bun">Mẫu: 10 Bánh Bao Tròn (Hình cầu)</option>
                 <option value="donut">Mẫu: 10 Bánh Donut Vòng (Hình xuyến)</option>
                 <option value="mixed" selected>Mẫu: 10 Bánh Hỗn Hợp</option>
@@ -649,13 +650,16 @@
       donut: Array.from({ length: 10 }, (_, i) => ({
         id: i + 1, name: `Donut ${i + 1}`, shape: 'donut', dims: { dout: 12.5, din: 4.5, thick: 4.2 }, mass: 290
       })),
+      dome: Array.from({ length: 10 }, (_, i) => ({
+        id: i + 1, name: `Chỏm cầu ${i + 1}`, shape: 'spherical_cap', dims: { d: 11.0, h: 5.5 }, mass: 300
+      })),
       mixed: [
         { id: 1, name: 'Bánh 1', shape: 'cuboid', dims: { l: 12, w: 9, h: 5 }, mass: 350 },
         { id: 2, name: 'Bánh 2', shape: 'cuboid', dims: { l: 12, w: 9, h: 5 }, mass: 350 },
         { id: 3, name: 'Bánh 3', shape: 'cylinder', dims: { d: 10, h: 7 }, mass: 340 },
         { id: 4, name: 'Bánh 4', shape: 'cylinder', dims: { d: 10, h: 7 }, mass: 340 },
-        { id: 5, name: 'Bánh 5', shape: 'muffin', dims: { d1: 10, d2: 7, h: 8 }, mass: 320 },
-        { id: 6, name: 'Bánh 6', shape: 'muffin', dims: { d1: 10, d2: 7, h: 8 }, mass: 320 },
+        { id: 5, name: 'Bánh 5', shape: 'spherical_cap', dims: { d: 11, h: 5.5 }, mass: 300 },
+        { id: 6, name: 'Bánh 6', shape: 'spherical_cap', dims: { d: 11, h: 5.5 }, mass: 300 },
         { id: 7, name: 'Bánh 7', shape: 'sphere', dims: { d: 10 }, mass: 310 },
         { id: 8, name: 'Bánh 8', shape: 'sphere', dims: { d: 10 }, mass: 310 },
         { id: 9, name: 'Bánh 9', shape: 'donut', dims: { dout: 12, din: 4.5, thick: 4 }, mass: 280 },
@@ -682,6 +686,15 @@
           const dia = parseFloat(d.d) || 0;
           const r = dia / 2;
           return (4 / 3) * Math.PI * Math.pow(r, 3);
+        }
+        case 'spherical_cap': {
+          // Spherical cap (Chỏm cầu):
+          // Base diameter d -> base radius a = d / 2, height h
+          // V = (1/6) * pi * h * (3 * a^2 + h^2)
+          const dia = parseFloat(d.d) || 0;
+          const h = parseFloat(d.h) || 0;
+          const a = dia / 2;
+          return (1 / 6) * Math.PI * h * (3 * Math.pow(a, 2) + Math.pow(h, 2));
         }
         case 'ellipsoid': {
           const a = (parseFloat(d.a) || 0) / 2;
@@ -831,7 +844,7 @@
     function renderFloatingCakes() {
       const container = document.getElementById('cakes-floating-container');
       container.innerHTML = '';
-      const icons = { cuboid: '📦', cylinder: '🥫', sphere: '⚪', muffin: '🧁', donut: '🍩', ellipsoid: '🥚', custom: '🍰' };
+      const icons = { cuboid: '📦', cylinder: '🥫', sphere: '⚪', spherical_cap: '🥣', muffin: '🧁', donut: '🍩', ellipsoid: '🥚', custom: '🍰' };
       cakes.forEach(c => {
         const span = document.createElement('span');
         span.className = 'text-[11px] select-none';
@@ -862,6 +875,7 @@
             <select data-index="${index}" class="cake-shape-select bg-slate-950 border border-slate-700 text-slate-200 text-xs rounded px-1.5 py-1 w-full focus:outline-none focus:border-emerald-500 font-sans">
               <option value="cuboid" ${cake.shape === 'cuboid' ? 'selected' : ''}>Hộp chữ nhật</option>
               <option value="cylinder" ${cake.shape === 'cylinder' ? 'selected' : ''}>Hình trụ</option>
+              <option value="spherical_cap" ${cake.shape === 'spherical_cap' ? 'selected' : ''}>Chỏm cầu (Vòm)</option>
               <option value="muffin" ${cake.shape === 'muffin' ? 'selected' : ''}>Muffin (Nón cụt)</option>
               <option value="sphere" ${cake.shape === 'sphere' ? 'selected' : ''}>Hình cầu</option>
               <option value="donut" ${cake.shape === 'donut' ? 'selected' : ''}>Donut (Xuyến)</option>
@@ -899,6 +913,7 @@
             <select data-index="${index}" class="cake-shape-select bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg px-2 py-1 focus:outline-none focus:border-emerald-500">
               <option value="cuboid" ${cake.shape === 'cuboid' ? 'selected' : ''}>📦 Hộp CN</option>
               <option value="cylinder" ${cake.shape === 'cylinder' ? 'selected' : ''}>🥫 Hình trụ</option>
+              <option value="spherical_cap" ${cake.shape === 'spherical_cap' ? 'selected' : ''}>🥣 Chỏm cầu</option>
               <option value="muffin" ${cake.shape === 'muffin' ? 'selected' : ''}>🧁 Muffin</option>
               <option value="sphere" ${cake.shape === 'sphere' ? 'selected' : ''}>⚪ Hình cầu</option>
               <option value="donut" ${cake.shape === 'donut' ? 'selected' : ''}>🍩 Donut</option>
@@ -950,6 +965,7 @@
       const d = cake.dims || {};
       if (cake.shape === 'cuboid') return `L:${d.l} W:${d.w} H:${d.h}`;
       if (cake.shape === 'cylinder') return `D:${d.d} H:${d.h}`;
+      if (cake.shape === 'spherical_cap') return `D:${d.d} H:${d.h}`;
       if (cake.shape === 'sphere') return `D:${d.d}`;
       if (cake.shape === 'muffin') return `D1:${d.d1} D2:${d.d2} H:${d.h}`;
       if (cake.shape === 'donut') return `D_out:${d.dout} D_in:${d.din} T:${d.thick}`;
@@ -971,6 +987,11 @@
             return `
               <div class="col-span-1"><span class="text-[10px] text-slate-500">Đ.kính</span><input type="number" inputmode="decimal" step="0.1" value="${d.d || 10}" data-index="${index}" data-dim="d" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
               <div class="col-span-2"><span class="text-[10px] text-slate-500">Cao</span><input type="number" inputmode="decimal" step="0.1" value="${d.h || 7}" data-index="${index}" data-dim="h" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+            `;
+          case 'spherical_cap':
+            return `
+              <div class="col-span-1"><span class="text-[10px] text-slate-500">ĐK đáy (D)</span><input type="number" inputmode="decimal" step="0.1" value="${d.d || 11}" data-index="${index}" data-dim="d" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div class="col-span-2"><span class="text-[10px] text-slate-500">Chiều cao (h)</span><input type="number" inputmode="decimal" step="0.1" value="${d.h || 5.5}" data-index="${index}" data-dim="h" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
             `;
           case 'muffin':
             return `
@@ -1012,6 +1033,11 @@
               <span class="text-[10px] text-slate-500">D:</span><input type="number" inputmode="decimal" step="0.1" value="${d.d || 10}" data-index="${index}" data-dim="d" class="dim-input w-14 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
               <span class="text-[10px] text-slate-500">H:</span><input type="number" inputmode="decimal" step="0.1" value="${d.h || 7}" data-index="${index}" data-dim="h" class="dim-input w-14 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
             `;
+          case 'spherical_cap':
+            return `
+              <span class="text-[10px] text-slate-500">ĐK đáy:</span><input type="number" inputmode="decimal" step="0.1" value="${d.d || 11}" data-index="${index}" data-dim="d" class="dim-input w-14 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">Cao:</span><input type="number" inputmode="decimal" step="0.1" value="${d.h || 5.5}" data-index="${index}" data-dim="h" class="dim-input w-14 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+            `;
           case 'muffin':
             return `
               <span class="text-[10px] text-slate-500">D1:</span><input type="number" inputmode="decimal" step="0.1" value="${d.d1 || 10}" data-index="${index}" data-dim="d1" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
@@ -1051,6 +1077,7 @@
           cakes[index].shape = newShape;
           if (newShape === 'cuboid') cakes[index].dims = { l: 12, w: 9, h: 5 };
           else if (newShape === 'cylinder') cakes[index].dims = { d: 10, h: 7 };
+          else if (newShape === 'spherical_cap') cakes[index].dims = { d: 11, h: 5.5 };
           else if (newShape === 'muffin') cakes[index].dims = { d1: 10, d2: 7, h: 8 };
           else if (newShape === 'sphere') cakes[index].dims = { d: 10 };
           else if (newShape === 'donut') cakes[index].dims = { dout: 12, din: 4.5, thick: 4 };
