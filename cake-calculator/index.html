@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="version" content="2.5.0">
+  <meta name="version" content="2.6.0">
   <meta name="build-date" content="2026-10-01">
-  <title>Cake Volume Displacement v2.5.0 - Đo Thể Tích Bánh Ống Đong (H=80cm, h0=30cm, Vạch 50cm)</title>
+  <title>Cake Volume Displacement v2.6.0 - Lật Ngược Ống 180° (H=80cm, h0=30cm, Vạch Xanh Sau Lật=30cm)</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -87,16 +87,16 @@
             <h1 class="text-xs sm:text-lg font-bold text-white tracking-tight">
               Cake Displacement
             </h1>
-            <span class="text-[9px] sm:text-xs px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-medium">Vạch 50cm</span>
+            <span class="text-[9px] sm:text-xs px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-medium">Vạch Sau Lật 30cm</span>
             <button id="header-version-badge" class="text-[9px] sm:text-xs px-2 py-0.5 rounded-full bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 font-mono font-bold flex items-center gap-1 cursor-pointer transition active:scale-95" title="Bấm để xem lịch sử cập nhật phiên bản">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              v2.5.0
+              v2.6.0
             </button>
           </div>
           <p class="text-[10px] sm:text-[11px] text-slate-400">
             <span class="text-amber-300 font-mono font-medium">h₀: 30cm</span> • 
-            <span class="text-emerald-400 font-mono font-medium">Vạch xanh: 50cm</span> • 
-            <span class="text-slate-400 font-mono">Bản cập nhật 01/10/2026</span>
+            <span class="text-emerald-400 font-mono font-medium">Vạch xanh sau lật: 30cm (gốc 50cm)</span> • 
+            <span class="text-indigo-400 font-medium">Lật ống 180°</span>
           </p>
         </div>
       </div>
@@ -195,8 +195,8 @@
             <div class="font-bold font-mono text-amber-400 text-xs sm:text-sm" id="disp-h0">30.0cm</div>
           </div>
           <div class="bg-slate-950 p-2 rounded-lg border border-emerald-500/40 text-center sm:text-left bg-emerald-950/20">
-            <div class="text-emerald-400 font-semibold text-[10px]">Vạch xanh</div>
-            <div class="font-bold font-mono text-emerald-300 text-xs sm:text-sm" id="disp-green">50.0cm</div>
+            <div class="text-emerald-400 font-semibold text-[10px]">Vạch xanh sau lật</div>
+            <div class="font-bold font-mono text-emerald-300 text-xs sm:text-sm" id="disp-green">30.0cm</div>
           </div>
         </div>
       </div>
@@ -211,32 +211,51 @@
         
         <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl relative overflow-hidden">
           
-          <div class="flex items-center justify-between mb-3">
-            <h2 class="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
+          <div class="flex items-center justify-between mb-2">
+            <h2 class="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5 sm:gap-2">
               <i data-lucide="eye" class="w-4 h-4 text-emerald-400"></i>
-              Mô Phỏng Ống Đong 80cm & Vạch Xanh
+              Mô Phỏng Ống Đong & Lật Ống 180°
             </h2>
-            <span class="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">Tỷ lệ 0-80cm</span>
+            <!-- NÚT LẬT NGƯỢC ỐNG ĐONG -->
+            <button id="btn-flip-cylinder" class="px-2.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition active:scale-95 shadow bg-indigo-600 hover:bg-indigo-500 text-white border border-indigo-400/30" title="Bấm để xoay lật ống 180 độ">
+              <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
+              <span id="flip-btn-text">Lật ngược ống (180°)</span>
+            </button>
+          </div>
+
+          <!-- BANNER GIẢI THÍCH TRẠNG THÁI LẬT ỐNG -->
+          <div id="flip-status-banner" class="mb-3 p-2 sm:p-2.5 rounded-xl bg-indigo-950/40 border border-indigo-500/30 text-[11px] text-indigo-200 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1.5">
+              <span id="flip-badge" class="px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-emerald-500 text-slate-950">
+                ĐÃ LẬT 180°
+              </span>
+              <span id="flip-banner-desc">
+                Vạch xanh ở <strong>30cm</strong> (= mức gạo đầu). Đo chiều cao dâng trên vạch xanh!
+              </span>
+            </div>
+            <button id="btn-quick-flip-toggle" class="text-[10px] font-bold text-emerald-400 hover:text-emerald-300 underline flex-shrink-0">
+              Xem lúc chưa lật
+            </button>
           </div>
 
           <!-- The Visual Cylinder Graphic Display -->
           <div class="flex items-center justify-center gap-3 sm:gap-4 py-1">
             
             <!-- Scale Ruler (0 to 80cm) -->
-            <div class="h-80 sm:h-96 flex flex-col justify-between text-[10px] font-mono text-slate-400 py-1 text-right w-12 select-none flex-shrink-0">
+            <div id="scale-ruler" class="h-80 sm:h-96 flex flex-col justify-between text-[10px] font-mono text-slate-400 py-1 text-right w-14 select-none flex-shrink-0">
               <span class="font-bold text-red-400">80cm (H)</span>
               <span>70cm</span>
               <span>60cm</span>
-              <span class="text-emerald-400 font-extrabold flex items-center justify-end gap-1">50cm <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span></span>
+              <span>50cm</span>
               <span>40cm</span>
-              <span class="text-amber-400 font-bold">30cm (gạo)</span>
+              <span class="text-emerald-400 font-extrabold flex items-center justify-end gap-1">30cm <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span></span>
               <span>20cm</span>
               <span>10cm</span>
-              <span>0cm</span>
+              <span>0cm (Đáy)</span>
             </div>
 
-            <!-- SVG Cylinder Container (Height represents 80cm) -->
-            <div class="relative w-36 sm:w-44 h-80 sm:h-96 bg-slate-950 border-2 border-slate-700 rounded-b-2xl rounded-t-lg shadow-inner overflow-hidden flex flex-col-reverse flex-shrink-0">
+            <!-- SVG Cylinder Container with 3D transition -->
+            <div id="cylinder-visual-wrapper" class="relative w-36 sm:w-44 h-80 sm:h-96 bg-slate-950 border-2 border-slate-700 rounded-b-2xl rounded-t-lg shadow-inner overflow-hidden flex flex-col-reverse flex-shrink-0 transition-transform duration-500">
               
               <!-- Glass reflection highlight -->
               <div class="absolute inset-y-0 left-2 w-2.5 bg-white/10 blur-[1px] pointer-events-none z-20"></div>
@@ -258,12 +277,12 @@
               <div class="w-full rice-pattern relative border-t border-amber-600/40 transition-all duration-300" style="height: 37.5%;">
                 <div class="absolute inset-0 bg-amber-900/10"></div>
                 <div class="absolute inset-x-0 bottom-1 flex justify-center">
-                  <span class="text-[9px] sm:text-[10px] font-bold text-amber-950 bg-amber-300/90 px-1.5 py-0.5 rounded shadow">Gạo đầu (30cm)</span>
+                  <span id="base-rice-label" class="text-[9px] sm:text-[10px] font-bold text-amber-950 bg-amber-300/90 px-1.5 py-0.5 rounded shadow">Gạo đầu (30cm)</span>
                 </div>
               </div>
 
               <!-- 2. DISPLACED RICE + CAKES LAYER (30cm to h_sau) -->
-              <div id="displaced-layer" class="w-full rice-displaced-pattern relative transition-all duration-300 flex items-center justify-center overflow-hidden border-t-2 border-orange-400" style="height: 25%;">
+              <div id="displaced-layer" class="w-full rice-displaced-pattern relative transition-all duration-300 flex items-center justify-center overflow-hidden border-t-2 border-orange-400" style="height: 18.75%;">
                 <div class="absolute inset-0 bg-orange-600/10 animate-pulse"></div>
                 
                 <!-- Floating Cakes Icons -->
@@ -272,25 +291,30 @@
                 </div>
 
                 <div class="z-10 bg-slate-950/90 text-amber-300 text-[9px] sm:text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border border-amber-500/40 shadow">
-                  h_sau: <span id="layer-h-sau-val">55.0</span>cm
+                  h_sau: <span id="layer-h-sau-val">45.0</span>cm
                 </div>
               </div>
 
-              <!-- 3. PROMINENT GREEN REFERENCE LINE AT 50cm (50/80 = 62.5%) -->
-              <div class="absolute w-full border-t-2 border-emerald-400 green-benchmark-glow z-30 flex items-center justify-start pl-1 pointer-events-none" style="bottom: 62.5%;">
-                <span class="text-[8px] sm:text-[9px] bg-emerald-500 text-slate-950 font-bold px-1 rounded shadow flex items-center gap-0.5">
-                  <i data-lucide="flag" class="w-2.5 h-2.5"></i> Vạch xanh (50cm)
+              <!-- 3. GREEN REFERENCE LINE (Dynamic: 30cm when flipped, 50cm when unflipped) -->
+              <div id="green-benchmark-line" class="absolute w-full border-t-2 border-emerald-400 green-benchmark-glow z-30 flex items-center justify-start pl-1 pointer-events-none transition-all duration-500" style="bottom: 37.5%;">
+                <span id="green-benchmark-badge" class="text-[8px] sm:text-[9px] bg-emerald-500 text-slate-950 font-bold px-1 rounded shadow flex items-center gap-0.5">
+                  <i data-lucide="flag" class="w-2.5 h-2.5"></i> Vạch xanh (30cm)
                 </span>
               </div>
 
               <!-- 4. CURRENT LEVEL MARKER (h_sau) -->
-              <div id="h-after-line" class="absolute w-full border-t-2 border-red-500 z-35 flex items-center justify-end pr-1 pointer-events-none" style="bottom: 68.75%;">
-                <span class="text-[8px] sm:text-[9px] bg-red-600 text-white font-mono px-1 rounded shadow" id="h-after-badge">h_sau: 55cm</span>
+              <div id="h-after-line" class="absolute w-full border-t-2 border-red-500 z-35 flex items-center justify-end pr-1 pointer-events-none transition-all duration-300" style="bottom: 56.25%;">
+                <span class="text-[8px] sm:text-[9px] bg-red-600 text-white font-mono px-1 rounded shadow" id="h-after-badge">h_sau: 45.0cm</span>
               </div>
 
-              <!-- 30cm dashed marker -->
-              <div class="absolute w-full border-t border-dashed border-amber-500/80 z-25 pointer-events-none" style="bottom: 37.5%;">
-                <span class="text-[8px] text-amber-300 ml-1">30cm</span>
+              <!-- UNFLIPPED OVERLAY: WHEN SHOWING STATE BEFORE FLIP -->
+              <div id="unflipped-cakes-preview" class="hidden absolute inset-x-0 top-0 bottom-[37.5%] flex flex-col items-center justify-center p-2 z-25 bg-slate-950/40 backdrop-blur-[1px] pointer-events-none">
+                <span class="text-[9px] font-bold text-amber-200 bg-amber-950/80 border border-amber-500/40 px-2 py-0.5 rounded shadow mb-1">
+                  10 bánh bỏ vào miệng ống
+                </span>
+                <div class="flex flex-wrap justify-center gap-1 opacity-90 text-xs">
+                  📦🥫🧁🥣⚪🍩🥚🍰
+                </div>
               </div>
 
             </div>
@@ -303,22 +327,22 @@
                 <div class="text-[10px] text-emerald-400 font-bold uppercase flex items-center gap-1">
                   <span class="w-2 h-2 rounded-full bg-emerald-400"></span> So với vạch xanh
                 </div>
-                <div class="text-sm sm:text-base font-extrabold font-mono text-emerald-300 mt-0.5" id="stat-delta-green">+5.0 cm</div>
-                <div class="text-[9px] text-emerald-400/80" id="stat-green-desc">Cao hơn vạch xanh 5cm</div>
+                <div class="text-sm sm:text-base font-extrabold font-mono text-emerald-300 mt-0.5" id="stat-delta-green">+15.0 cm</div>
+                <div class="text-[9px] text-emerald-400/80" id="stat-green-desc">Gạo dâng 15cm trên vạch xanh</div>
               </div>
 
               <!-- MỨC GẠO TUYỆT ĐỐI -->
               <div class="bg-slate-900 border border-slate-800 p-2 rounded-xl text-left">
                 <div class="text-[10px] text-slate-400 font-semibold uppercase">Mức gạo sau ($h_{\text{sau}}$)</div>
-                <div class="text-sm sm:text-base font-extrabold font-mono text-amber-300" id="stat-h-sau">55.0 cm</div>
-                <div class="text-[10px] text-slate-500">Tổng dâng: <span id="stat-total-rise" class="font-mono text-orange-400 font-bold">20.0cm</span></div>
+                <div class="text-sm sm:text-base font-extrabold font-mono text-amber-300" id="stat-h-sau">45.0 cm</div>
+                <div class="text-[10px] text-slate-500">Độ dâng: <span id="stat-total-rise" class="font-mono text-orange-400 font-bold">15.0cm</span></div>
               </div>
 
               <!-- THỂ TÍCH TỔNG -->
               <div class="bg-orange-500/10 border border-orange-500/30 p-2 rounded-xl text-left">
                 <div class="text-[10px] text-orange-400 font-semibold uppercase">Thể tích 10 bánh ($V$)</div>
-                <div class="text-xs sm:text-sm font-extrabold font-mono text-orange-300 truncate" id="stat-volume-v">5,516.47 cm³</div>
-                <div class="text-[10px] text-slate-400" id="stat-volume-liters">≈ 5.52 Lít</div>
+                <div class="text-xs sm:text-sm font-extrabold font-mono text-orange-300 truncate" id="stat-volume-v">4,137.35 cm³</div>
+                <div class="text-[10px] text-slate-400" id="stat-volume-liters">≈ 4.14 Lít</div>
               </div>
             </div>
 
@@ -332,14 +356,14 @@
               <div class="bg-emerald-950/20 border border-emerald-500/40 p-2 rounded-xl">
                 <label for="input-delta-green" class="text-[11px] font-bold text-emerald-300 block mb-1 flex items-center gap-1">
                   <i data-lucide="arrow-up-down" class="w-3 h-3 text-emerald-400"></i>
-                  So với vạch xanh:
+                  Độ cao trên vạch xanh ($\Delta h_{\text{xanh}}$):
                 </label>
                 <div class="flex items-center gap-1">
-                  <input type="number" inputmode="decimal" id="input-delta-green" step="0.1" value="5.0" 
+                  <input type="number" inputmode="decimal" id="input-delta-green" step="0.1" min="0" max="50" value="15.0" 
                     class="w-full px-2 py-1 bg-slate-950 border border-emerald-600/60 rounded-lg text-right font-mono font-bold text-emerald-300 focus:outline-none focus:border-emerald-400 text-sm">
                   <span class="text-emerald-400 font-mono text-xs">cm</span>
                 </div>
-                <div class="text-[9px] text-slate-400 mt-0.5">Dương (+): trên vạch, Âm (-): dưới</div>
+                <div class="text-[9px] text-slate-400 mt-0.5">Vạch xanh sau lật = 30cm</div>
               </div>
 
               <div class="bg-slate-950 border border-slate-800 p-2 rounded-xl">
@@ -348,32 +372,33 @@
                   Mức gạo sau ($h_{\text{sau}}$):
                 </label>
                 <div class="flex items-center gap-1">
-                  <input type="number" inputmode="decimal" id="input-h-sau-number" step="0.1" min="30" max="80" value="55.0" 
+                  <input type="number" inputmode="decimal" id="input-h-sau-number" step="0.1" min="30" max="80" value="45.0" 
                     class="w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded-lg text-right font-mono font-bold text-amber-300 focus:outline-none focus:border-amber-500 text-sm">
                   <span class="text-slate-400 font-mono text-xs">cm</span>
                 </div>
-                <div class="text-[9px] text-slate-400 mt-0.5">Từ đáy ống (30cm đến 80cm)</div>
+                <div class="text-[9px] text-slate-400 mt-0.5">h_sau = 30 + Δh_xanh (cm)</div>
               </div>
             </div>
 
             <!-- Big touch slider (30cm to 80cm) -->
             <div class="py-1">
-              <input type="range" id="input-h-sau-slider" min="30" max="80" step="0.1" value="55.0" 
+              <input type="range" id="input-h-sau-slider" min="30" max="80" step="0.1" value="45.0" 
                 class="w-full h-3 bg-slate-800 rounded-lg appearance-none cursor-pointer">
             </div>
 
             <div class="flex justify-between text-[10px] font-mono text-slate-500">
-              <span>30cm (Gạo đầu)</span>
-              <span class="text-emerald-400 font-bold">50cm (Vạch xanh)</span>
+              <span class="text-emerald-400 font-bold">30cm (Vạch xanh & Gạo đầu)</span>
+              <span>55cm</span>
               <span>80cm (Đầy ống)</span>
             </div>
 
             <!-- Quick Presets for Green Mark Distance -->
-            <div class="grid grid-cols-4 gap-1.5 pt-1">
-              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="0">Bằng vạch (0)</button>
-              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="5">+5.0cm</button>
-              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="10">+10.0cm</button>
-              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="15">+15.0cm</button>
+            <div class="grid grid-cols-5 gap-1.5 pt-1">
+              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="0">0 (Vạch)</button>
+              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="5">+5cm</button>
+              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="10">+10cm</button>
+              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="15">+15cm</button>
+              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="20">+20cm</button>
             </div>
 
             <!-- Overflow Warning Banner -->
@@ -497,40 +522,41 @@
 
         </div>
 
-        <!-- DETAILED FORMULA ACCORDION FOR THE GREEN MARK PROBLEM -->
+        <!-- DETAILED FORMULA ACCORDION FOR THE FLIPPED GREEN MARK PROBLEM -->
         <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-4 sm:p-5 no-print">
           <h3 class="text-xs sm:text-sm font-bold text-slate-200 flex items-center gap-2 mb-2.5">
             <i data-lucide="book-open" class="w-4 h-4 text-emerald-400"></i>
-            Công Thức Tính Thể Tích Từ Độ Cao So Với Vạch Xanh (50cm)
+            Nguyên Lý Lật Ống 180° & Tính Thể Tích Từ Vạch Xanh Sau Lật
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-slate-300 leading-relaxed">
             
             <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
-              <div class="font-bold text-amber-400 mb-1">1. Thông số ống đong</div>
-              <p>Bán kính $R = 9.37\text{ cm}$, Cao $H = 80\text{ cm}$:</p>
-              <p class="font-mono text-amber-300 my-1">A = π × R² ≈ 275.8234 cm²</p>
-              <p class="text-slate-400 text-[11px]">Mức gạo ban đầu: <strong class="text-amber-300">h₀ = 30 cm</strong>.<br>Vạch chuẩn màu xanh: <strong class="text-emerald-400">h_xanh = 50 cm</strong>.</p>
+              <div class="font-bold text-amber-400 mb-1">1. Thông số & Cơ chế lật ống</div>
+              <p>Ống đong $H = 80\text{ cm}$, bán kính $R = 9.37\text{ cm}$ ($A \approx 275.8234\text{ cm}^2$).</p>
+              <p class="text-slate-400 text-[11px] mt-1">
+                • <strong>Trước khi lật:</strong> Đổ gạo $30\text{ cm}$ ở đáy. Vạch xanh vẽ ở $50\text{ cm}$ (cách miệng $80 - 50 = 30\text{ cm}$). Bỏ 10 bánh vào phía trên.<br>
+                • <strong>Sau khi lật 180°:</strong> Miệng ống biến thành đáy mới. Vạch xanh cách miệng cũ 30cm giờ lộn xuống thành <strong class="text-emerald-400">30.0 cm</strong> tính từ đáy mới!<br>
+                • <strong>Kết quả:</strong> <strong class="text-emerald-300">Vạch xanh trùng khít với mức gạo ban đầu ($30\text{ cm}$)</strong>!
+              </p>
             </div>
 
             <div class="bg-slate-950 p-3 rounded-xl border border-emerald-500/40">
-              <div class="font-bold text-emerald-400 mb-1">2. Tính thể tích từ độ cao so với vạch xanh</div>
-              <p>Gọi <span class="font-mono text-emerald-300">Δh_xanh</span> là khoảng cách từ mức gạo sau đến vạch xanh 50cm:</p>
-              <p class="font-mono text-emerald-300 my-0.5">h_sau = 50 + Δh_xanh (cm)</p>
-              <p class="font-mono text-emerald-300 my-0.5">Δh_tổng = h_sau - 30 = 20 + Δh_xanh (cm)</p>
-              <div class="p-2 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 font-mono my-1.5 font-bold text-[11px]">
-                V = A × (20 + Δh_xanh)<br>
-                = 5,516.47 + 275.8234 × Δh_xanh
+              <div class="font-bold text-emerald-400 mb-1">2. Thể tích đo từ vạch xanh sau lật</div>
+              <p>Gọi <span class="font-mono text-emerald-300">Δh_xanh</span> là chiều cao gạo dâng thêm trên vạch xanh ($30\text{ cm}$):</p>
+              <p class="font-mono text-emerald-300 my-0.5">h_sau = 30 + Δh_xanh (cm)</p>
+              <p class="font-mono text-emerald-300 my-0.5">Δh_tổng = h_sau - 30 = Δh_xanh (cm)</p>
+              <div class="p-2.5 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 font-mono my-1.5 font-bold text-xs">
+                V = A × Δh_xanh = 275.8234 × Δh_xanh (cm³)
               </div>
-              <p class="text-slate-400 text-[11px]">Trong đó 5,516.47 cm³ là thể tích gạo từ 30cm dâng lên vạch 50cm.</p>
+              <p class="text-slate-400 text-[11px]">Vì vạch xanh sau lật chính là mức gạo ban đầu, toàn bộ chiều cao dâng trên vạch xanh chính là thể tích 10 chiếc bánh chiếm chỗ.</p>
             </div>
 
             <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
               <div class="font-bold text-cyan-400 mb-1">3. Dự đoán ngược từ 10 bánh</div>
               <p>Khi biết kích thước các bánh $\implies V_{\text{geo}} = \sum V_i$:</p>
-              <p class="font-mono text-cyan-300 my-1">Δh_tổng = V_geo / A</p>
-              <p class="font-mono text-cyan-300 my-1">Δh_xanh = (V_geo / A) - 20 (cm)</p>
-              <p class="font-mono text-cyan-300 my-1">h_sau = 30 + (V_geo / A) (cm)</p>
-              <p class="text-slate-400 text-[11px]">Giúp đối chiếu kiểm tra thực nghiệm và lý thuyết.</p>
+              <p class="font-mono text-cyan-300 my-1">Δh_xanh = V_geo / A = V_geo / 275.8234 (cm)</p>
+              <p class="font-mono text-cyan-300 my-1">h_sau = 30 + Δh_xanh (cm)</p>
+              <p class="text-slate-400 text-[11px]">Dự đoán độ dâng trên vạch xanh để đối chiếu kiểm tra thực nghiệm sau khi lật ống.</p>
             </div>
 
           </div>
@@ -545,10 +571,10 @@
           <div class="flex items-center gap-2 flex-wrap">
             <span class="px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 font-mono font-bold text-xs flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Phiên bản: v2.5.0
+              Phiên bản: v2.6.0
             </span>
             <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-[11px] font-mono">
-              Build: 2026.10.01-1525
+              Build: 2026.10.01-1545
             </span>
             <span class="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[11px] font-medium flex items-center gap-1">
               <i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i>
@@ -556,7 +582,7 @@
             </span>
           </div>
           <p class="text-[11px] text-slate-400">
-            Thông số chuẩn: Ống <strong class="text-white">H = 80cm</strong>, <strong class="text-white">R = 9.37cm</strong>, Mức gạo đầu <strong class="text-amber-300">h₀ = 30cm</strong>, Vạch chuẩn <strong class="text-emerald-400">50cm</strong> (Chênh lệch gốc: 20cm, V_gốc = 5,516.47 cm³).
+            Thông số chuẩn: Ống <strong class="text-white">H = 80cm</strong>, <strong class="text-white">R = 9.37cm</strong>, Mức gạo đầu <strong class="text-amber-300">h₀ = 30cm</strong>. Vạch xanh gốc 50cm, sau khi lật 180° trở thành <strong class="text-emerald-400">30.0cm</strong> (trùng gạo đầu). Thể tích <strong class="text-orange-400">V = A × Δh_xanh</strong>.
           </p>
         </div>
 
@@ -573,7 +599,7 @@
         <span>•</span>
         <a href="https://github.com/letuananh035/cake-displacement-calculator" target="_blank" class="hover:text-slate-300 underline text-slate-400">GitHub Repository</a>
         <span>•</span>
-        <span class="text-indigo-400 font-mono font-medium">Phiên bản v2.5.0</span>
+        <span class="text-indigo-400 font-mono font-medium">Phiên bản v2.6.0</span>
       </div>
     </footer>
 
@@ -584,12 +610,12 @@
     <div class="flex items-center gap-3">
       <div>
         <div class="text-[9px] text-emerald-400 uppercase font-semibold">So với vạch xanh</div>
-        <div class="text-sm font-extrabold font-mono text-emerald-300" id="mobile-bar-delta-green">+5.0 cm</div>
+        <div class="text-sm font-extrabold font-mono text-emerald-300" id="mobile-bar-delta-green">+15.0 cm</div>
       </div>
       <div class="w-px h-6 bg-slate-800"></div>
       <div>
         <div class="text-[9px] text-slate-400 uppercase font-semibold">Thể tích V (10 bánh)</div>
-        <div class="text-sm font-extrabold font-mono text-orange-400" id="mobile-bar-volume">5,516 cm³</div>
+        <div class="text-sm font-extrabold font-mono text-orange-400" id="mobile-bar-volume">4,137 cm³</div>
       </div>
     </div>
 
@@ -603,22 +629,21 @@
   <div class="hidden print-only p-8 text-black bg-white max-w-4xl mx-auto">
     <div class="border-b-2 border-black pb-4 mb-6">
       <h1 class="text-2xl font-bold uppercase tracking-wider">Phiếu Báo Cáo Đo Thể Tích Bánh Bằng Phương Pháp Chiếm Chỗ Gạo</h1>
-      <p class="text-sm text-gray-600 mt-1">Cylinder Rice Displacement Laboratory Report | Phiên bản: v2.5.0 (Build 2026.10.01) | H=80cm, h0=30cm, Green Mark=50cm</p>
+      <p class="text-sm text-gray-600 mt-1">Cylinder Rice Displacement Laboratory Report | Phiên bản: v2.6.0 (Build 2026.10.01) | H=80cm, h0=30cm, Vạch xanh sau lật=30cm</p>
     </div>
 
     <div class="grid grid-cols-2 gap-4 text-xs mb-6 border p-4 rounded">
       <div>
-        <p><strong>Thiết bị:</strong> Ống đong hình trụ chuẩn</p>
+        <p><strong>Thiết bị:</strong> Ống đong hình trụ chuẩn (Lật ngược 180°)</p>
         <p><strong>Chiều cao ống (H):</strong> 80.0 cm | <strong>Bán kính (R):</strong> 9.37 cm</p>
         <p><strong>Diện tích đáy (A):</strong> 275.82 cm²</p>
         <p><strong>Mức gạo ban đầu (h₀):</strong> 30.0 cm</p>
-        <p><strong>Vạch chuẩn xanh:</strong> 50.0 cm</p>
+        <p><strong>Vạch xanh gốc / sau khi lật:</strong> 50.0 cm (gốc) $\to$ <strong>30.0 cm (sau lật, trùng gạo đầu)</strong></p>
       </div>
       <div>
-        <p><strong>Mức gạo đo được (h_sau):</strong> <span id="print-h-sau"></span> cm</p>
-        <p><strong>Độ lệch so với vạch xanh:</strong> <span id="print-delta-green"></span> cm</p>
-        <p><strong>Tổng độ dâng (Δh_tổng = h_sau - 30):</strong> <span id="print-delta-h"></span> cm</p>
-        <p><strong>Tổng thể tích đo thực nghiệm (V):</strong> <span id="print-volume"></span> cm³ (<span id="print-volume-l"></span> L)</p>
+        <p><strong>Mức gạo sau khi lật (h_sau):</strong> <span id="print-h-sau"></span> cm</p>
+        <p><strong>Độ dâng so với vạch xanh (Δh_xanh = h_sau - 30):</strong> <span id="print-delta-green"></span> cm</p>
+        <p><strong>Tổng thể tích đo thực nghiệm (V = A × Δh_xanh):</strong> <span id="print-volume"></span> cm³ (<span id="print-volume-l"></span> L)</p>
         <p><strong>Tổng khối lượng (M):</strong> <span id="print-mass"></span> g | <strong>Tỷ trọng ρ:</strong> <span id="print-density"></span> g/cm³</p>
       </div>
     </div>
@@ -652,23 +677,29 @@
 
   <!-- JAVASCRIPT APPLICATION LOGIC -->
   <script>
-    const APP_VERSION = 'v2.5.0';
-    const BUILD_TIMESTAMP = '2026-10-01 15:25';
+    const APP_VERSION = 'v2.6.0';
+    const BUILD_TIMESTAMP = '2026-10-01 15:45';
 
-    // CYLINDER CONSTANTS PER NEW SPEC
+    // CYLINDER CONSTANTS PER SPEC
     const CYLINDER = {
-      H: 80.0,         // Cylinder Height: 80cm
-      R: 9.37,         // Radius: 9.37cm
-      h0: 30.0,        // Initial rice level: 30cm
-      greenMark: 50.0  // Reference Green Benchmark line: 50cm
+      H: 80.0,                // Total cylinder height: 80cm
+      R: 9.37,                // Radius: 9.37cm
+      h0: 30.0,               // Initial rice level: 30cm
+      greenMarkOriginal: 50.0 // Green benchmark before inverting: 50cm (from old base, 30cm from top)
     };
+
+    // After inverting 180°, green mark is: 80 - 50 = 30cm from new base (coincides with initial rice level!)
+    function getGreenMarkFlipped() {
+      return CYLINDER.H - CYLINDER.greenMarkOriginal; // 80 - 50 = 30.0 cm
+    }
 
     function getCylinderArea() {
       return Math.PI * Math.pow(CYLINDER.R, 2); // ~275.8234 cm2
     }
 
     // STATE
-    let hAfter = 55.0; // Current absolute h_sau (cm), default is 5cm above green mark (50 + 5 = 55cm)
+    let isFlipped = true; // Default: Flipped state (ready for measurement after inverting)
+    let hAfter = 45.0;    // Current measured h_sau (cm), default is 15cm above green mark (30 + 15 = 45cm)
     let currentMode = 'experimental';
     let currentMobileTab = 'visualizer';
 
@@ -775,11 +806,13 @@
 
     function updateAll() {
       const A = getCylinderArea();
+      const greenMarkFlipped = getGreenMarkFlipped(); // 30.0 cm
       
-      // Calculate delta relative to green mark (50cm) and relative to initial rice (30cm)
-      const deltaGreen = hAfter - CYLINDER.greenMark; // e.g. 55 - 50 = +5.0 cm
-      const totalRise = Math.max(0, hAfter - CYLINDER.h0); // e.g. 55 - 30 = 25.0 cm
-      const measuredVolume = A * totalRise; // V = A * totalRise in cm3
+      // When cylinder is flipped: green mark is at 30cm (coincides with initial rice h0 = 30cm)
+      const greenReference = isFlipped ? greenMarkFlipped : CYLINDER.greenMarkOriginal;
+      const deltaGreen = isFlipped ? (hAfter - greenMarkFlipped) : (hAfter - CYLINDER.greenMarkOriginal);
+      const totalRise = Math.max(0, hAfter - CYLINDER.h0); // In flipped state: totalRise = deltaGreen
+      const measuredVolume = A * totalRise; // V = A * totalRise = A * deltaGreen (cm3)
       const measuredVolumeLiters = measuredVolume / 1000;
 
       let totalGeoVolume = 0;
@@ -797,43 +830,119 @@
       // Predicted values from theoretical geometric cake volumes
       const predictedTotalRise = totalGeoVolume / A;
       const predictedHAfter = CYLINDER.h0 + predictedTotalRise;
-      const predictedDeltaGreen = predictedHAfter - CYLINDER.greenMark;
+      const predictedDeltaGreen = isFlipped ? predictedTotalRise : (predictedHAfter - CYLINDER.greenMarkOriginal);
 
       // Overflow check (H = 80cm)
       const isOverflow = hAfter > CYLINDER.H;
       document.getElementById('overflow-alert').classList.toggle('hidden', !isOverflow);
 
       // Visual cylinder graphic (0 to 80cm scale)
-      // Percentage relative to 80cm height:
       const visualHAfter = Math.min(80, Math.max(CYLINDER.h0, hAfter));
       const visualHAfterPct = (visualHAfter / CYLINDER.H) * 100; // % from bottom
       const initialRicePct = (CYLINDER.h0 / CYLINDER.H) * 100;   // 30/80 = 37.5%
       const displacedLayerPct = Math.max(0, visualHAfterPct - initialRicePct);
 
       const displacedLayer = document.getElementById('displaced-layer');
-      displacedLayer.style.height = `${displacedLayerPct}%`;
-      document.getElementById('layer-h-sau-val').textContent = hAfter.toFixed(1);
+      if (displacedLayer) {
+        displacedLayer.style.height = `${displacedLayerPct}%`;
+        document.getElementById('layer-h-sau-val').textContent = hAfter.toFixed(1);
+      }
 
       const hAfterLine = document.getElementById('h-after-line');
-      hAfterLine.style.bottom = `${visualHAfterPct}%`;
-      document.getElementById('h-after-badge').textContent = `h_sau: ${hAfter.toFixed(1)}cm`;
+      if (hAfterLine) {
+        hAfterLine.style.bottom = `${visualHAfterPct}%`;
+        document.getElementById('h-after-badge').textContent = `h_sau: ${hAfter.toFixed(1)}cm`;
+      }
+
+      // Dynamic Green Line & Ruler according to isFlipped
+      const greenLine = document.getElementById('green-benchmark-line');
+      const greenBadge = document.getElementById('green-benchmark-badge');
+      const unflippedPreview = document.getElementById('unflipped-cakes-preview');
+      const scaleRuler = document.getElementById('scale-ruler');
+      const flipBtnText = document.getElementById('flip-btn-text');
+      const flipBadge = document.getElementById('flip-badge');
+      const flipBannerDesc = document.getElementById('flip-banner-desc');
+      const btnQuickFlip = document.getElementById('btn-quick-flip-toggle');
+
+      if (isFlipped) {
+        // FLIPPED STATE: Green line at 30cm (coincides with initial rice)
+        if (greenLine) greenLine.style.bottom = '37.5%';
+        if (greenBadge) greenBadge.innerHTML = '<i data-lucide="flag" class="w-2.5 h-2.5"></i> Vạch xanh (30cm)';
+        if (unflippedPreview) unflippedPreview.classList.add('hidden');
+        if (displacedLayer) displacedLayer.classList.remove('hidden');
+
+        if (scaleRuler) {
+          scaleRuler.innerHTML = `
+            <span class="font-bold text-red-400">80cm (H)</span>
+            <span>70cm</span>
+            <span>60cm</span>
+            <span>50cm</span>
+            <span>40cm</span>
+            <span class="text-emerald-400 font-extrabold flex items-center justify-end gap-1">30cm <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span></span>
+            <span>20cm</span>
+            <span>10cm</span>
+            <span>0cm (Đáy)</span>
+          `;
+        }
+
+        if (flipBtnText) flipBtnText.textContent = '🔄 Đã lật 180°';
+        if (flipBadge) {
+          flipBadge.textContent = 'ĐÃ LẬT 180°';
+          flipBadge.className = 'px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-emerald-500 text-slate-950';
+        }
+        if (flipBannerDesc) {
+          flipBannerDesc.innerHTML = `Vạch xanh ở <strong>30cm</strong> (= mức gạo đầu). Dâng trên vạch: <strong>+${deltaGreen.toFixed(1)}cm</strong>!`;
+        }
+        if (btnQuickFlip) btnQuickFlip.textContent = 'Xem lúc chưa lật';
+      } else {
+        // UNFLIPPED STATE: Green line at 50cm (30cm from top)
+        if (greenLine) greenLine.style.bottom = '62.5%';
+        if (greenBadge) greenBadge.innerHTML = '<i data-lucide="flag" class="w-2.5 h-2.5"></i> Vạch xanh (50cm)';
+        if (unflippedPreview) unflippedPreview.classList.remove('hidden');
+        if (displacedLayer) displacedLayer.classList.add('hidden');
+
+        if (scaleRuler) {
+          scaleRuler.innerHTML = `
+            <span class="font-bold text-slate-300">80cm (Miệng)</span>
+            <span>70cm</span>
+            <span>60cm</span>
+            <span class="text-emerald-400 font-extrabold flex items-center justify-end gap-1">50cm <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span></span>
+            <span>40cm</span>
+            <span class="text-amber-400 font-bold">30cm (gạo)</span>
+            <span>20cm</span>
+            <span>10cm</span>
+            <span>0cm (Đáy)</span>
+          `;
+        }
+
+        if (flipBtnText) flipBtnText.textContent = '🔄 Lật ngược ống 180°';
+        if (flipBadge) {
+          flipBadge.textContent = 'CHƯA LẬT (XUÔI)';
+          flipBadge.className = 'px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-amber-500 text-slate-950';
+        }
+        if (flipBannerDesc) {
+          flipBannerDesc.innerHTML = `Gạo 30cm ở đáy, bánh ở trên. Vạch xanh 50cm (cách miệng 30cm). Bấm Lật ống!`;
+        }
+        if (btnQuickFlip) btnQuickFlip.textContent = 'Lật ngược ống ngay';
+      }
 
       renderFloatingCakes();
+      lucide.createIcons();
 
       // Update Texts
       document.getElementById('disp-H').textContent = `${CYLINDER.H.toFixed(1)}cm`;
       document.getElementById('disp-R').textContent = `${CYLINDER.R.toFixed(2)}cm`;
       document.getElementById('disp-h0').textContent = `${CYLINDER.h0.toFixed(1)}cm`;
-      document.getElementById('disp-green').textContent = `${CYLINDER.greenMark.toFixed(1)}cm`;
+      document.getElementById('disp-green').textContent = `${greenMarkFlipped.toFixed(1)}cm`;
 
       // Relative to Green Mark Display
       const deltaGreenSign = deltaGreen >= 0 ? `+${deltaGreen.toFixed(1)}` : `${deltaGreen.toFixed(1)}`;
       document.getElementById('stat-delta-green').textContent = `${deltaGreenSign} cm`;
       
       if (deltaGreen > 0) {
-        document.getElementById('stat-green-desc').textContent = `Cao hơn vạch xanh ${deltaGreen.toFixed(1)}cm`;
+        document.getElementById('stat-green-desc').textContent = `Dâng +${deltaGreen.toFixed(1)}cm trên vạch xanh`;
       } else if (deltaGreen === 0) {
-        document.getElementById('stat-green-desc').textContent = 'Ngang bằng vạch xanh (50cm)';
+        document.getElementById('stat-green-desc').textContent = 'Ngang bằng vạch xanh (30cm)';
       } else {
         document.getElementById('stat-green-desc').textContent = `Thấp hơn vạch xanh ${Math.abs(deltaGreen).toFixed(1)}cm`;
       }
@@ -1228,21 +1337,50 @@
         updateAll();
       });
 
-      // 3. Green Benchmark delta input change: h_sau = 50 + deltaGreen
+      // 3. Green Benchmark delta input change: h_sau = greenRef + deltaGreen
       deltaGreenInput.addEventListener('input', (e) => {
         const dG = parseFloat(e.target.value) || 0;
-        hAfter = CYLINDER.greenMark + dG;
+        const greenRef = isFlipped ? getGreenMarkFlipped() : CYLINDER.greenMarkOriginal;
+        hAfter = greenRef + dG;
         updateAll();
       });
 
-      // Quick delta buttons (+0, +5, +10, +15)
+      // Quick delta buttons (0, +5, +10, +15, +20)
       document.querySelectorAll('.quick-delta-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const dG = parseFloat(btn.dataset.delta);
-          hAfter = CYLINDER.greenMark + dG;
+          const greenRef = isFlipped ? getGreenMarkFlipped() : CYLINDER.greenMarkOriginal;
+          hAfter = greenRef + dG;
           updateAll();
         });
       });
+
+      // Flip Cylinder Toggle Handlers
+      const btnFlip = document.getElementById('btn-flip-cylinder');
+      if (btnFlip) {
+        btnFlip.addEventListener('click', () => {
+          isFlipped = !isFlipped;
+          const wrapper = document.getElementById('cylinder-visual-wrapper');
+          if (wrapper) {
+            wrapper.classList.add('scale-95');
+            setTimeout(() => wrapper.classList.remove('scale-95'), 200);
+          }
+          updateAll();
+        });
+      }
+
+      const btnQuickFlip = document.getElementById('btn-quick-flip-toggle');
+      if (btnQuickFlip) {
+        btnQuickFlip.addEventListener('click', () => {
+          isFlipped = !isFlipped;
+          const wrapper = document.getElementById('cylinder-visual-wrapper');
+          if (wrapper) {
+            wrapper.classList.add('scale-95');
+            setTimeout(() => wrapper.classList.remove('scale-95'), 200);
+          }
+          updateAll();
+        });
+      }
 
       // Mode toggles
       const btnModeExp = document.getElementById('btn-mode-exp');
@@ -1326,8 +1464,8 @@
         const newH0 = prompt('Nhập mức gạo ban đầu h0 (cm):', CYLINDER.h0);
         if (newH0 && !isNaN(parseFloat(newH0))) CYLINDER.h0 = parseFloat(newH0);
 
-        const newGreen = prompt('Nhập vạch xanh chuẩn (cm):', CYLINDER.greenMark);
-        if (newGreen && !isNaN(parseFloat(newGreen))) CYLINDER.greenMark = parseFloat(newGreen);
+        const newGreen = prompt('Nhập vạch xanh gốc khi chưa lật (cm):', CYLINDER.greenMarkOriginal);
+        if (newGreen && !isNaN(parseFloat(newGreen))) CYLINDER.greenMarkOriginal = parseFloat(newGreen);
 
         updateAll();
       });
@@ -1339,12 +1477,11 @@
           alert(
             `Phiên bản hiện tại: ${APP_VERSION}\n` +
             `Thời gian cập nhật: ${BUILD_TIMESTAMP}\n\n` +
-            `Các cập nhật mới nhất:\n` +
-            `✓ Mức gạo ban đầu chuẩn: h0 = 30.0 cm\n` +
-            `✓ Vạch mốc chuẩn màu xanh: 50.0 cm\n` +
-            `✓ Khoảng cách từ mốc đầu đến vạch xanh: 20.0 cm\n` +
-            `✓ Thể tích cơ sở tương ứng: 5,516.47 cm³\n` +
-            `✓ Bổ sung hình dạng bánh Chỏm Cầu (Spherical Cap / Vòm)\n` +
+            `Các tính năng chuẩn hóa mới nhất:\n` +
+            `✓ Mô phỏng lật ngược ống 180° (Interactive Inversion)\n` +
+            `✓ Vạch xanh sau khi lật ở mức 30.0 cm (= mức gạo ban đầu)\n` +
+            `✓ Thể tích 10 bánh: V = A × Δh_xanh = 275.8234 × Δh_xanh\n` +
+            `✓ Hỗ trợ hình bánh Chỏm Cầu (Spherical Cap / Vòm)\n` +
             `✓ Nút Tải lại & Xóa cache để luôn tải bản mới nhất`
           );
         });
@@ -1365,7 +1502,8 @@
 
     function exportToCSV() {
       const A = getCylinderArea();
-      const deltaGreen = hAfter - CYLINDER.greenMark;
+      const greenMarkFlipped = getGreenMarkFlipped();
+      const deltaGreen = isFlipped ? (hAfter - greenMarkFlipped) : (hAfter - CYLINDER.greenMarkOriginal);
       const totalRise = Math.max(0, hAfter - CYLINDER.h0);
       const measuredVolume = A * totalRise;
 
@@ -1375,8 +1513,10 @@
       csv += `Cylinder Radius (R),${CYLINDER.R},cm\n`;
       csv += `Cylinder Base Area (A),${A.toFixed(4)},cm2\n`;
       csv += `Initial Rice Height (h0),${CYLINDER.h0},cm\n`;
-      csv += `Green Benchmark Line (greenMark),${CYLINDER.greenMark},cm\n`;
-      csv += `Final Height (h_sau),${hAfter.toFixed(2)},cm\n`;
+      csv += `Original Green Benchmark (before flip),${CYLINDER.greenMarkOriginal},cm\n`;
+      csv += `Flipped Green Benchmark (after 180 flip),${greenMarkFlipped},cm\n`;
+      csv += `Cylinder Inversion State,${isFlipped ? 'Flipped (180 Inversion)' : 'Original (Unflipped)'}\n`;
+      csv += `Final Rice Height (h_sau),${hAfter.toFixed(2)},cm\n`;
       csv += `Delta Relative to Green Mark,${deltaGreen.toFixed(2)},cm\n`;
       csv += `Total Rise (delta_h),${totalRise.toFixed(2)},cm\n`;
       csv += `Displaced Volume (V),${measuredVolume.toFixed(2)},cm3\n\n`;
@@ -1390,7 +1530,7 @@
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `cake_displacement_report_green_mark_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.download = `cake_displacement_report_flipped_${new Date().toISOString().slice(0, 10)}.csv`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
