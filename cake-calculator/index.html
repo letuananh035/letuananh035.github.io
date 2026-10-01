@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="version" content="2.6.0">
+  <meta name="version" content="2.7.0">
   <meta name="build-date" content="2026-10-01">
-  <title>Cake Volume Displacement v2.6.0 - Lật Ngược Ống 180° (H=80cm, h0=30cm, Vạch Xanh Sau Lật=30cm)</title>
+  <title>Cake Displacement v2.7.0 - 10 Bánh Chỏm Cầu & Thí Nghiệm Lật Ống Đong</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -87,16 +87,16 @@
             <h1 class="text-xs sm:text-lg font-bold text-white tracking-tight">
               Cake Displacement
             </h1>
-            <span class="text-[9px] sm:text-xs px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-medium">Vạch Sau Lật 30cm</span>
+            <span class="text-[9px] sm:text-xs px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-medium">Vạch Xanh Chuẩn 50cm</span>
             <button id="header-version-badge" class="text-[9px] sm:text-xs px-2 py-0.5 rounded-full bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 font-mono font-bold flex items-center gap-1 cursor-pointer transition active:scale-95" title="Bấm để xem lịch sử cập nhật phiên bản">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-              v2.6.0
+              v2.7.0
             </button>
           </div>
           <p class="text-[10px] sm:text-[11px] text-slate-400">
             <span class="text-amber-300 font-mono font-medium">h₀: 30cm</span> • 
-            <span class="text-emerald-400 font-mono font-medium">Vạch xanh sau lật: 30cm (gốc 50cm)</span> • 
-            <span class="text-indigo-400 font-medium">Lật ống 180°</span>
+            <span class="text-emerald-400 font-mono font-medium">Vạch xanh: 50cm (khi lật không bánh)</span> • 
+            <span class="text-indigo-400 font-medium">10 Bánh Chỏm Cầu (mm & g)</span>
           </p>
         </div>
       </div>
@@ -195,8 +195,8 @@
             <div class="font-bold font-mono text-amber-400 text-xs sm:text-sm" id="disp-h0">30.0cm</div>
           </div>
           <div class="bg-slate-950 p-2 rounded-lg border border-emerald-500/40 text-center sm:text-left bg-emerald-950/20">
-            <div class="text-emerald-400 font-semibold text-[10px]">Vạch xanh sau lật</div>
-            <div class="font-bold font-mono text-emerald-300 text-xs sm:text-sm" id="disp-green">30.0cm</div>
+            <div class="text-emerald-400 font-semibold text-[10px]">Vạch xanh chuẩn</div>
+            <div class="font-bold font-mono text-emerald-300 text-xs sm:text-sm" id="disp-green">50.0cm</div>
           </div>
         </div>
       </div>
@@ -230,7 +230,7 @@
                 ĐÃ LẬT 180°
               </span>
               <span id="flip-banner-desc">
-                Vạch xanh ở <strong>30cm</strong> (= mức gạo đầu). Đo chiều cao dâng trên vạch xanh!
+                Khi không bánh, gạo đạt đúng <strong>vạch xanh 50cm</strong>. Cho 10 bánh vào $\to$ đo độ cao dâng trên vạch xanh!
               </span>
             </div>
             <button id="btn-quick-flip-toggle" class="text-[10px] font-bold text-emerald-400 hover:text-emerald-300 underline flex-shrink-0">
@@ -246,9 +246,9 @@
               <span class="font-bold text-red-400">80cm (H)</span>
               <span>70cm</span>
               <span>60cm</span>
-              <span>50cm</span>
+              <span class="text-emerald-400 font-extrabold flex items-center justify-end gap-1">50cm <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span></span>
               <span>40cm</span>
-              <span class="text-emerald-400 font-extrabold flex items-center justify-end gap-1">30cm <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span></span>
+              <span class="text-amber-400 font-semibold">30cm (h₀)</span>
               <span>20cm</span>
               <span>10cm</span>
               <span>0cm (Đáy)</span>
@@ -273,16 +273,16 @@
                 <div class="border-b border-white w-2"></div>
               </div>
 
-              <!-- 1. BASE RICE LAYER (0 to 30cm: 30/80 = 37.5%) -->
-              <div class="w-full rice-pattern relative border-t border-amber-600/40 transition-all duration-300" style="height: 37.5%;">
+              <!-- 1. BASE RICE LAYER (0 to 50cm when flipped: 50/80 = 62.5%) -->
+              <div class="w-full rice-pattern relative border-t border-amber-600/40 transition-all duration-300" style="height: 62.5%;">
                 <div class="absolute inset-0 bg-amber-900/10"></div>
                 <div class="absolute inset-x-0 bottom-1 flex justify-center">
-                  <span id="base-rice-label" class="text-[9px] sm:text-[10px] font-bold text-amber-950 bg-amber-300/90 px-1.5 py-0.5 rounded shadow">Gạo đầu (30cm)</span>
+                  <span id="base-rice-label" class="text-[9px] sm:text-[10px] font-bold text-amber-950 bg-amber-300/90 px-1.5 py-0.5 rounded shadow">Gạo khi lật không bánh (50cm)</span>
                 </div>
               </div>
 
-              <!-- 2. DISPLACED RICE + CAKES LAYER (30cm to h_sau) -->
-              <div id="displaced-layer" class="w-full rice-displaced-pattern relative transition-all duration-300 flex items-center justify-center overflow-hidden border-t-2 border-orange-400" style="height: 18.75%;">
+              <!-- 2. DISPLACED RICE + CAKES LAYER (50cm to h_sau) -->
+              <div id="displaced-layer" class="w-full rice-displaced-pattern relative transition-all duration-300 flex items-center justify-center overflow-hidden border-t-2 border-orange-400" style="height: 12.1%;">
                 <div class="absolute inset-0 bg-orange-600/10 animate-pulse"></div>
                 
                 <!-- Floating Cakes Icons -->
@@ -291,20 +291,20 @@
                 </div>
 
                 <div class="z-10 bg-slate-950/90 text-amber-300 text-[9px] sm:text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border border-amber-500/40 shadow">
-                  h_sau: <span id="layer-h-sau-val">45.0</span>cm
+                  h_sau: <span id="layer-h-sau-val">59.7</span>cm
                 </div>
               </div>
 
-              <!-- 3. GREEN REFERENCE LINE (Dynamic: 30cm when flipped, 50cm when unflipped) -->
-              <div id="green-benchmark-line" class="absolute w-full border-t-2 border-emerald-400 green-benchmark-glow z-30 flex items-center justify-start pl-1 pointer-events-none transition-all duration-500" style="bottom: 37.5%;">
+              <!-- 3. GREEN REFERENCE LINE (Standard: 50cm when flipped) -->
+              <div id="green-benchmark-line" class="absolute w-full border-t-2 border-emerald-400 green-benchmark-glow z-30 flex items-center justify-start pl-1 pointer-events-none transition-all duration-500" style="bottom: 62.5%;">
                 <span id="green-benchmark-badge" class="text-[8px] sm:text-[9px] bg-emerald-500 text-slate-950 font-bold px-1 rounded shadow flex items-center gap-0.5">
-                  <i data-lucide="flag" class="w-2.5 h-2.5"></i> Vạch xanh (30cm)
+                  <i data-lucide="flag" class="w-2.5 h-2.5"></i> Vạch xanh (50cm)
                 </span>
               </div>
 
               <!-- 4. CURRENT LEVEL MARKER (h_sau) -->
-              <div id="h-after-line" class="absolute w-full border-t-2 border-red-500 z-35 flex items-center justify-end pr-1 pointer-events-none transition-all duration-300" style="bottom: 56.25%;">
-                <span class="text-[8px] sm:text-[9px] bg-red-600 text-white font-mono px-1 rounded shadow" id="h-after-badge">h_sau: 45.0cm</span>
+              <div id="h-after-line" class="absolute w-full border-t-2 border-red-500 z-35 flex items-center justify-end pr-1 pointer-events-none transition-all duration-300" style="bottom: 74.6%;">
+                <span class="text-[8px] sm:text-[9px] bg-red-600 text-white font-mono px-1 rounded shadow" id="h-after-badge">h_sau: 59.7cm</span>
               </div>
 
               <!-- UNFLIPPED OVERLAY: WHEN SHOWING STATE BEFORE FLIP -->
@@ -313,7 +313,7 @@
                   10 bánh bỏ vào miệng ống
                 </span>
                 <div class="flex flex-wrap justify-center gap-1 opacity-90 text-xs">
-                  📦🥫🧁🥣⚪🍩🥚🍰
+                  🥣🥣🥣🥣🥣🥣🥣🥣🥣🥣
                 </div>
               </div>
 
@@ -327,22 +327,22 @@
                 <div class="text-[10px] text-emerald-400 font-bold uppercase flex items-center gap-1">
                   <span class="w-2 h-2 rounded-full bg-emerald-400"></span> So với vạch xanh
                 </div>
-                <div class="text-sm sm:text-base font-extrabold font-mono text-emerald-300 mt-0.5" id="stat-delta-green">+15.0 cm</div>
-                <div class="text-[9px] text-emerald-400/80" id="stat-green-desc">Gạo dâng 15cm trên vạch xanh</div>
+                <div class="text-sm sm:text-base font-extrabold font-mono text-emerald-300 mt-0.5" id="stat-delta-green">+9.7 cm</div>
+                <div class="text-[9px] text-emerald-400/80" id="stat-green-desc">Gạo dâng 9.7cm trên vạch xanh</div>
               </div>
 
               <!-- MỨC GẠO TUYỆT ĐỐI -->
               <div class="bg-slate-900 border border-slate-800 p-2 rounded-xl text-left">
                 <div class="text-[10px] text-slate-400 font-semibold uppercase">Mức gạo sau ($h_{\text{sau}}$)</div>
-                <div class="text-sm sm:text-base font-extrabold font-mono text-amber-300" id="stat-h-sau">45.0 cm</div>
-                <div class="text-[10px] text-slate-500">Độ dâng: <span id="stat-total-rise" class="font-mono text-orange-400 font-bold">15.0cm</span></div>
+                <div class="text-sm sm:text-base font-extrabold font-mono text-amber-300" id="stat-h-sau">59.7 cm</div>
+                <div class="text-[10px] text-slate-500">Độ dâng: <span id="stat-total-rise" class="font-mono text-orange-400 font-bold">9.7cm</span></div>
               </div>
 
               <!-- THỂ TÍCH TỔNG -->
               <div class="bg-orange-500/10 border border-orange-500/30 p-2 rounded-xl text-left">
                 <div class="text-[10px] text-orange-400 font-semibold uppercase">Thể tích 10 bánh ($V$)</div>
-                <div class="text-xs sm:text-sm font-extrabold font-mono text-orange-300 truncate" id="stat-volume-v">4,137.35 cm³</div>
-                <div class="text-[10px] text-slate-400" id="stat-volume-liters">≈ 4.14 Lít</div>
+                <div class="text-xs sm:text-sm font-extrabold font-mono text-orange-300 truncate" id="stat-volume-v">2,675.5 cm³</div>
+                <div class="text-[10px] text-slate-400" id="stat-volume-liters">≈ 2.68 Lít</div>
               </div>
             </div>
 
@@ -359,11 +359,11 @@
                   Độ cao trên vạch xanh ($\Delta h_{\text{xanh}}$):
                 </label>
                 <div class="flex items-center gap-1">
-                  <input type="number" inputmode="decimal" id="input-delta-green" step="0.1" min="0" max="50" value="15.0" 
+                  <input type="number" inputmode="decimal" id="input-delta-green" step="0.1" min="0" max="30" value="9.7" 
                     class="w-full px-2 py-1 bg-slate-950 border border-emerald-600/60 rounded-lg text-right font-mono font-bold text-emerald-300 focus:outline-none focus:border-emerald-400 text-sm">
                   <span class="text-emerald-400 font-mono text-xs">cm</span>
                 </div>
-                <div class="text-[9px] text-slate-400 mt-0.5">Vạch xanh sau lật = 30cm</div>
+                <div class="text-[9px] text-slate-400 mt-0.5">Vạch xanh chuẩn = 50.0cm</div>
               </div>
 
               <div class="bg-slate-950 border border-slate-800 p-2 rounded-xl">
@@ -372,31 +372,31 @@
                   Mức gạo sau ($h_{\text{sau}}$):
                 </label>
                 <div class="flex items-center gap-1">
-                  <input type="number" inputmode="decimal" id="input-h-sau-number" step="0.1" min="30" max="80" value="45.0" 
+                  <input type="number" inputmode="decimal" id="input-h-sau-number" step="0.1" min="50" max="80" value="59.7" 
                     class="w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded-lg text-right font-mono font-bold text-amber-300 focus:outline-none focus:border-amber-500 text-sm">
                   <span class="text-slate-400 font-mono text-xs">cm</span>
                 </div>
-                <div class="text-[9px] text-slate-400 mt-0.5">h_sau = 30 + Δh_xanh (cm)</div>
+                <div class="text-[9px] text-slate-400 mt-0.5">h_sau = 50 + Δh_xanh (cm)</div>
               </div>
             </div>
 
-            <!-- Big touch slider (30cm to 80cm) -->
+            <!-- Big touch slider (50cm to 80cm) -->
             <div class="py-1">
-              <input type="range" id="input-h-sau-slider" min="30" max="80" step="0.1" value="45.0" 
+              <input type="range" id="input-h-sau-slider" min="50" max="80" step="0.1" value="59.7" 
                 class="w-full h-3 bg-slate-800 rounded-lg appearance-none cursor-pointer">
             </div>
 
             <div class="flex justify-between text-[10px] font-mono text-slate-500">
-              <span class="text-emerald-400 font-bold">30cm (Vạch xanh & Gạo đầu)</span>
-              <span>55cm</span>
+              <span class="text-emerald-400 font-bold">50cm (Vạch xanh chuẩn)</span>
+              <span>65cm</span>
               <span>80cm (Đầy ống)</span>
             </div>
 
             <!-- Quick Presets for Green Mark Distance -->
             <div class="grid grid-cols-5 gap-1.5 pt-1">
-              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="0">0 (Vạch)</button>
+              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="0">0 (Tại vạch)</button>
               <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="5">+5cm</button>
-              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="10">+10cm</button>
+              <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95 font-bold border border-emerald-500/40" id="btn-quick-pred" data-delta="9.7">+9.7cm (LT)</button>
               <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="15">+15cm</button>
               <button class="quick-delta-btn py-1.5 px-1 bg-slate-800 hover:bg-slate-700 rounded-lg text-[11px] font-mono text-emerald-300 active:scale-95" data-delta="20">+20cm</button>
             </div>
@@ -430,12 +430,12 @@
 
             <div class="flex items-center gap-2 flex-wrap">
               <select id="preset-selector" class="text-xs bg-slate-950 border border-slate-700 text-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:border-emerald-500 flex-1 sm:flex-none">
-                <option value="muffin">Mẫu: 10 Bánh Muffin / Cupcake</option>
-                <option value="bread">Mẫu: 10 Bánh Mì Sandwich (Hộp CN)</option>
-                <option value="dome">Mẫu: 10 Bánh Chỏm Cầu (Dome / Vòm)</option>
-                <option value="bun">Mẫu: 10 Bánh Bao Tròn (Hình cầu)</option>
-                <option value="donut">Mẫu: 10 Bánh Donut Vòng (Hình xuyến)</option>
-                <option value="mixed" selected>Mẫu: 10 Bánh Hỗn Hợp</option>
+                <option value="dome_standard" selected>Mẫu chuẩn: 10 Bánh Chỏm Cầu (D=100mm, h=50mm)</option>
+                <option value="dome_varied">Mẫu thực tế: 10 Bánh Chỏm Cầu (D=98-105mm, h=48-52mm)</option>
+                <option value="dome_large">Mẫu lớn: 10 Bánh Chỏm Cầu (D=110mm, h=55mm)</option>
+                <option value="dome_small">Mẫu nhỏ: 10 Bánh Chỏm Cầu (D=85mm, h=45mm)</option>
+                <option value="muffin">Mẫu khác: 10 Bánh Muffin / Cupcake</option>
+                <option value="mixed">Mẫu khác: 10 Bánh Hỗn Hợp Nhiều Dạng</option>
               </select>
 
               <button id="btn-copy-first-to-all" title="Sao chép bánh 1 cho toàn bộ" class="p-1.5 sm:px-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs flex items-center gap-1 border border-slate-700 active:scale-95">
@@ -456,11 +456,11 @@
               <thead class="text-[11px] uppercase bg-slate-950 text-slate-400 font-bold border-b border-slate-800">
                 <tr>
                   <th class="py-2 px-2 text-center w-8">#</th>
-                  <th class="py-2 px-2 w-24">Hình dạng</th>
-                  <th class="py-2 px-2">Kích thước (cm)</th>
-                  <th class="py-2 px-2 w-16 text-right">Khối lượng</th>
-                  <th class="py-2 px-2 w-20 text-right">Thể tích Vᵢ</th>
-                  <th class="py-2 px-2 w-16 text-right">Tỷ trọng</th>
+                  <th class="py-2 px-2 w-28">Hình dạng</th>
+                  <th class="py-2 px-2">Kích thước (mm)</th>
+                  <th class="py-2 px-2 w-20 text-right">Khối lượng</th>
+                  <th class="py-2 px-2 w-24 text-right">Thể tích Vᵢ</th>
+                  <th class="py-2 px-2 w-18 text-right">Tỷ trọng</th>
                 </tr>
               </thead>
               <tbody id="cake-table-body" class="divide-y divide-slate-800/80 font-mono">
@@ -494,29 +494,170 @@
       <!-- SECTION 3: METRICS & SCIENTIFIC FORMULA EXPLANATION -->
       <div id="section-metrics" class="lg:col-span-12 space-y-4">
         
+        <!-- BẢNG ĐÁP ỨNG TRỰC TIẾP 3 YÊU CẦU BÀI TOÁN (1) - (2) - (3) -->
+        <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950/40 border-2 border-indigo-500/40 rounded-2xl p-4 sm:p-6 shadow-2xl relative overflow-hidden">
+          
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[11px] font-bold">
+                  BẢN YÊU CẦU MỚI NHẤT
+                </span>
+                <span class="px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-mono text-[10px]">
+                  10 Bánh Chỏm Cầu (mm & g)
+                </span>
+              </div>
+              <h2 class="text-base sm:text-lg font-extrabold text-white mt-1 flex items-center gap-2">
+                <i data-lucide="calculator" class="w-5 h-5 text-amber-400"></i>
+                Kết Quả Đáp Ứng Đúng 3 Yêu Cầu Cốt Lõi (1) - (2) - (3)
+              </h2>
+            </div>
+            <div class="text-right text-[11px] text-slate-400">
+              Mốc vạch xanh sau lật: <span class="font-bold font-mono text-emerald-400">50.0 cm</span> (khi không bánh)
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            
+            <!-- (1) THỂ TÍCH TỪNG BÁNH & TỔNG 10 BÁNH THEO MÔ HÌNH CHỎM CẦU -->
+            <div class="bg-slate-950/90 border border-amber-500/30 rounded-xl p-3.5 sm:p-4 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-bold text-amber-300 uppercase tracking-wide flex items-center gap-1.5">
+                    <span class="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-xs">1</span>
+                    Thể tích 10 Bánh Chỏm Cầu
+                  </span>
+                  <span class="text-[10px] text-slate-400 font-mono">V_geo</span>
+                </div>
+                <div class="text-[11px] text-slate-400 leading-snug">
+                  Mô hình chỏm cầu với đáy $D$, cao $h$ (mm):<br>
+                  <code class="text-[10px] text-amber-200/90 font-mono">Vᵢ = (π·h/24)·(3D² + 4h²)·10⁻³ cm³</code>
+                </div>
+              </div>
+
+              <div class="bg-amber-950/20 border border-amber-500/30 rounded-lg p-2.5">
+                <div class="text-[10px] text-slate-400">Tổng thể tích 10 bánh (V_geo):</div>
+                <div class="text-lg sm:text-2xl font-extrabold font-mono text-amber-300" id="req1-total-v">2,666.2 cm³</div>
+                <div class="text-[11px] text-slate-400 flex justify-between mt-0.5">
+                  <span id="req1-total-liters">≈ 2.67 Lít</span>
+                  <span>Tổng M: <strong class="text-slate-200 font-mono" id="req1-total-mass">2,650 g</strong></span>
+                </div>
+              </div>
+
+              <!-- Chi tiết thể tích từng bánh -->
+              <div class="border-t border-slate-800/80 pt-2">
+                <div class="text-[10px] font-semibold text-slate-400 uppercase mb-1 flex justify-between">
+                  <span>Thể tích từng bánh (V₁ → V₁₀):</span>
+                  <span class="text-amber-400 font-mono text-[9px]">cm³</span>
+                </div>
+                <div id="req1-individual-list" class="grid grid-cols-2 gap-1 text-[11px] font-mono max-h-28 overflow-y-auto pr-1">
+                  <!-- Dynamically rendered -->
+                </div>
+              </div>
+            </div>
+
+            <!-- (2) ĐỘ CAO MỨC GẠO SAU KHI LẬT SO VỚI VẠCH XANH -->
+            <div class="bg-slate-950/90 border border-emerald-500/30 rounded-xl p-3.5 sm:p-4 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-bold text-emerald-300 uppercase tracking-wide flex items-center gap-1.5">
+                    <span class="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">2</span>
+                    Độ Cao So Với Vạch Xanh
+                  </span>
+                  <span class="text-[10px] text-slate-400 font-mono">Δh_xanh</span>
+                </div>
+                <div class="text-[11px] text-slate-400 leading-snug">
+                  Khi không bánh, lật ống gạo đạt đúng vạch xanh <strong>50.0 cm</strong>.
+                  Bỏ 10 bánh vào thì gạo dâng vượt vạch xanh:
+                </div>
+              </div>
+
+              <div class="bg-emerald-950/20 border border-emerald-500/40 rounded-lg p-2.5">
+                <div class="text-[10px] text-slate-400">Độ cao thực tế trên vạch xanh:</div>
+                <div class="text-lg sm:text-2xl font-extrabold font-mono text-emerald-300" id="req2-delta-green">+9.7 cm</div>
+                <div class="text-[11px] text-slate-400 mt-0.5">
+                  Mức gạo sau khi lật: <span class="text-white font-mono font-bold" id="req2-h-sau">59.7 cm</span>
+                </div>
+              </div>
+
+              <div class="border-t border-slate-800/80 pt-2 space-y-1.5 text-[11px]">
+                <div class="flex justify-between text-slate-300">
+                  <span>Dự đoán lý thuyết từ 10 bánh:</span>
+                  <strong class="font-mono text-cyan-300" id="req2-pred-delta">+9.67 cm</strong>
+                </div>
+                <div class="flex justify-between text-slate-400 text-[10px]">
+                  <span>Mức gạo lý thuyết:</span>
+                  <span class="font-mono text-cyan-400" id="req2-pred-hsau">59.67 cm</span>
+                </div>
+                <div class="p-1.5 rounded bg-slate-900 border border-slate-800 text-[10px] text-slate-400">
+                  Công thức: <code class="text-emerald-300">Δh = V_geo / A = V_geo / 275.82</code>
+                </div>
+              </div>
+            </div>
+
+            <!-- (3) THỂ TÍCH SUY RA TỪ ĐỘ DÂNG & SO SÁNH VỚI HÌNH HỌC -->
+            <div class="bg-slate-950/90 border border-indigo-500/30 rounded-xl p-3.5 sm:p-4 flex flex-col justify-between space-y-3">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-bold text-indigo-300 uppercase tracking-wide flex items-center gap-1.5">
+                    <span class="w-5 h-5 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-xs">3</span>
+                    Thể Tích Thực Tế & So Sánh
+                  </span>
+                  <span class="text-[10px] text-slate-400 font-mono">V = A·Δh</span>
+                </div>
+                <div class="text-[11px] text-slate-400 leading-snug">
+                  Thể tích bánh suy ra từ độ dâng thực tế: <code>V = 275.8234 × Δh_xanh</code>
+                </div>
+              </div>
+
+              <div class="bg-indigo-950/20 border border-indigo-500/40 rounded-lg p-2.5">
+                <div class="text-[10px] text-slate-400">Thể tích từ độ dâng thực tế (V):</div>
+                <div class="text-lg sm:text-2xl font-extrabold font-mono text-indigo-300" id="req3-measured-v">2,675.5 cm³</div>
+                <div class="text-[11px] text-slate-400 mt-0.5" id="req3-measured-l">≈ 2.68 Lít</div>
+              </div>
+
+              <div class="border-t border-slate-800/80 pt-2 space-y-1.5 text-[11px]">
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-300">Chênh lệch tuyệt đối (|V - V_geo|):</span>
+                  <strong class="font-mono text-white" id="req3-diff-abs">9.3 cm³</strong>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-slate-300">Sai số tương đối:</span>
+                  <strong class="font-mono text-emerald-400" id="req3-diff-pct">0.35%</strong>
+                </div>
+                <div class="p-1.5 rounded bg-emerald-950/30 border border-emerald-500/30 text-[10px] text-emerald-300 font-medium" id="req3-evaluation">
+                  ✓ Độ dâng thực tế rất khớp với tổng thể tích 10 bánh (&lt; 5%)
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 4 QUICK METRICS CARDS -->
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-4">
           
           <div class="bg-slate-900/90 border border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
             <div class="text-[10px] sm:text-[11px] text-slate-400 font-medium">Tổng khối lượng (10 bánh)</div>
-            <div class="text-base sm:text-xl font-extrabold font-mono text-white mt-1" id="stat-total-mass">3,200 g</div>
-            <div class="text-[10px] text-slate-500" id="stat-mass-kg">≈ 3.20 kg</div>
+            <div class="text-base sm:text-xl font-extrabold font-mono text-white mt-1" id="stat-total-mass">2,650 g</div>
+            <div class="text-[10px] text-slate-500" id="stat-mass-kg">≈ 2.65 kg</div>
           </div>
 
           <div class="bg-slate-900/90 border border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
             <div class="text-[10px] sm:text-[11px] text-slate-400 font-medium">Thể tích riêng (Độ nở)</div>
-            <div class="text-base sm:text-xl font-extrabold font-mono text-cyan-300 mt-1" id="stat-spec-volume">1.72 cm³/g</div>
+            <div class="text-base sm:text-xl font-extrabold font-mono text-cyan-300 mt-1" id="stat-spec-volume">1.01 cm³/g</div>
             <div class="text-[10px] text-slate-500">v = V / M (chỉ số xốp)</div>
           </div>
 
           <div class="bg-slate-900/90 border border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
             <div class="text-[10px] sm:text-[11px] text-slate-400 font-medium">Khối lượng riêng trung bình</div>
-            <div class="text-base sm:text-xl font-extrabold font-mono text-purple-300 mt-1" id="stat-density">0.58 g/cm³</div>
+            <div class="text-base sm:text-xl font-extrabold font-mono text-purple-300 mt-1" id="stat-density">0.99 g/cm³</div>
             <div class="text-[10px] text-slate-500">ρ = M / V (tỷ trọng)</div>
           </div>
 
           <div class="bg-slate-900/90 border border-slate-800 rounded-xl sm:rounded-2xl p-3 sm:p-4">
-            <div class="text-[10px] sm:text-[11px] text-slate-400 font-medium">Độ chênh lệch (Lý thuyết vs Thực)</div>
-            <div class="text-base sm:text-xl font-extrabold font-mono text-emerald-400 mt-1" id="stat-diff-percent">0.3%</div>
+            <div class="text-[10px] sm:text-[11px] text-slate-400 font-medium">Độ chênh lệch (Thực vs Hình học)</div>
+            <div class="text-base sm:text-xl font-extrabold font-mono text-emerald-400 mt-1" id="stat-diff-percent">0.35%</div>
             <div class="text-[10px] text-slate-500" id="stat-diff-desc">Rất chính xác (&lt; 5%)</div>
           </div>
 
@@ -526,37 +667,37 @@
         <div class="bg-slate-900/50 border border-slate-800 rounded-2xl p-4 sm:p-5 no-print">
           <h3 class="text-xs sm:text-sm font-bold text-slate-200 flex items-center gap-2 mb-2.5">
             <i data-lucide="book-open" class="w-4 h-4 text-emerald-400"></i>
-            Nguyên Lý Lật Ống 180° & Tính Thể Tích Từ Vạch Xanh Sau Lật
+            Nguyên Lý Lật Ống Đong & Thể Tích Chỏm Cầu (Chuẩn Hóa v2.7.0)
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs text-slate-300 leading-relaxed">
             
             <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
-              <div class="font-bold text-amber-400 mb-1">1. Thông số & Cơ chế lật ống</div>
-              <p>Ống đong $H = 80\text{ cm}$, bán kính $R = 9.37\text{ cm}$ ($A \approx 275.8234\text{ cm}^2$).</p>
+              <div class="font-bold text-amber-400 mb-1">1. Ống đong & Mốc vạch xanh 50cm</div>
+              <p>Ống đong $H = 80\text{ cm}$, bán kính $R = 9.37\text{ cm}$ $\implies A = \pi R^2 \approx 275.8234\text{ cm}^2$.</p>
               <p class="text-slate-400 text-[11px] mt-1">
-                • <strong>Trước khi lật:</strong> Đổ gạo $30\text{ cm}$ ở đáy. Vạch xanh vẽ ở $50\text{ cm}$ (cách miệng $80 - 50 = 30\text{ cm}$). Bỏ 10 bánh vào phía trên.<br>
-                • <strong>Sau khi lật 180°:</strong> Miệng ống biến thành đáy mới. Vạch xanh cách miệng cũ 30cm giờ lộn xuống thành <strong class="text-emerald-400">30.0 cm</strong> tính từ đáy mới!<br>
-                • <strong>Kết quả:</strong> <strong class="text-emerald-300">Vạch xanh trùng khít với mức gạo ban đầu ($30\text{ cm}$)</strong>!
+                • <strong>Mức gạo đầu:</strong> $h_0 = 30\text{ cm}$.<br>
+                • <strong>Khi không có bánh:</strong> Lật ngược ống thì mức gạo đạt đúng <strong class="text-emerald-400">vạch xanh 50.0 cm</strong>.<br>
+                • <strong>Chuẩn mốc:</strong> Mọi phép đo dâng thể tích đều lấy mốc từ <strong class="text-emerald-300">vạch xanh 50.0 cm</strong>!
               </p>
             </div>
 
             <div class="bg-slate-950 p-3 rounded-xl border border-emerald-500/40">
-              <div class="font-bold text-emerald-400 mb-1">2. Thể tích đo từ vạch xanh sau lật</div>
-              <p>Gọi <span class="font-mono text-emerald-300">Δh_xanh</span> là chiều cao gạo dâng thêm trên vạch xanh ($30\text{ cm}$):</p>
-              <p class="font-mono text-emerald-300 my-0.5">h_sau = 30 + Δh_xanh (cm)</p>
-              <p class="font-mono text-emerald-300 my-0.5">Δh_tổng = h_sau - 30 = Δh_xanh (cm)</p>
+              <div class="font-bold text-emerald-400 mb-1">2. Độ dâng trên vạch xanh & Thể tích V</div>
+              <p>Khi cho 10 bánh vào và lật ngược ống, mức gạo đo được là <span class="font-mono text-amber-300">h_sau</span>:</p>
+              <p class="font-mono text-emerald-300 my-0.5">Δh_xanh = h_sau - 50.0 (cm)</p>
               <div class="p-2.5 rounded bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 font-mono my-1.5 font-bold text-xs">
-                V = A × Δh_xanh = 275.8234 × Δh_xanh (cm³)
+                V = A × Δh_xanh = 275.8234 × (h_sau - 50.0) (cm³)
               </div>
-              <p class="text-slate-400 text-[11px]">Vì vạch xanh sau lật chính là mức gạo ban đầu, toàn bộ chiều cao dâng trên vạch xanh chính là thể tích 10 chiếc bánh chiếm chỗ.</p>
+              <p class="text-slate-400 text-[11px]">Toàn bộ thể tích gạo dâng trên vạch xanh 50cm chính là thể tích 10 chiếc bánh chiếm chỗ.</p>
             </div>
 
             <div class="bg-slate-950 p-3 rounded-xl border border-slate-800/80">
-              <div class="font-bold text-cyan-400 mb-1">3. Dự đoán ngược từ 10 bánh</div>
-              <p>Khi biết kích thước các bánh $\implies V_{\text{geo}} = \sum V_i$:</p>
-              <p class="font-mono text-cyan-300 my-1">Δh_xanh = V_geo / A = V_geo / 275.8234 (cm)</p>
-              <p class="font-mono text-cyan-300 my-1">h_sau = 30 + Δh_xanh (cm)</p>
-              <p class="text-slate-400 text-[11px]">Dự đoán độ dâng trên vạch xanh để đối chiếu kiểm tra thực nghiệm sau khi lật ống.</p>
+              <div class="font-bold text-cyan-400 mb-1">3. Mô hình chỏm cầu & Dự đoán ngược</div>
+              <p>Với mỗi bánh có đường kính $D$ (mm), chiều cao $h$ (mm):</p>
+              <p class="font-mono text-cyan-300 my-1 text-[11px]">Vᵢ = (π·h/24)·(3D² + 4h²)·10⁻³ (cm³)</p>
+              <p class="font-mono text-cyan-300 my-1">Δh_xanh, lý thuyết = V_geo / A = V_geo / 275.8234 (cm)</p>
+              <p class="font-mono text-cyan-300 my-1">h_sau, lý thuyết = 50.0 + Δh_xanh, lý thuyết (cm)</p>
+              <p class="text-slate-400 text-[11px]">So sánh $V$ thực tế và $V_{\text{geo}}$ để kiểm chứng sai số thí nghiệm.</p>
             </div>
 
           </div>
@@ -571,10 +712,10 @@
           <div class="flex items-center gap-2 flex-wrap">
             <span class="px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 font-mono font-bold text-xs flex items-center gap-1.5">
               <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              Phiên bản: v2.6.0
+              Phiên bản: v2.7.0
             </span>
             <span class="px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 text-[11px] font-mono">
-              Build: 2026.10.01-1545
+              Build: 2026.10.01-1600
             </span>
             <span class="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 text-[11px] font-medium flex items-center gap-1">
               <i data-lucide="check-circle-2" class="w-3 h-3 text-emerald-400"></i>
@@ -582,7 +723,7 @@
             </span>
           </div>
           <p class="text-[11px] text-slate-400">
-            Thông số chuẩn: Ống <strong class="text-white">H = 80cm</strong>, <strong class="text-white">R = 9.37cm</strong>, Mức gạo đầu <strong class="text-amber-300">h₀ = 30cm</strong>. Vạch xanh gốc 50cm, sau khi lật 180° trở thành <strong class="text-emerald-400">30.0cm</strong> (trùng gạo đầu). Thể tích <strong class="text-orange-400">V = A × Δh_xanh</strong>.
+            Thông số chuẩn: Ống <strong class="text-white">H = 80cm</strong>, <strong class="text-white">R = 9.37cm</strong>, Mức gạo đầu <strong class="text-amber-300">h₀ = 30cm</strong>. Khi lật ngược ống không bánh, mức gạo đạt đúng <strong class="text-emerald-400">vạch xanh 50.0cm</strong>. 10 Bánh hình chỏm cầu tính bằng <strong class="text-cyan-300">mm & g</strong>. Thể tích <strong class="text-orange-400">V = A × Δh_xanh = 275.8234 × (h_sau - 50.0)</strong>.
           </p>
         </div>
 
@@ -599,7 +740,7 @@
         <span>•</span>
         <a href="https://github.com/letuananh035/cake-displacement-calculator" target="_blank" class="hover:text-slate-300 underline text-slate-400">GitHub Repository</a>
         <span>•</span>
-        <span class="text-indigo-400 font-mono font-medium">Phiên bản v2.6.0</span>
+        <span class="text-indigo-400 font-mono font-medium">Phiên bản v2.7.0</span>
       </div>
     </footer>
 
@@ -654,7 +795,7 @@
         <tr class="bg-gray-100 border-b border-gray-400">
           <th class="border border-gray-400 p-1 text-center">#</th>
           <th class="border border-gray-400 p-1">Hình Dạng</th>
-          <th class="border border-gray-400 p-1">Thông Số Kích Thước (cm)</th>
+          <th class="border border-gray-400 p-1">Thông Số Kích Thước (mm)</th>
           <th class="border border-gray-400 p-1 text-right">Khối Lượng (g)</th>
           <th class="border border-gray-400 p-1 text-right">Thể Tích Hình Học Vᵢ (cm³)</th>
           <th class="border border-gray-400 p-1 text-right">Khối Lượng Riêng (g/cm³)</th>
@@ -677,124 +818,130 @@
 
   <!-- JAVASCRIPT APPLICATION LOGIC -->
   <script>
-    const APP_VERSION = 'v2.6.0';
-    const BUILD_TIMESTAMP = '2026-10-01 15:45';
+    const APP_VERSION = 'v2.7.0';
+    const BUILD_TIMESTAMP = '2026-10-01 16:00';
 
     // CYLINDER CONSTANTS PER SPEC
     const CYLINDER = {
       H: 80.0,                // Total cylinder height: 80cm
       R: 9.37,                // Radius: 9.37cm
       h0: 30.0,               // Initial rice level: 30cm
-      greenMarkOriginal: 50.0 // Green benchmark before inverting: 50cm (from old base, 30cm from top)
+      greenMark: 50.0         // Green benchmark: 50cm (settles exactly here when inverted without cakes!)
     };
-
-    // After inverting 180°, green mark is: 80 - 50 = 30cm from new base (coincides with initial rice level!)
-    function getGreenMarkFlipped() {
-      return CYLINDER.H - CYLINDER.greenMarkOriginal; // 80 - 50 = 30.0 cm
-    }
 
     function getCylinderArea() {
       return Math.PI * Math.pow(CYLINDER.R, 2); // ~275.8234 cm2
     }
 
     // STATE
-    let isFlipped = true; // Default: Flipped state (ready for measurement after inverting)
-    let hAfter = 45.0;    // Current measured h_sau (cm), default is 15cm above green mark (30 + 15 = 45cm)
+    let isFlipped = true; // Inverted state (standard state for the experiment)
+    let hAfter = 59.7;    // Measured rice level after inverting with 10 cakes (cm), default ~9.7cm above 50cm
     let currentMode = 'experimental';
     let currentMobileTab = 'visualizer';
 
-    // 10 Cake Items (default parameters giving around ~5,500 cm3 total volume)
+    // 10 Cake Items (default 10 spherical caps, dimensions in mm, mass in g)
     let cakes = [
-      { id: 1, name: 'Bánh 1', shape: 'cuboid', dims: { l: 12, w: 9, h: 5 }, mass: 350 },
-      { id: 2, name: 'Bánh 2', shape: 'cuboid', dims: { l: 12, w: 9, h: 5 }, mass: 350 },
-      { id: 3, name: 'Bánh 3', shape: 'cylinder', dims: { d: 10, h: 7 }, mass: 340 },
-      { id: 4, name: 'Bánh 4', shape: 'cylinder', dims: { d: 10, h: 7 }, mass: 340 },
-      { id: 5, name: 'Bánh 5', shape: 'muffin', dims: { d1: 10, d2: 7, h: 8 }, mass: 320 },
-      { id: 6, name: 'Bánh 6', shape: 'muffin', dims: { d1: 10, d2: 7, h: 8 }, mass: 320 },
-      { id: 7, name: 'Bánh 7', shape: 'sphere', dims: { d: 10 }, mass: 310 },
-      { id: 8, name: 'Bánh 8', shape: 'sphere', dims: { d: 10 }, mass: 310 },
-      { id: 9, name: 'Bánh 9', shape: 'donut', dims: { dout: 12, din: 4.5, thick: 4 }, mass: 280 },
-      { id: 10, name: 'Bánh 10', shape: 'donut', dims: { dout: 12, din: 4.5, thick: 4 }, mass: 280 }
+      { id: 1, name: 'Bánh 1 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 },
+      { id: 2, name: 'Bánh 2 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 },
+      { id: 3, name: 'Bánh 3 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 105, h: 52 }, mass: 285 },
+      { id: 4, name: 'Bánh 4 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 105, h: 52 }, mass: 285 },
+      { id: 5, name: 'Bánh 5 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 98, h: 48 }, mass: 240 },
+      { id: 6, name: 'Bánh 6 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 98, h: 48 }, mass: 240 },
+      { id: 7, name: 'Bánh 7 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 102, h: 51 }, mass: 270 },
+      { id: 8, name: 'Bánh 8 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 102, h: 51 }, mass: 270 },
+      { id: 9, name: 'Bánh 9 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 },
+      { id: 10, name: 'Bánh 10 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 }
     ];
 
     const PRESETS = {
+      dome_standard: Array.from({ length: 10 }, (_, i) => ({
+        id: i + 1, name: `Chỏm cầu ${i + 1}`, shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260
+      })),
+      dome_varied: [
+        { id: 1, name: 'Chỏm cầu 1', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 },
+        { id: 2, name: 'Chỏm cầu 2', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 },
+        { id: 3, name: 'Chỏm cầu 3', shape: 'spherical_cap', dims: { d: 105, h: 52 }, mass: 285 },
+        { id: 4, name: 'Chỏm cầu 4', shape: 'spherical_cap', dims: { d: 105, h: 52 }, mass: 285 },
+        { id: 5, name: 'Chỏm cầu 5', shape: 'spherical_cap', dims: { d: 98, h: 48 }, mass: 240 },
+        { id: 6, name: 'Chỏm cầu 6', shape: 'spherical_cap', dims: { d: 98, h: 48 }, mass: 240 },
+        { id: 7, name: 'Chỏm cầu 7', shape: 'spherical_cap', dims: { d: 102, h: 51 }, mass: 270 },
+        { id: 8, name: 'Chỏm cầu 8', shape: 'spherical_cap', dims: { d: 102, h: 51 }, mass: 270 },
+        { id: 9, name: 'Chỏm cầu 9', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 },
+        { id: 10, name: 'Chỏm cầu 10', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 }
+      ],
+      dome_large: Array.from({ length: 10 }, (_, i) => ({
+        id: i + 1, name: `Chỏm cầu ${i + 1}`, shape: 'spherical_cap', dims: { d: 110, h: 55 }, mass: 320
+      })),
+      dome_small: Array.from({ length: 10 }, (_, i) => ({
+        id: i + 1, name: `Chỏm cầu ${i + 1}`, shape: 'spherical_cap', dims: { d: 85, h: 45 }, mass: 180
+      })),
       muffin: Array.from({ length: 10 }, (_, i) => ({
-        id: i + 1, name: `Muffin ${i + 1}`, shape: 'muffin', dims: { d1: 10.0, d2: 7.0, h: 8.0 }, mass: 320
-      })),
-      bread: Array.from({ length: 10 }, (_, i) => ({
-        id: i + 1, name: `Sandwich ${i + 1}`, shape: 'cuboid', dims: { l: 13.0, w: 9.0, h: 4.8 }, mass: 360
-      })),
-      bun: Array.from({ length: 10 }, (_, i) => ({
-        id: i + 1, name: `Bánh bao ${i + 1}`, shape: 'sphere', dims: { d: 10.2 }, mass: 340
-      })),
-      donut: Array.from({ length: 10 }, (_, i) => ({
-        id: i + 1, name: `Donut ${i + 1}`, shape: 'donut', dims: { dout: 12.5, din: 4.5, thick: 4.2 }, mass: 290
-      })),
-      dome: Array.from({ length: 10 }, (_, i) => ({
-        id: i + 1, name: `Chỏm cầu ${i + 1}`, shape: 'spherical_cap', dims: { d: 11.0, h: 5.5 }, mass: 300
+        id: i + 1, name: `Muffin ${i + 1}`, shape: 'muffin', dims: { d1: 100, d2: 70, h: 80 }, mass: 320
       })),
       mixed: [
-        { id: 1, name: 'Bánh 1', shape: 'cuboid', dims: { l: 12, w: 9, h: 5 }, mass: 350 },
-        { id: 2, name: 'Bánh 2', shape: 'cuboid', dims: { l: 12, w: 9, h: 5 }, mass: 350 },
-        { id: 3, name: 'Bánh 3', shape: 'cylinder', dims: { d: 10, h: 7 }, mass: 340 },
-        { id: 4, name: 'Bánh 4', shape: 'cylinder', dims: { d: 10, h: 7 }, mass: 340 },
-        { id: 5, name: 'Bánh 5', shape: 'spherical_cap', dims: { d: 11, h: 5.5 }, mass: 300 },
-        { id: 6, name: 'Bánh 6', shape: 'spherical_cap', dims: { d: 11, h: 5.5 }, mass: 300 },
-        { id: 7, name: 'Bánh 7', shape: 'sphere', dims: { d: 10 }, mass: 310 },
-        { id: 8, name: 'Bánh 8', shape: 'sphere', dims: { d: 10 }, mass: 310 },
-        { id: 9, name: 'Bánh 9', shape: 'donut', dims: { dout: 12, din: 4.5, thick: 4 }, mass: 280 },
-        { id: 10, name: 'Bánh 10', shape: 'donut', dims: { dout: 12, din: 4.5, thick: 4 }, mass: 280 }
+        { id: 1, name: 'Bánh 1 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 },
+        { id: 2, name: 'Bánh 2 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 },
+        { id: 3, name: 'Bánh 3 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 105, h: 52 }, mass: 285 },
+        { id: 4, name: 'Bánh 4 (Trụ)', shape: 'cylinder', dims: { d: 100, h: 70 }, mass: 340 },
+        { id: 5, name: 'Bánh 5 (Trụ)', shape: 'cylinder', dims: { d: 100, h: 70 }, mass: 340 },
+        { id: 6, name: 'Bánh 6 (Hộp CN)', shape: 'cuboid', dims: { l: 120, w: 90, h: 50 }, mass: 350 },
+        { id: 7, name: 'Bánh 7 (Hộp CN)', shape: 'cuboid', dims: { l: 120, w: 90, h: 50 }, mass: 350 },
+        { id: 8, name: 'Bánh 8 (Cầu)', shape: 'sphere', dims: { d: 100 }, mass: 310 },
+        { id: 9, name: 'Bánh 9 (Donut)', shape: 'donut', dims: { dout: 120, din: 45, thick: 40 }, mass: 280 },
+        { id: 10, name: 'Bánh 10 (Chỏm cầu)', shape: 'spherical_cap', dims: { d: 100, h: 50 }, mass: 260 }
       ]
     };
 
+    // Calculate individual cake volume from mm input, returns cm3
     function calculateCakeVolume(cake) {
       const d = cake.dims || {};
       switch (cake.shape) {
-        case 'cuboid': {
-          const l = parseFloat(d.l) || 0;
-          const w = parseFloat(d.w) || 0;
-          const h = parseFloat(d.h) || 0;
-          return l * w * h;
-        }
-        case 'cylinder': {
-          const dia = parseFloat(d.d) || 0;
-          const h = parseFloat(d.h) || 0;
-          const r = dia / 2;
-          return Math.PI * Math.pow(r, 2) * h;
-        }
-        case 'sphere': {
-          const dia = parseFloat(d.d) || 0;
-          const r = dia / 2;
-          return (4 / 3) * Math.PI * Math.pow(r, 3);
-        }
         case 'spherical_cap': {
           // Spherical cap (Chỏm cầu):
-          // Base diameter d -> base radius a = d / 2, height h
-          // V = (1/6) * pi * h * (3 * a^2 + h^2)
-          const dia = parseFloat(d.d) || 0;
-          const h = parseFloat(d.h) || 0;
-          const a = dia / 2;
-          return (1 / 6) * Math.PI * h * (3 * Math.pow(a, 2) + Math.pow(h, 2));
+          // Input D (mm) and h (mm)
+          // Convert mm to cm: D_cm = D / 10, h_cm = h / 10, a_cm = D_cm / 2
+          // V (cm3) = (1/6) * pi * h_cm * (3 * a_cm^2 + h_cm^2)
+          const dia_mm = parseFloat(d.d) || 0;
+          const h_mm = parseFloat(d.h) || 0;
+          const dia_cm = dia_mm / 10;
+          const h_cm = h_mm / 10;
+          const a_cm = dia_cm / 2;
+          return (1 / 6) * Math.PI * h_cm * (3 * Math.pow(a_cm, 2) + Math.pow(h_cm, 2));
         }
-        case 'ellipsoid': {
-          const a = (parseFloat(d.a) || 0) / 2;
-          const b = (parseFloat(d.b) || 0) / 2;
-          const c = (parseFloat(d.c) || 0) / 2;
-          return (4 / 3) * Math.PI * a * b * c;
+        case 'cuboid': {
+          const l_cm = (parseFloat(d.l) || 0) / 10;
+          const w_cm = (parseFloat(d.w) || 0) / 10;
+          const h_cm = (parseFloat(d.h) || 0) / 10;
+          return l_cm * w_cm * h_cm;
+        }
+        case 'cylinder': {
+          const r_cm = ((parseFloat(d.d) || 0) / 10) / 2;
+          const h_cm = (parseFloat(d.h) || 0) / 10;
+          return Math.PI * Math.pow(r_cm, 2) * h_cm;
+        }
+        case 'sphere': {
+          const r_cm = ((parseFloat(d.d) || 0) / 10) / 2;
+          return (4 / 3) * Math.PI * Math.pow(r_cm, 3);
         }
         case 'muffin': {
-          const r1 = (parseFloat(d.d1) || 0) / 2;
-          const r2 = (parseFloat(d.d2) || 0) / 2;
-          const h = parseFloat(d.h) || 0;
-          return (1 / 3) * Math.PI * h * (Math.pow(r1, 2) + Math.pow(r2, 2) + r1 * r2);
+          const r1_cm = ((parseFloat(d.d1) || 0) / 10) / 2;
+          const r2_cm = ((parseFloat(d.d2) || 0) / 10) / 2;
+          const h_cm = (parseFloat(d.h) || 0) / 10;
+          return (1 / 3) * Math.PI * h_cm * (Math.pow(r1_cm, 2) + Math.pow(r2_cm, 2) + r1_cm * r2_cm);
         }
         case 'donut': {
-          const dOut = parseFloat(d.dout) || 0;
-          const dIn = parseFloat(d.din) || 0;
-          if (dOut <= dIn) return 0;
-          const rTube = (dOut - dIn) / 4;
-          const rMajor = (dOut + dIn) / 4;
-          return 2 * Math.pow(Math.PI, 2) * rMajor * Math.pow(rTube, 2);
+          const dOut_cm = (parseFloat(d.dout) || 0) / 10;
+          const dIn_cm = (parseFloat(d.din) || 0) / 10;
+          if (dOut_cm <= dIn_cm) return 0;
+          const rTube_cm = (dOut_cm - dIn_cm) / 4;
+          const rMajor_cm = (dOut_cm + dIn_cm) / 4;
+          return 2 * Math.pow(Math.PI, 2) * rMajor_cm * Math.pow(rTube_cm, 2);
+        }
+        case 'ellipsoid': {
+          const a_cm = ((parseFloat(d.a) || 0) / 10) / 2;
+          const b_cm = ((parseFloat(d.b) || 0) / 10) / 2;
+          const c_cm = ((parseFloat(d.c) || 0) / 10) / 2;
+          return (4 / 3) * Math.PI * a_cm * b_cm * c_cm;
         }
         case 'custom': {
           return parseFloat(d.v) || 0;
@@ -806,13 +953,11 @@
 
     function updateAll() {
       const A = getCylinderArea();
-      const greenMarkFlipped = getGreenMarkFlipped(); // 30.0 cm
+      const greenRef = CYLINDER.greenMark; // 50.0 cm
       
-      // When cylinder is flipped: green mark is at 30cm (coincides with initial rice h0 = 30cm)
-      const greenReference = isFlipped ? greenMarkFlipped : CYLINDER.greenMarkOriginal;
-      const deltaGreen = isFlipped ? (hAfter - greenMarkFlipped) : (hAfter - CYLINDER.greenMarkOriginal);
-      const totalRise = Math.max(0, hAfter - CYLINDER.h0); // In flipped state: totalRise = deltaGreen
-      const measuredVolume = A * totalRise; // V = A * totalRise = A * deltaGreen (cm3)
+      // Relative rise over green mark (50.0cm)
+      const deltaGreen = isFlipped ? (hAfter - greenRef) : (hAfter - CYLINDER.h0);
+      const measuredVolume = A * Math.max(0, deltaGreen); // V = A * deltaGreen (cm3)
       const measuredVolumeLiters = measuredVolume / 1000;
 
       let totalGeoVolume = 0;
@@ -827,19 +972,18 @@
         totalMass += m;
       });
 
-      // Predicted values from theoretical geometric cake volumes
-      const predictedTotalRise = totalGeoVolume / A;
-      const predictedHAfter = CYLINDER.h0 + predictedTotalRise;
-      const predictedDeltaGreen = isFlipped ? predictedTotalRise : (predictedHAfter - CYLINDER.greenMarkOriginal);
+      // Predicted rise from 10 cakes
+      const predictedDeltaGreen = totalGeoVolume / A;
+      const predictedHAfter = greenRef + predictedDeltaGreen;
 
       // Overflow check (H = 80cm)
       const isOverflow = hAfter > CYLINDER.H;
       document.getElementById('overflow-alert').classList.toggle('hidden', !isOverflow);
 
       // Visual cylinder graphic (0 to 80cm scale)
-      const visualHAfter = Math.min(80, Math.max(CYLINDER.h0, hAfter));
+      const visualHAfter = Math.min(80, Math.max(greenRef, hAfter));
       const visualHAfterPct = (visualHAfter / CYLINDER.H) * 100; // % from bottom
-      const initialRicePct = (CYLINDER.h0 / CYLINDER.H) * 100;   // 30/80 = 37.5%
+      const initialRicePct = (greenRef / CYLINDER.H) * 100;      // 50/80 = 62.5%
       const displacedLayerPct = Math.max(0, visualHAfterPct - initialRicePct);
 
       const displacedLayer = document.getElementById('displaced-layer');
@@ -865,9 +1009,8 @@
       const btnQuickFlip = document.getElementById('btn-quick-flip-toggle');
 
       if (isFlipped) {
-        // FLIPPED STATE: Green line at 30cm (coincides with initial rice)
-        if (greenLine) greenLine.style.bottom = '37.5%';
-        if (greenBadge) greenBadge.innerHTML = '<i data-lucide="flag" class="w-2.5 h-2.5"></i> Vạch xanh (30cm)';
+        if (greenLine) greenLine.style.bottom = '62.5%';
+        if (greenBadge) greenBadge.innerHTML = '<i data-lucide="flag" class="w-2.5 h-2.5"></i> Vạch xanh (50cm)';
         if (unflippedPreview) unflippedPreview.classList.add('hidden');
         if (displacedLayer) displacedLayer.classList.remove('hidden');
 
@@ -876,9 +1019,9 @@
             <span class="font-bold text-red-400">80cm (H)</span>
             <span>70cm</span>
             <span>60cm</span>
-            <span>50cm</span>
+            <span class="text-emerald-400 font-extrabold flex items-center justify-end gap-1">50cm <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span></span>
             <span>40cm</span>
-            <span class="text-emerald-400 font-extrabold flex items-center justify-end gap-1">30cm <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span></span>
+            <span class="text-amber-400 font-semibold">30cm (h₀)</span>
             <span>20cm</span>
             <span>10cm</span>
             <span>0cm (Đáy)</span>
@@ -891,11 +1034,10 @@
           flipBadge.className = 'px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-emerald-500 text-slate-950';
         }
         if (flipBannerDesc) {
-          flipBannerDesc.innerHTML = `Vạch xanh ở <strong>30cm</strong> (= mức gạo đầu). Dâng trên vạch: <strong>+${deltaGreen.toFixed(1)}cm</strong>!`;
+          flipBannerDesc.innerHTML = `Khi không bánh, gạo đạt đúng <strong>vạch xanh 50cm</strong>. Cho 10 bánh vào $\\to$ đo dâng trên vạch xanh!`;
         }
         if (btnQuickFlip) btnQuickFlip.textContent = 'Xem lúc chưa lật';
       } else {
-        // UNFLIPPED STATE: Green line at 50cm (30cm from top)
         if (greenLine) greenLine.style.bottom = '62.5%';
         if (greenBadge) greenBadge.innerHTML = '<i data-lucide="flag" class="w-2.5 h-2.5"></i> Vạch xanh (50cm)';
         if (unflippedPreview) unflippedPreview.classList.remove('hidden');
@@ -921,7 +1063,7 @@
           flipBadge.className = 'px-2 py-0.5 rounded font-mono font-bold text-[10px] bg-amber-500 text-slate-950';
         }
         if (flipBannerDesc) {
-          flipBannerDesc.innerHTML = `Gạo 30cm ở đáy, bánh ở trên. Vạch xanh 50cm (cách miệng 30cm). Bấm Lật ống!`;
+          flipBannerDesc.innerHTML = `Gạo 30cm ở đáy, bánh ở trên. Vạch xanh 50cm. Bấm Lật ống để bắt đầu đo!`;
         }
         if (btnQuickFlip) btnQuickFlip.textContent = 'Lật ngược ống ngay';
       }
@@ -933,7 +1075,7 @@
       document.getElementById('disp-H').textContent = `${CYLINDER.H.toFixed(1)}cm`;
       document.getElementById('disp-R').textContent = `${CYLINDER.R.toFixed(2)}cm`;
       document.getElementById('disp-h0').textContent = `${CYLINDER.h0.toFixed(1)}cm`;
-      document.getElementById('disp-green').textContent = `${greenMarkFlipped.toFixed(1)}cm`;
+      document.getElementById('disp-green').textContent = `${greenRef.toFixed(1)}cm`;
 
       // Relative to Green Mark Display
       const deltaGreenSign = deltaGreen >= 0 ? `+${deltaGreen.toFixed(1)}` : `${deltaGreen.toFixed(1)}`;
@@ -942,13 +1084,13 @@
       if (deltaGreen > 0) {
         document.getElementById('stat-green-desc').textContent = `Dâng +${deltaGreen.toFixed(1)}cm trên vạch xanh`;
       } else if (deltaGreen === 0) {
-        document.getElementById('stat-green-desc').textContent = 'Ngang bằng vạch xanh (30cm)';
+        document.getElementById('stat-green-desc').textContent = 'Ngang bằng vạch xanh (50cm)';
       } else {
         document.getElementById('stat-green-desc').textContent = `Thấp hơn vạch xanh ${Math.abs(deltaGreen).toFixed(1)}cm`;
       }
 
       document.getElementById('stat-h-sau').textContent = `${hAfter.toFixed(1)} cm`;
-      document.getElementById('stat-total-rise').textContent = `${totalRise.toFixed(1)}cm`;
+      document.getElementById('stat-total-rise').textContent = `${deltaGreen.toFixed(1)}cm`;
       document.getElementById('stat-volume-v').textContent = `${measuredVolume.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} cm³`;
       document.getElementById('stat-volume-liters').textContent = `≈ ${measuredVolumeLiters.toFixed(2)} Lít`;
 
@@ -961,10 +1103,11 @@
       const avgDensity = measuredVolume > 0 ? (totalMass / measuredVolume) : 0;
       document.getElementById('stat-density').textContent = `${avgDensity.toFixed(2)} g/cm³`;
 
-      // Compare
-      const diffPercent = totalGeoVolume > 0 ? (Math.abs(measuredVolume - totalGeoVolume) / totalGeoVolume * 100) : 0;
+      // Comparison Metrics (Requirements 1, 2, 3)
+      const diffAbs = Math.abs(measuredVolume - totalGeoVolume);
+      const diffPercent = totalGeoVolume > 0 ? (diffAbs / totalGeoVolume * 100) : 0;
       const diffElem = document.getElementById('stat-diff-percent');
-      diffElem.textContent = `${diffPercent.toFixed(1)}%`;
+      diffElem.textContent = `${diffPercent.toFixed(2)}%`;
       if (diffPercent < 5) {
         diffElem.className = 'text-base sm:text-xl font-extrabold font-mono text-emerald-400 mt-1';
         document.getElementById('stat-diff-desc').textContent = 'Rất chính xác (< 5%)';
@@ -974,6 +1117,70 @@
       } else {
         diffElem.className = 'text-base sm:text-xl font-extrabold font-mono text-rose-400 mt-1';
         document.getElementById('stat-diff-desc').textContent = 'Chênh lệch lớn (> 15%)';
+      }
+
+      // Update DEDICATED 3-REQUIREMENT CARD
+      // (1) Thể tích từng bánh & Tổng thể tích 10 bánh
+      const req1TotalV = document.getElementById('req1-total-v');
+      if (req1TotalV) req1TotalV.textContent = `${totalGeoVolume.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} cm³`;
+      const req1Liters = document.getElementById('req1-total-liters');
+      if (req1Liters) req1Liters.textContent = `≈ ${(totalGeoVolume / 1000).toFixed(2)} Lít`;
+      const req1Mass = document.getElementById('req1-total-mass');
+      if (req1Mass) req1Mass.textContent = `${totalMass.toLocaleString('en-US')} g`;
+      
+      const req1List = document.getElementById('req1-individual-list');
+      if (req1List) {
+        req1List.innerHTML = '';
+        cakes.forEach((c, idx) => {
+          const item = document.createElement('div');
+          item.className = 'flex items-center justify-between bg-slate-900/80 px-2 py-0.5 rounded border border-slate-800 text-[10px]';
+          const dimTxt = c.shape === 'spherical_cap' ? `D:${c.dims.d} h:${c.dims.h}` : `${c.shape}`;
+          item.innerHTML = `
+            <span class="text-slate-400">#${idx + 1} (${dimTxt})</span>
+            <span class="text-amber-300 font-bold font-mono">${(c.calculatedVolume || 0).toFixed(1)} cm³</span>
+          `;
+          req1List.appendChild(item);
+        });
+      }
+
+      // (2) Độ cao mức gạo sau khi lật so với vạch xanh
+      const req2Delta = document.getElementById('req2-delta-green');
+      if (req2Delta) req2Delta.textContent = `${deltaGreenSign} cm`;
+      const req2HSau = document.getElementById('req2-h-sau');
+      if (req2HSau) req2HSau.textContent = `${hAfter.toFixed(1)} cm`;
+      const req2PredDelta = document.getElementById('req2-pred-delta');
+      if (req2PredDelta) req2PredDelta.textContent = `+${predictedDeltaGreen.toFixed(2)} cm`;
+      const req2PredHSau = document.getElementById('req2-pred-hsau');
+      if (req2PredHSau) req2PredHSau.textContent = `${predictedHAfter.toFixed(2)} cm`;
+
+      // (3) Thể tích bánh suy ra từ độ dâng & so sánh với hình học
+      const req3Vol = document.getElementById('req3-measured-v');
+      if (req3Vol) req3Vol.textContent = `${measuredVolume.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} cm³`;
+      const req3Lit = document.getElementById('req3-measured-l');
+      if (req3Lit) req3Lit.textContent = `≈ ${measuredVolumeLiters.toFixed(2)} Lít`;
+      const req3Diff = document.getElementById('req3-diff-abs');
+      if (req3Diff) req3Diff.textContent = `${diffAbs.toFixed(1)} cm³`;
+      const req3Pct = document.getElementById('req3-diff-pct');
+      if (req3Pct) req3Pct.textContent = `${diffPercent.toFixed(2)}%`;
+      const req3Eval = document.getElementById('req3-evaluation');
+      if (req3Eval) {
+        if (diffPercent < 2) {
+          req3Eval.textContent = '✓ Độ dâng thực tế rất khớp với tổng thể tích 10 bánh (< 2%)';
+          req3Eval.className = 'p-1.5 rounded bg-emerald-950/30 border border-emerald-500/30 text-[10px] text-emerald-300 font-medium';
+        } else if (diffPercent < 5) {
+          req3Eval.textContent = '✓ Độ dâng thực tế khớp tốt với mô hình chỏm cầu (< 5%)';
+          req3Eval.className = 'p-1.5 rounded bg-emerald-950/30 border border-emerald-500/30 text-emerald-300 font-medium';
+        } else {
+          req3Eval.textContent = `⚠️ Chênh lệch ${diffPercent.toFixed(1)}%: Cần kiểm tra lại độ lèn chặt hoặc kích thước bánh`;
+          req3Eval.className = 'p-1.5 rounded bg-amber-950/30 border border-amber-500/30 text-[10px] text-amber-300 font-medium';
+        }
+      }
+
+      // Update Quick Prediction Preset Button
+      const btnQuickPred = document.getElementById('btn-quick-pred');
+      if (btnQuickPred) {
+        btnQuickPred.textContent = `+${predictedDeltaGreen.toFixed(1)}cm (LT)`;
+        btnQuickPred.dataset.delta = predictedDeltaGreen.toFixed(1);
       }
 
       document.getElementById('sum-geo-volume').textContent = `${totalGeoVolume.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })} cm³`;
@@ -992,7 +1199,8 @@
       // Sync Print Fields
       document.getElementById('print-h-sau').textContent = hAfter.toFixed(1);
       document.getElementById('print-delta-green').textContent = deltaGreenSign;
-      document.getElementById('print-delta-h').textContent = totalRise.toFixed(1);
+      const printDeltaH = document.getElementById('print-delta-h');
+      if (printDeltaH) printDeltaH.textContent = deltaGreen.toFixed(1);
       document.getElementById('print-volume').textContent = measuredVolume.toFixed(1);
       document.getElementById('print-volume-l').textContent = measuredVolumeLiters.toFixed(2);
       document.getElementById('print-mass').textContent = totalMass.toFixed(0);
@@ -1081,7 +1289,7 @@
           </div>
 
           <div class="space-y-1.5">
-            <div class="text-[10px] text-slate-400 font-medium">Kích thước (cm):</div>
+            <div class="text-[10px] text-slate-400 font-medium">Kích thước (mm):</div>
             <div class="grid grid-cols-3 gap-2">
               ${dimInputsMobile}
             </div>
@@ -1123,7 +1331,7 @@
       const d = cake.dims || {};
       if (cake.shape === 'cuboid') return `L:${d.l} W:${d.w} H:${d.h}`;
       if (cake.shape === 'cylinder') return `D:${d.d} H:${d.h}`;
-      if (cake.shape === 'spherical_cap') return `D:${d.d} H:${d.h}`;
+      if (cake.shape === 'spherical_cap') return `D:${d.d}mm h:${d.h}mm`;
       if (cake.shape === 'sphere') return `D:${d.d}`;
       if (cake.shape === 'muffin') return `D1:${d.d1} D2:${d.d2} H:${d.h}`;
       if (cake.shape === 'donut') return `D_out:${d.dout} D_in:${d.din} T:${d.thick}`;
@@ -1137,41 +1345,41 @@
         switch (cake.shape) {
           case 'cuboid':
             return `
-              <div><span class="text-[10px] text-slate-500">Dài</span><input type="number" inputmode="decimal" step="0.1" value="${d.l || 12}" data-index="${index}" data-dim="l" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
-              <div><span class="text-[10px] text-slate-500">Rộng</span><input type="number" inputmode="decimal" step="0.1" value="${d.w || 9}" data-index="${index}" data-dim="w" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
-              <div><span class="text-[10px] text-slate-500">Cao</span><input type="number" inputmode="decimal" step="0.1" value="${d.h || 5}" data-index="${index}" data-dim="h" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div><span class="text-[10px] text-slate-500">Dài</span><input type="number" inputmode="decimal" step="1" value="${d.l || 120}" data-index="${index}" data-dim="l" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div><span class="text-[10px] text-slate-500">Rộng</span><input type="number" inputmode="decimal" step="1" value="${d.w || 90}" data-index="${index}" data-dim="w" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div><span class="text-[10px] text-slate-500">Cao</span><input type="number" inputmode="decimal" step="1" value="${d.h || 50}" data-index="${index}" data-dim="h" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
             `;
           case 'cylinder':
             return `
-              <div class="col-span-1"><span class="text-[10px] text-slate-500">Đ.kính</span><input type="number" inputmode="decimal" step="0.1" value="${d.d || 10}" data-index="${index}" data-dim="d" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
-              <div class="col-span-2"><span class="text-[10px] text-slate-500">Cao</span><input type="number" inputmode="decimal" step="0.1" value="${d.h || 7}" data-index="${index}" data-dim="h" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div class="col-span-1"><span class="text-[10px] text-slate-500">Đ.kính</span><input type="number" inputmode="decimal" step="1" value="${d.d || 100}" data-index="${index}" data-dim="d" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div class="col-span-2"><span class="text-[10px] text-slate-500">Cao</span><input type="number" inputmode="decimal" step="1" value="${d.h || 70}" data-index="${index}" data-dim="h" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
             `;
           case 'spherical_cap':
             return `
-              <div class="col-span-1"><span class="text-[10px] text-slate-500">ĐK đáy (D)</span><input type="number" inputmode="decimal" step="0.1" value="${d.d || 11}" data-index="${index}" data-dim="d" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
-              <div class="col-span-2"><span class="text-[10px] text-slate-500">Chiều cao (h)</span><input type="number" inputmode="decimal" step="0.1" value="${d.h || 5.5}" data-index="${index}" data-dim="h" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div class="col-span-1"><span class="text-[10px] text-slate-500">ĐK D (mm)</span><input type="number" inputmode="decimal" step="1" value="${d.d || 100}" data-index="${index}" data-dim="d" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div class="col-span-2"><span class="text-[10px] text-slate-500">Cao h (mm)</span><input type="number" inputmode="decimal" step="1" value="${d.h || 50}" data-index="${index}" data-dim="h" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
             `;
           case 'muffin':
             return `
-              <div><span class="text-[10px] text-slate-500">ĐK trên</span><input type="number" inputmode="decimal" step="0.1" value="${d.d1 || 10}" data-index="${index}" data-dim="d1" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
-              <div><span class="text-[10px] text-slate-500">ĐK đáy</span><input type="number" inputmode="decimal" step="0.1" value="${d.d2 || 7}" data-index="${index}" data-dim="d2" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
-              <div><span class="text-[10px] text-slate-500">Cao</span><input type="number" inputmode="decimal" step="0.1" value="${d.h || 8}" data-index="${index}" data-dim="h" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div><span class="text-[10px] text-slate-500">ĐK trên</span><input type="number" inputmode="decimal" step="1" value="${d.d1 || 100}" data-index="${index}" data-dim="d1" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div><span class="text-[10px] text-slate-500">ĐK đáy</span><input type="number" inputmode="decimal" step="1" value="${d.d2 || 70}" data-index="${index}" data-dim="d2" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div><span class="text-[10px] text-slate-500">Cao</span><input type="number" inputmode="decimal" step="1" value="${d.h || 80}" data-index="${index}" data-dim="h" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
             `;
           case 'sphere':
             return `
-              <div class="col-span-3"><span class="text-[10px] text-slate-500">Đường kính D</span><input type="number" inputmode="decimal" step="0.1" value="${d.d || 10}" data-index="${index}" data-dim="d" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div class="col-span-3"><span class="text-[10px] text-slate-500">Đường kính D (mm)</span><input type="number" inputmode="decimal" step="1" value="${d.d || 100}" data-index="${index}" data-dim="d" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
             `;
           case 'donut':
             return `
-              <div><span class="text-[10px] text-slate-500">ĐK ngoài</span><input type="number" inputmode="decimal" step="0.1" value="${d.dout || 12}" data-index="${index}" data-dim="dout" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
-              <div><span class="text-[10px] text-slate-500">ĐK lỗ</span><input type="number" inputmode="decimal" step="0.1" value="${d.din || 4.5}" data-index="${index}" data-dim="din" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
-              <div><span class="text-[10px] text-slate-500">Độ dày</span><input type="number" inputmode="decimal" step="0.1" value="${d.thick || 4}" data-index="${index}" data-dim="thick" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div><span class="text-[10px] text-slate-500">ĐK ngoài</span><input type="number" inputmode="decimal" step="1" value="${d.dout || 120}" data-index="${index}" data-dim="dout" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div><span class="text-[10px] text-slate-500">ĐK lỗ</span><input type="number" inputmode="decimal" step="1" value="${d.din || 45}" data-index="${index}" data-dim="din" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div><span class="text-[10px] text-slate-500">Độ dày</span><input type="number" inputmode="decimal" step="1" value="${d.thick || 40}" data-index="${index}" data-dim="thick" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
             `;
           case 'ellipsoid':
             return `
-              <div><span class="text-[10px] text-slate-500">Trục a</span><input type="number" inputmode="decimal" step="0.1" value="${d.a || 13}" data-index="${index}" data-dim="a" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
-              <div><span class="text-[10px] text-slate-500">Trục b</span><input type="number" inputmode="decimal" step="0.1" value="${d.b || 9}" data-index="${index}" data-dim="b" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
-              <div><span class="text-[10px] text-slate-500">Trục c</span><input type="number" inputmode="decimal" step="0.1" value="${d.c || 6}" data-index="${index}" data-dim="c" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div><span class="text-[10px] text-slate-500">Trục a</span><input type="number" inputmode="decimal" step="1" value="${d.a || 130}" data-index="${index}" data-dim="a" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div><span class="text-[10px] text-slate-500">Trục b</span><input type="number" inputmode="decimal" step="1" value="${d.b || 90}" data-index="${index}" data-dim="b" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
+              <div><span class="text-[10px] text-slate-500">Trục c</span><input type="number" inputmode="decimal" step="1" value="${d.c || 60}" data-index="${index}" data-dim="c" class="dim-input w-full px-2 py-1 bg-slate-900 border border-slate-700 rounded text-right text-xs text-white"></div>
             `;
           case 'custom':
             return `
@@ -1182,34 +1390,48 @@
         switch (cake.shape) {
           case 'cuboid':
             return `
-              <span class="text-[10px] text-slate-500">L:</span><input type="number" inputmode="decimal" step="0.1" value="${d.l || 12}" data-index="${index}" data-dim="l" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
-              <span class="text-[10px] text-slate-500">W:</span><input type="number" inputmode="decimal" step="0.1" value="${d.w || 9}" data-index="${index}" data-dim="w" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
-              <span class="text-[10px] text-slate-500">H:</span><input type="number" inputmode="decimal" step="0.1" value="${d.h || 5}" data-index="${index}" data-dim="h" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">L:</span><input type="number" inputmode="decimal" step="1" value="${d.l || 120}" data-index="${index}" data-dim="l" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">W:</span><input type="number" inputmode="decimal" step="1" value="${d.w || 90}" data-index="${index}" data-dim="w" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">H:</span><input type="number" inputmode="decimal" step="1" value="${d.h || 50}" data-index="${index}" data-dim="h" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
             `;
           case 'cylinder':
             return `
-              <span class="text-[10px] text-slate-500">D:</span><input type="number" inputmode="decimal" step="0.1" value="${d.d || 10}" data-index="${index}" data-dim="d" class="dim-input w-14 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
-              <span class="text-[10px] text-slate-500">H:</span><input type="number" inputmode="decimal" step="0.1" value="${d.h || 7}" data-index="${index}" data-dim="h" class="dim-input w-14 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">D:</span><input type="number" inputmode="decimal" step="1" value="${d.d || 100}" data-index="${index}" data-dim="d" class="dim-input w-14 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">H:</span><input type="number" inputmode="decimal" step="1" value="${d.h || 70}" data-index="${index}" data-dim="h" class="dim-input w-14 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
             `;
           case 'spherical_cap':
             return `
-              <span class="text-[10px] text-slate-500">ĐK đáy:</span><input type="number" inputmode="decimal" step="0.1" value="${d.d || 11}" data-index="${index}" data-dim="d" class="dim-input w-14 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
-              <span class="text-[10px] text-slate-500">Cao:</span><input type="number" inputmode="decimal" step="0.1" value="${d.h || 5.5}" data-index="${index}" data-dim="h" class="dim-input w-14 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">D (mm):</span><input type="number" inputmode="decimal" step="1" value="${d.d || 100}" data-index="${index}" data-dim="d" class="dim-input w-14 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">h (mm):</span><input type="number" inputmode="decimal" step="1" value="${d.h || 50}" data-index="${index}" data-dim="h" class="dim-input w-14 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
             `;
           case 'muffin':
             return `
-              <span class="text-[10px] text-slate-500">D1:</span><input type="number" inputmode="decimal" step="0.1" value="${d.d1 || 10}" data-index="${index}" data-dim="d1" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
-              <span class="text-[10px] text-slate-500">D2:</span><input type="number" inputmode="decimal" step="0.1" value="${d.d2 || 7}" data-index="${index}" data-dim="d2" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
-              <span class="text-[10px] text-slate-500">H:</span><input type="number" inputmode="decimal" step="0.1" value="${d.h || 8}" data-index="${index}" data-dim="h" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">D1:</span><input type="number" inputmode="decimal" step="1" value="${d.d1 || 100}" data-index="${index}" data-dim="d1" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">D2:</span><input type="number" inputmode="decimal" step="1" value="${d.d2 || 70}" data-index="${index}" data-dim="d2" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">H:</span><input type="number" inputmode="decimal" step="1" value="${d.h || 80}" data-index="${index}" data-dim="h" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
             `;
           case 'sphere':
             return `
-              <span class="text-[10px] text-slate-500">D:</span><input type="number" inputmode="decimal" step="0.1" value="${d.d || 10}" data-index="${index}" data-dim="d" class="dim-input w-16 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">D:</span><input type="number" inputmode="decimal" step="1" value="${d.d || 100}" data-index="${index}" data-dim="d" class="dim-input w-16 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
             `;
           case 'donut':
             return `
-              <span class="text-[10px] text-slate-500">D_out:</span><input type="number" inputmode="decimal" step="0.1" value="${d.dout || 12}" data-index="${index}" data-dim="dout" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
-              <span class="text-[10px] text-slate-500">D_in:</span><input type="number" inputmode="decimal" step="0.1" value="${d.din || 4.5}" data-index="${index}" data-dim="din" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">D_out:</span><input type="number" inputmode="decimal" step="1" value="${d.dout || 120}" data-index="${index}" data-dim="dout" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">D_in:</span><input type="number" inputmode="decimal" step="1" value="${d.din || 45}" data-index="${index}" data-dim="din" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">T:</span><input type="number" inputmode="decimal" step="1" value="${d.thick || 40}" data-index="${index}" data-dim="thick" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+            `;
+          case 'ellipsoid':
+            return `
+              <span class="text-[10px] text-slate-500">a:</span><input type="number" inputmode="decimal" step="1" value="${d.a || 130}" data-index="${index}" data-dim="a" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">b:</span><input type="number" inputmode="decimal" step="1" value="${d.b || 90}" data-index="${index}" data-dim="b" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+              <span class="text-[10px] text-slate-500">c:</span><input type="number" inputmode="decimal" step="1" value="${d.c || 60}" data-index="${index}" data-dim="c" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+            `;
+          case 'custom':
+            return `
+              <span class="text-[10px] text-slate-500">V:</span><input type="number" inputmode="decimal" step="1" value="${d.v || 450}" data-index="${index}" data-dim="v" class="dim-input w-20 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
+            `;
+        }
+      }
               <span class="text-[10px] text-slate-500">T:</span><input type="number" inputmode="decimal" step="0.1" value="${d.thick || 4}" data-index="${index}" data-dim="thick" class="dim-input w-12 px-1 py-0.5 bg-slate-950 border border-slate-700 rounded text-right text-xs text-white">
             `;
           case 'ellipsoid':
@@ -1235,7 +1457,7 @@
           cakes[index].shape = newShape;
           if (newShape === 'cuboid') cakes[index].dims = { l: 12, w: 9, h: 5 };
           else if (newShape === 'cylinder') cakes[index].dims = { d: 10, h: 7 };
-          else if (newShape === 'spherical_cap') cakes[index].dims = { d: 11, h: 5.5 };
+          else if (newShape === 'spherical_cap') cakes[index].dims = { d: 100, h: 50 };
           else if (newShape === 'muffin') cakes[index].dims = { d1: 10, d2: 7, h: 8 };
           else if (newShape === 'sphere') cakes[index].dims = { d: 10 };
           else if (newShape === 'donut') cakes[index].dims = { dout: 12, din: 4.5, thick: 4 };
@@ -1340,7 +1562,7 @@
       // 3. Green Benchmark delta input change: h_sau = greenRef + deltaGreen
       deltaGreenInput.addEventListener('input', (e) => {
         const dG = parseFloat(e.target.value) || 0;
-        const greenRef = isFlipped ? getGreenMarkFlipped() : CYLINDER.greenMarkOriginal;
+        const greenRef = CYLINDER.greenMark;
         hAfter = greenRef + dG;
         updateAll();
       });
@@ -1349,7 +1571,7 @@
       document.querySelectorAll('.quick-delta-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           const dG = parseFloat(btn.dataset.delta);
-          const greenRef = isFlipped ? getGreenMarkFlipped() : CYLINDER.greenMarkOriginal;
+          const greenRef = CYLINDER.greenMark;
           hAfter = greenRef + dG;
           updateAll();
         });
@@ -1405,7 +1627,7 @@
         const A = getCylinderArea();
         let totalV = 0;
         cakes.forEach(c => totalV += calculateCakeVolume(c));
-        hAfter = CYLINDER.h0 + (totalV / A);
+        hAfter = CYLINDER.greenMark + (totalV / A);
         updateAll();
       });
 
@@ -1413,7 +1635,7 @@
         const A = getCylinderArea();
         let totalV = 0;
         cakes.forEach(c => totalV += calculateCakeVolume(c));
-        hAfter = CYLINDER.h0 + (totalV / A);
+        hAfter = CYLINDER.greenMark + (totalV / A);
         updateAll();
         if (window.innerWidth < 1024) {
           const tabBtn = document.querySelector('[data-tab="visualizer"]');
@@ -1464,8 +1686,8 @@
         const newH0 = prompt('Nhập mức gạo ban đầu h0 (cm):', CYLINDER.h0);
         if (newH0 && !isNaN(parseFloat(newH0))) CYLINDER.h0 = parseFloat(newH0);
 
-        const newGreen = prompt('Nhập vạch xanh gốc khi chưa lật (cm):', CYLINDER.greenMarkOriginal);
-        if (newGreen && !isNaN(parseFloat(newGreen))) CYLINDER.greenMarkOriginal = parseFloat(newGreen);
+        const newGreen = prompt('Nhập vạch xanh khi lật không bánh (cm):', CYLINDER.greenMark);
+        if (newGreen && !isNaN(parseFloat(newGreen))) CYLINDER.greenMark = parseFloat(newGreen);
 
         updateAll();
       });
@@ -1477,12 +1699,14 @@
           alert(
             `Phiên bản hiện tại: ${APP_VERSION}\n` +
             `Thời gian cập nhật: ${BUILD_TIMESTAMP}\n\n` +
-            `Các tính năng chuẩn hóa mới nhất:\n` +
-            `✓ Mô phỏng lật ngược ống 180° (Interactive Inversion)\n` +
-            `✓ Vạch xanh sau khi lật ở mức 30.0 cm (= mức gạo ban đầu)\n` +
-            `✓ Thể tích 10 bánh: V = A × Δh_xanh = 275.8234 × Δh_xanh\n` +
-            `✓ Hỗ trợ hình bánh Chỏm Cầu (Spherical Cap / Vòm)\n` +
-            `✓ Nút Tải lại & Xóa cache để luôn tải bản mới nhất`
+            `Các yêu cầu bài toán đã đáp ứng đầy đủ:\n` +
+            `✓ Ống trụ R = 9.37cm (A = 275.82 cm²), H = 80cm, gạo ban đầu = 30cm\n` +
+            `✓ Khi lật không bánh, mức gạo đạt đúng vạch xanh = 50.0cm\n` +
+            `✓ 10 bánh hình chỏm cầu: đường kính D (mm), cao h (mm), khối lượng m (g)\n` +
+            `✓ (1) Tính thể tích từng bánh & tổng thể tích 10 bánh chỏm cầu (cm³)\n` +
+            `✓ (2) Độ cao mức gạo dâng sau khi lật so với vạch xanh (Δh_xanh)\n` +
+            `✓ (3) Thể tích bánh suy ra từ độ dâng thực tế V = A × Δh_xanh & so sánh với V hình học\n` +
+            `✓ Nút Tải lại & Xóa cache để luôn tải bản mới nhất.`
           );
         });
       }
@@ -1502,24 +1726,21 @@
 
     function exportToCSV() {
       const A = getCylinderArea();
-      const greenMarkFlipped = getGreenMarkFlipped();
-      const deltaGreen = isFlipped ? (hAfter - greenMarkFlipped) : (hAfter - CYLINDER.greenMarkOriginal);
-      const totalRise = Math.max(0, hAfter - CYLINDER.h0);
-      const measuredVolume = A * totalRise;
+      const greenRef = CYLINDER.greenMark;
+      const deltaGreen = hAfter - greenRef;
+      const measuredVolume = A * Math.max(0, deltaGreen);
 
       let csv = 'Cylinder Rice Displacement Experiment Report\n';
       csv += `Application Version,${APP_VERSION},Build ${BUILD_TIMESTAMP}\n`;
       csv += `Cylinder Height (H),${CYLINDER.H},cm\n`;
       csv += `Cylinder Radius (R),${CYLINDER.R},cm\n`;
       csv += `Cylinder Base Area (A),${A.toFixed(4)},cm2\n`;
-      csv += `Initial Rice Height (h0),${CYLINDER.h0},cm\n`;
-      csv += `Original Green Benchmark (before flip),${CYLINDER.greenMarkOriginal},cm\n`;
-      csv += `Flipped Green Benchmark (after 180 flip),${greenMarkFlipped},cm\n`;
-      csv += `Cylinder Inversion State,${isFlipped ? 'Flipped (180 Inversion)' : 'Original (Unflipped)'}\n`;
+      csv += `Initial Rice Height (before flip),${CYLINDER.h0},cm\n`;
+      csv += `Green Benchmark (after flip without cakes),${CYLINDER.greenMark},cm\n`;
+      csv += `Cylinder Inversion State,${isFlipped ? 'Inverted (180° Flip)' : 'Original (Upright)'}\n`;
       csv += `Final Rice Height (h_sau),${hAfter.toFixed(2)},cm\n`;
-      csv += `Delta Relative to Green Mark,${deltaGreen.toFixed(2)},cm\n`;
-      csv += `Total Rise (delta_h),${totalRise.toFixed(2)},cm\n`;
-      csv += `Displaced Volume (V),${measuredVolume.toFixed(2)},cm3\n\n`;
+      csv += `Height Rise relative to Green Mark (delta_h_xanh),${deltaGreen.toFixed(2)},cm\n`;
+      csv += `Displaced Volume from Rice Rise (V),${measuredVolume.toFixed(2)},cm3\n\n`;
 
       csv += 'Cake #,Name,Shape,Dimensions,Mass (g),Geometric Volume (cm3),Density (g/cm3)\n';
       cakes.forEach((c, i) => {
