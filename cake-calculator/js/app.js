@@ -5,10 +5,10 @@
 
 function updateAll() {
   const A = getCylinderArea();
-  const greenRef = CYLINDER.greenMark; // 50.0 cm
+  const greenRef = getGreenBenchmark(); // 30.0cm (new_bottom) or 50.0cm (original_tube)
   
-  // Relative rise over green mark (50.0cm)
-  const deltaGreen = isFlipped ? (hAfter - greenRef) : (hAfter - CYLINDER.h0);
+  // Relative rise over green mark
+  deltaGreen = isFlipped ? (hAfter - greenRef) : (hAfter - CYLINDER.h0);
   const measuredVolume = A * Math.max(0, deltaGreen); // V = A * deltaGreen (cm3)
   const measuredVolumeLiters = measuredVolume / 1000;
 
@@ -43,7 +43,7 @@ function updateAll() {
   const isOverflow = hAfter > CYLINDER.H;
 
   // Update visual cylinder graphic
-  updateCylinderVisualizer(hAfter, greenRef, isFlipped, isOverflow);
+  updateCylinderVisualizer(hAfter, greenRef, isFlipped, isOverflow, deltaGreen);
 
   // Update Cylinder Specs Display
   const dispH = document.getElementById('disp-H');
@@ -53,7 +53,15 @@ function updateAll() {
   const dispH0 = document.getElementById('disp-h0');
   if (dispH0) dispH0.textContent = `${CYLINDER.h0.toFixed(1)}cm`;
   const dispGreen = document.getElementById('disp-green');
-  if (dispGreen) dispGreen.textContent = `${greenRef.toFixed(1)}cm`;
+  if (dispGreen) {
+    if (!isFlipped) {
+      dispGreen.textContent = '50.0cm (gốc)';
+    } else if (rulerMode === 'new_bottom') {
+      dispGreen.textContent = '30.0cm (đáy mới)';
+    } else {
+      dispGreen.textContent = '50.0cm (vỏ ống)';
+    }
+  }
 
   // Relative to Green Mark Display
   const deltaGreenSign = deltaGreen >= 0 ? `+${deltaGreen.toFixed(1)}` : `${deltaGreen.toFixed(1)}`;
@@ -62,12 +70,13 @@ function updateAll() {
   
   const statGreenDesc = document.getElementById('stat-green-desc');
   if (statGreenDesc) {
+    const markName = rulerMode === 'new_bottom' ? 'vạch 30cm (đáy mới)' : 'vạch 50cm (vỏ ống)';
     if (deltaGreen > 0) {
-      statGreenDesc.textContent = `Dâng +${deltaGreen.toFixed(1)}cm trên vạch xanh`;
+      statGreenDesc.textContent = `Dâng +${deltaGreen.toFixed(1)}cm trên ${markName}`;
     } else if (deltaGreen === 0) {
-      statGreenDesc.textContent = 'Ngang bằng vạch xanh (50cm)';
+      statGreenDesc.textContent = `Ngang bằng ${markName}`;
     } else {
-      statGreenDesc.textContent = `Thấp hơn vạch xanh ${Math.abs(deltaGreen).toFixed(1)}cm`;
+      statGreenDesc.textContent = `Thấp hơn ${markName} ${Math.abs(deltaGreen).toFixed(1)}cm`;
     }
   }
 
@@ -183,11 +192,42 @@ function updateAll() {
 
   // Sync input elements without triggering recursive input events
   const inputHSauNum = document.getElementById('input-h-sau-number');
-  if (inputHSauNum) inputHSauNum.value = hAfter.toFixed(1);
+  if (inputHSauNum) {
+    inputHSauNum.min = greenRef;
+    inputHSauNum.value = hAfter.toFixed(1);
+  }
   const inputDeltaGreen = document.getElementById('input-delta-green');
   if (inputDeltaGreen) inputDeltaGreen.value = deltaGreen.toFixed(1);
   const inputHSauSlider = document.getElementById('input-h-sau-slider');
-  if (inputHSauSlider) inputHSauSlider.value = hAfter.toFixed(1);
+  if (inputHSauSlider) {
+    inputHSauSlider.min = greenRef;
+    inputHSauSlider.value = hAfter.toFixed(1);
+  }
+  const sliderMinLabel = document.getElementById('slider-min-label');
+  if (sliderMinLabel) {
+    sliderMinLabel.textContent = `${greenRef.toFixed(0)}cm (Vạch xanh)`;
+  }
+  const inputHSauHint = document.getElementById('input-h-sau-hint');
+  if (inputHSauHint) {
+    inputHSauHint.textContent = `h_sau = ${greenRef.toFixed(0)} + Δh_xanh (cm)`;
+  }
+  const inputDeltaHint = document.getElementById('input-delta-hint');
+  if (inputDeltaHint) {
+    inputDeltaHint.textContent = `Mốc vạch xanh = ${greenRef.toFixed(1)}cm`;
+  }
+
+  // Sync Ruler Mode buttons active states
+  const btnRulerNewBottom = document.getElementById('btn-ruler-new-bottom');
+  const btnRulerOrigTube = document.getElementById('btn-ruler-original-tube');
+  if (btnRulerNewBottom && btnRulerOrigTube) {
+    if (rulerMode === 'new_bottom') {
+      btnRulerNewBottom.className = 'px-2 py-1 rounded-lg text-[10px] font-bold transition active:scale-95 bg-emerald-500 text-slate-950 shadow';
+      btnRulerOrigTube.className = 'px-2 py-1 rounded-lg text-[10px] font-semibold transition active:scale-95 bg-slate-800 text-slate-300 hover:bg-slate-700';
+    } else {
+      btnRulerOrigTube.className = 'px-2 py-1 rounded-lg text-[10px] font-bold transition active:scale-95 bg-indigo-500 text-white shadow';
+      btnRulerNewBottom.className = 'px-2 py-1 rounded-lg text-[10px] font-semibold transition active:scale-95 bg-slate-800 text-slate-300 hover:bg-slate-700';
+    }
+  }
 
   // Sync Mobile Sticky Bar
   const mobDeltaGreen = document.getElementById('mobile-bar-delta-green');
@@ -313,6 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (slider) {
     slider.addEventListener('input', (e) => {
       hAfter = parseFloat(e.target.value);
+      const greenRef = getGreenBenchmark();
+      deltaGreen = hAfter - greenRef;
       updateAll();
     });
   }
@@ -320,7 +362,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Absolute Height number change
   if (numInput) {
     numInput.addEventListener('input', (e) => {
-      hAfter = parseFloat(e.target.value) || CYLINDER.h0;
+      const greenRef = getGreenBenchmark();
+      hAfter = parseFloat(e.target.value) || greenRef;
+      deltaGreen = hAfter - greenRef;
       updateAll();
     });
   }
@@ -328,22 +372,40 @@ document.addEventListener('DOMContentLoaded', () => {
   // 3. Green Benchmark delta input change: h_sau = greenRef + deltaGreen
   if (deltaGreenInput) {
     deltaGreenInput.addEventListener('input', (e) => {
-      const dG = parseFloat(e.target.value) || 0;
-      const greenRef = CYLINDER.greenMark;
-      hAfter = greenRef + dG;
+      deltaGreen = parseFloat(e.target.value) || 0;
+      const greenRef = getGreenBenchmark();
+      hAfter = greenRef + deltaGreen;
       updateAll();
     });
   }
 
-  // Quick delta buttons (0, +5, +10, +15, +20)
+  // Quick delta buttons (0, +5, +6, +5.9, +10)
   document.querySelectorAll('.quick-delta-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const dG = parseFloat(btn.dataset.delta);
-      const greenRef = CYLINDER.greenMark;
-      hAfter = greenRef + dG;
+      deltaGreen = parseFloat(btn.dataset.delta) || 0;
+      const greenRef = getGreenBenchmark();
+      hAfter = greenRef + deltaGreen;
       updateAll();
     });
   });
+
+  // Ruler Mode Toggles
+  const btnRulerNewBottom = document.getElementById('btn-ruler-new-bottom');
+  const btnRulerOrigTube = document.getElementById('btn-ruler-original-tube');
+  if (btnRulerNewBottom) {
+    btnRulerNewBottom.addEventListener('click', () => {
+      rulerMode = 'new_bottom';
+      hAfter = CYLINDER.greenMarkNewBottom + deltaGreen;
+      updateAll();
+    });
+  }
+  if (btnRulerOrigTube) {
+    btnRulerOrigTube.addEventListener('click', () => {
+      rulerMode = 'original_tube';
+      hAfter = CYLINDER.greenMarkOriginal + deltaGreen;
+      updateAll();
+    });
+  }
 
   // Flip Cylinder Toggle Handlers
   const btnFlip = document.getElementById('btn-flip-cylinder');
@@ -400,7 +462,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const A = getCylinderArea();
       let totalV = 0;
       cakes.forEach(c => totalV += calculateCakeVolume(c));
-      hAfter = CYLINDER.greenMark + (totalV / A);
+      deltaGreen = totalV / A;
+      hAfter = getGreenBenchmark() + deltaGreen;
       updateAll();
     });
   }
@@ -411,7 +474,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const A = getCylinderArea();
       let totalV = 0;
       cakes.forEach(c => totalV += calculateCakeVolume(c));
-      hAfter = CYLINDER.greenMark + (totalV / A);
+      deltaGreen = totalV / A;
+      hAfter = getGreenBenchmark() + deltaGreen;
       updateAll();
       if (window.innerWidth < 1024) {
         const tabBtn = document.querySelector('[data-tab="visualizer"]');

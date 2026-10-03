@@ -3,22 +3,30 @@
  * Cake Displacement Volume Calculator
  */
 
-const APP_VERSION = 'v2.8.1';
-const BUILD_TIMESTAMP = '2026-10-01 17:20';
+const APP_VERSION = 'v2.9.0';
+const BUILD_TIMESTAMP = '2026-10-03 19:25';
 
 // Cylindrical measuring vessel specifications
 const CYLINDER = {
-  H: 80.0,        // Total cylinder height: 80cm
-  R: 9.37,        // Base radius: 9.37cm
-  h0: 30.0,       // Initial rice level: 30cm
-  greenMark: 50.0 // Green benchmark: 50cm (settles exactly here when inverted without cakes!)
+  H: 80.0,                  // Total cylinder height: 80cm
+  R: 9.37,                  // Base radius: 9.37cm
+  h0: 30.0,                 // Initial rice level: 30cm
+  greenMarkNewBottom: 30.0, // When inverted: 80cm - 50cm = 30.0cm from new bottom (rice settles exactly here!)
+  greenMarkOriginal: 50.0   // Original mark on tube body: 50.0cm from original bottom
 };
 
 // Application State
-let isFlipped = true;         // Default to inverted state (the measuring state of the experiment)
-let hAfter = 56.0;            // Measured rice level after inverting with 10 cakes (cm), default Δh = 6.0cm above 50cm mark as tested in Gemini chat!
+let isFlipped = true;             // Default to inverted state (the measuring state of the experiment)
+let rulerMode = 'new_bottom';     // 'new_bottom' (0->80cm from new bottom, mark at 30cm) | 'original_tube' (mark at 50cm)
+let deltaGreen = 6.0;             // Measured rise over green mark (cm), default Δh = 6.0cm
+let hAfter = 36.0;                // In 'new_bottom' mode: 30 + 6 = 36.0cm; in 'original_tube': 50 + 6 = 56.0cm
 let currentMode = 'experimental';
 let currentMobileTab = 'visualizer';
+
+function getGreenBenchmark() {
+  if (!isFlipped) return CYLINDER.greenMarkOriginal;
+  return rulerMode === 'new_bottom' ? CYLINDER.greenMarkNewBottom : CYLINDER.greenMarkOriginal;
+}
 
 // 10 Cake Items (default matching latest Gemini chat dataset: V=1629.3cm³, m=421.7g)
 let cakes = [
